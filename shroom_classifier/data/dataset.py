@@ -6,7 +6,7 @@ from os import path
 from PIL import Image
 
 
-_DATA_PATH = "data/processed"
+_DATA_PATH = "data/processed/"
 
 N_CLASSES = 1392
 N_SUPER_CLASSES = 418
@@ -34,9 +34,10 @@ class ShroomDataset(Dataset):
     def __init__(self, dataname = "sample", preprocesser = None) -> None:
         super().__init__()
 
-        self.info = json.load(open(path.join(_DATA_PATH, "sample.json"), "r"))
+        self.info = json.load(open(path.join(_DATA_PATH, f"{dataname}.json"), "r"))
         self.images = self.info["images"]
         self.categories = self.info["categories"]
+        self.annotations = self.info["annotations"]
         self.categories_dict = np.load(path.join(_DATA_PATH, "categories.npy"), allow_pickle=True).item()
         self.preprocesser = preprocesser
 
@@ -56,7 +57,10 @@ class ShroomDataset(Dataset):
         '''
 
         if self.preprocesser is not None:
-            img = Image.open(self.images[index]["file_name"])
+            filename = self.images[index]["file_name"]
+            if not path.exists(filename):
+                filename = path.join(_DATA_PATH, filename)
+            img = Image.open(filename)
             img = self.preprocesser(img)
 
         else:
@@ -64,8 +68,10 @@ class ShroomDataset(Dataset):
             img = np.array(img)
             img = torch.tensor(img).permute(2, 0, 1).float()
 
-        category = self.categories[index]["name"]
-        super_category = self.categories[index]["supercategory"]
+        label_dict = [cat for cat in self.categories if cat['id'] == self.annotations[index]['category_id']].pop()
+
+        category = label_dict['name']
+        super_category = label_dict['supercategory']
 
         classes = torch.zeros(N_CLASSES)
         classes[self.categories_dict[category]] = 1
