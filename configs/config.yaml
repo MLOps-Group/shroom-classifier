@@ -1,4 +1,0 @@
-defaults:
-    - experiments: exp1
-    - N_CLASSES: 1392
-    - N_SUPERCLASSES: 418
