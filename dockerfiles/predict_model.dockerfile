@@ -14,4 +14,4 @@ WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
-ENTRYPOINT ["python", "-u", "src/predict_model.py"]
+ENTRYPOINT ["python", "-u", "shroom_classifier/predict_model.py"]
