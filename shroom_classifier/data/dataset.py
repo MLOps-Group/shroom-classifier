@@ -5,11 +5,9 @@ import torch
 from os import path
 from PIL import Image
 
-
-_DATA_PATH = "data/processed/"
-
 N_CLASSES = 1392
 N_SUPER_CLASSES = 418
+
 class ShroomDataset(Dataset):
     ''' Dataset for the mushroom images. 
         The images are saved in the following structure:
@@ -31,16 +29,15 @@ class ShroomDataset(Dataset):
                         (assumes that the images are already preprocessed)
             NB: See example below!
         '''
-    def __init__(self, dataname = "sample", preprocesser = None) -> None:
+    def __init__(self, dataname = "sample", datapath = "data/processed", preprocesser = None) -> None:
         super().__init__()
-
-        self.info = json.load(open(path.join(_DATA_PATH, f"{dataname}.json"), "r"))
+        self.info = json.load(open(path.join(datapath, f"{dataname}.json"), "r"))
         self.images = self.info["images"]
         self.categories = self.info["categories"]
         self.annotations = self.info["annotations"]
-        self.categories_dict = np.load(path.join(_DATA_PATH, "categories.npy"), allow_pickle=True).item()
+        self.categories_dict = np.load(path.join(datapath, "categories.npy"), allow_pickle=True).item()
         self.preprocesser = preprocesser
-
+        self.datapath = datapath
     def __len__(self) -> int:
         return len(self.info["images"])
     
@@ -59,7 +56,7 @@ class ShroomDataset(Dataset):
         if self.preprocesser is not None:
             filename = self.images[index]["file_name"]
             if not path.exists(filename):
-                filename = path.join(_DATA_PATH, filename)
+                filename = path.join(self.datapath, filename)
             img = Image.open(filename)
             img = self.preprocesser(img)
 
