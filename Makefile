@@ -8,7 +8,7 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = src
+PROJECT_NAME = shroom_classifier
 PYTHON_VERSION = 3.8.10
 PYTHON_INTERPRETER = python
 
