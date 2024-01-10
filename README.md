@@ -1,6 +1,13 @@
-# src
+# Shroom Classifier
 
-A short description of the project.
+Mushroom foraging has gained popularity as a recreational activity, yet its seemingly harmless nature hides potential dangers, as some fungi can be fatally poisonous. 
+Understanding the risks associated with collecting and consuming mushrooms is crucial. To enhance the safety of mushroom hunting enthusiasts, we present ShroomClassifier, an innovative image classification framework built on the powerful TIMM (Transfer Learning with Image Models) library from Hugging Face (https://huggingface.co/timm).
+
+## Features
+Powered by TIMM: Leveraging the cutting-edge capabilities of the TIMM library, ShroomClassifier ensures state-of-the-art performance in image classification. TIMM's pre-trained models enable accurate and efficient identification of various fungi species.
+
+Accessible Data: ShroomClassifieris finetuned on a comprehensive dataset of labeled images of fungi, ensuring a diverse and reliable training set. The dataset can be easily accessed and downloaded from: https://github.com/visipedia/fgvcx_fungi_comp#data
+
 
 ## Project structure
 
@@ -58,6 +65,4 @@ The directory structure of the project looks like this:
 └── LICENSE              <- Open-source license if one is chosen
 ```
 
-Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
-a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting
-started with Machine Learning Operations (MLOps).
+
