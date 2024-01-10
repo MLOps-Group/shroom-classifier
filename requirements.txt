@@ -5,4 +5,3 @@ torchvision
 timm
 matplotlib
 pandas
-hydra-core
