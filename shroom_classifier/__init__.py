@@ -1,2 +1,2 @@
-from shroom_classifier.models.model import MyNeuralNet
-from shroom_classifier.predict_model import predict
+from shroom_classifier.models.model import ShroomClassifierMobileNetV3Large100
+# from shroom_classifier.predict_model import predict
