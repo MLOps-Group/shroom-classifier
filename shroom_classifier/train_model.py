@@ -21,8 +21,8 @@ def train():
     # val_datalaoder = DataLoader(val_dataset, batch_size=64, shuffle=True, num_workers=8)
 
     model.train()
-    wandb_logger = WandbLogger(entity = WANDB_ENTITY, project = PROJECT_NAME)
-    trainer = Trainer(max_epochs=10, logger=wandb_logger)
+    wandb_logger = WandbLogger(entity = WANDB_ENTITY, project = PROJECT_NAME, mode = "disabled")
+    trainer = Trainer(max_epochs=1, logger=wandb_logger)
     # trainer.fit(model, train_dataloader, val_datalaoder)
     trainer.fit(model, train_dataloader)
 
