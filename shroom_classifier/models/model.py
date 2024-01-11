@@ -33,8 +33,13 @@ class ShroomClassifierMobileNetV3Large100(LightningModule):
             self.logger.experiment.log({"train_loss": loss})
             self.logger.experiment.log({"trainer/step": self.global_step})
             logits = y_hat[0]
-            probs = logits.sigmoid().detach().cpu().numpy()
-            probs = probs / probs.sum()
+            probs = torch.exp(logits) / torch.exp(logits).sum()
+            probs = probs.detach().cpu().numpy()    
+            prediction = torch.argmax(y_hat.sigmoid(), axis=0).detach().cpu().numpy()
+            targets    = torch.argmax(super_classes, axis=0).detach().cpu().numpy()
+
+            acc = np.mean(prediction == targets)
+            self.logger.experiment.log({"train_acc": acc})
             fig, ax = plt.subplots(figsize=(10, 10))
             ax.bar(range(len(probs)), probs * 3)
             y_true = super_classes[0].detach().cpu().numpy()
