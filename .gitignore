@@ -181,3 +181,5 @@ data/raw
 data/processed
 wandb/
 outputs/
+lightning_logs/*
+models/*.ckpt
