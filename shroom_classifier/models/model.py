@@ -28,7 +28,7 @@ class ShroomClassifierMobileNetV3Large100(LightningModule):
         y_hat = self(images)
         loss = self.loss(y_hat, super_classes)
 
-
+        # Log metrics
         if self.global_step % 10 == 0:
             self.logger.experiment.log({"train/loss": loss})
             self.logger.experiment.log({"trainer/step": self.global_step})
