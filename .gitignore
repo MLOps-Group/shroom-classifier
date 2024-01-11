@@ -182,3 +182,5 @@ wandb/
 outputs/
 data/
 /data
+lightning_logs/*
+models/*.ckpt
