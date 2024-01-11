@@ -6,3 +6,5 @@ timm
 matplotlib
 pandas
 wandb
+dvc
+dvc-gdrive
