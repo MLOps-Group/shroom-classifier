@@ -9,10 +9,10 @@ def train():
     preprocesser = model.preprocesser
 
     train_dataset = ShroomDataset("train", datapath="data/raw", preprocesser=preprocesser)
-    train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=8)
+    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=8)
 
     val_dataset = ShroomDataset("val", datapath="data/raw", preprocesser=preprocesser)
-    val_datalaoder = DataLoader(val_dataset, batch_size=64, shuffle=True, num_workers=8)
+    val_datalaoder = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=8)
 
     model.train()
     wandb_logger = WandbLogger()
