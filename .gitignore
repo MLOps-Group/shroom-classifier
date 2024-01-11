@@ -177,8 +177,7 @@ cython_debug/
 #.idea/
 
 
-data/raw
-data/processed
+
 wandb/
 outputs/
-./data
+data/
