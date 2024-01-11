@@ -31,7 +31,7 @@ class ShroomClassifierResNet(LightningModule):
         # Log metrics
         if self.global_step % 10 == 0:
             self.logger.experiment.log({"train/loss": loss})
-            self.logger.experiment.log({"trainer/step": self.global_step})
+            self.logger.experiment.log({"trainer/global_step": self.global_step})
 
             probs = torch.nn.functional.softmax(y_hat, dim=1).detach().cpu().numpy()
             prediction = probs.argmax(axis=1)
@@ -48,6 +48,27 @@ class ShroomClassifierResNet(LightningModule):
 
         return loss
 
+    def validation_step(self, batch, batch_idx):
+        images, classes, super_classes = batch
+        y_hat = self(images)
+        loss = self.loss(y_hat, super_classes)
+
+        # Log metrics
+        # if self.global_step % 10 == 0:
+        self.logger.experiment.log({"val/loss": loss})
+        self.logger.experiment.log({"trainer/step": self.global_step})
+
+        probs = torch.nn.functional.softmax(y_hat, dim=1).detach().cpu().numpy()
+        prediction = probs.argmax(axis=1)
+        targets    = super_classes.detach().cpu().numpy()
+        acc, precision, recall, f1, support = get_metrics(targets.argmax(axis = 1), prediction)
+        self.logger.experiment.log({"val/acc": acc,
+                                    "val/precision": precision,
+                                    "val/recall": recall,
+                                    "val/f1": f1,
+                                    "val/support": support})
+        return loss
+    
     def configure_optimizers(self):
         optimizer = optim.Adam(self.parameters(), lr=1e-3)
         return optimizer

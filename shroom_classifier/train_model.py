@@ -18,12 +18,12 @@ def train():
     train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=8)
 
     val_dataset = ShroomDataset("val", datapath="data/raw", preprocesser=preprocesser)
-    val_datalaoder = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=8)
+    val_datalaoder = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=8)
 
     model.train()
     wandb_logger = WandbLogger(entity = WANDB_ENTITY, project = PROJECT_NAME)
     trainer = Trainer(max_epochs=10, logger=wandb_logger)
-    trainer.fit(model, train_dataloader)
+    trainer.fit(model, train_dataloader, val_datalaoder)
 
 
 
