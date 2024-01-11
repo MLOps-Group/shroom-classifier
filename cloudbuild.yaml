@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/shroom-project-410914/testing_m21', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/shroom-project-410914/testing_m21']
+
