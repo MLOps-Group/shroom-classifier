@@ -1,5 +1,5 @@
 import torch
-from shroom_classifier import ShroomClassifierMobileNetV3Large100
+from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data.utils import image_to_tensor
 from PIL import Image
 
@@ -19,7 +19,7 @@ class ShroomPredictor:
         if model_path.startswith("wandb:"):
             raise NotImplementedError("Wandb loading not implemented")
         else:   
-            self.model = ShroomClassifierMobileNetV3Large100.load_from_checkpoint(model_path, map_location=self.device)
+            self.model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=self.device)
             
     def get_probs(self, image):
         self.model.eval()
