@@ -13,7 +13,7 @@ import wandb
 import numpy as np
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 
-class ShroomClassifierMobileNetV3Large100(LightningModule):
+class ShroomClassifierResNet(LightningModule):
     def __init__(self, num_classes: int):
         super().__init__()
         self.model = timm.create_model('resnet50.a1_in1k', pretrained=True, num_classes=num_classes)

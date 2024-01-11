@@ -183,3 +183,4 @@ outputs/
 /data
 lightning_logs/*
 models/*.ckpt
+*.tgz

@@ -1,13 +1,17 @@
-from shroom_classifier import ShroomClassifierMobileNetV3Large100
+from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data import N_SUPER_CLASSES, ShroomDataset
 from torch.utils.data import DataLoader
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 
 
+WANDB_ENTITY = "mlops_papersummarizer"
+PROJECT_NAME = "dev"
+
+
 
 def train():
-    model = ShroomClassifierMobileNetV3Large100(N_SUPER_CLASSES)
+    model = ShroomClassifierResNet(N_SUPER_CLASSES)
     preprocesser = model.preprocesser
 
     train_dataset = ShroomDataset("sample", datapath="data/processed", preprocesser=preprocesser)
@@ -17,7 +21,7 @@ def train():
     val_datalaoder = DataLoader(val_dataset, batch_size=32, shuffle=True, num_workers=8)
 
     model.train()
-    wandb_logger = WandbLogger()
+    wandb_logger = WandbLogger(entity = WANDB_ENTITY, project = PROJECT_NAME)
     trainer = Trainer(max_epochs=10, logger=wandb_logger)
     trainer.fit(model, train_dataloader)
 
