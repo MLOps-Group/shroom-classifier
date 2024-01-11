@@ -1,3 +1,2 @@
 defaults:
-    - experiment: exp1
-    
+    - experiments: exp1
