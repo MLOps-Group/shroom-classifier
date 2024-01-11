@@ -64,6 +64,7 @@ def process_data(size: Tuple = (WIDTH, HEIGHT), info: str = "val.json", out_fold
 
         # Saves image
         new_filename = path.join(data_folder, image_dict['file_name'][7:])
+        new_filename = new_filename[:-4].replace(" ", "_").replace(".", "_") + ".JPG"
         if not path.exists(path.dirname(new_filename)):
             os.mkdir(path.dirname(new_filename))
 
@@ -71,7 +72,7 @@ def process_data(size: Tuple = (WIDTH, HEIGHT), info: str = "val.json", out_fold
         image_dict['width'] = WIDTH
         image_dict['height'] = HEIGHT
         img.save(new_filename)
-
+        
         # Saves new info
         new_info['annotations'].append(annotations[i])
         new_info['categories'].append(label_dict)
@@ -111,5 +112,5 @@ def categories_dictionary(folder_path: str = _DATA_PATH_RAW) -> dict:
     return categories
 
 if __name__ == '__main__':
-    # process_data(size = (WIDTH, HEIGHT), info = "val.json")
+    process_data(size = (WIDTH, HEIGHT), info = "val.json")
     categories_dictionary(_DATA_PATH_RAW)

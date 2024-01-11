@@ -73,7 +73,7 @@ def get_metrics(y_true: np.ndarray, y_hat: np.ndarray) -> (float, float, float, 
     '''
     
     accuracy = accuracy_score(y_true, y_hat)
-    precision, recall, f1, support = precision_recall_fscore_support(y_true, y_hat, average="macro")
+    precision, recall, f1, support = precision_recall_fscore_support(y_true, y_hat, average="macro", zero_division=0)
 
     return accuracy, precision, recall, f1, support
 
