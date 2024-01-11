@@ -8,4 +8,5 @@ pandas
 wandb
 dvc
 dvc-gdrive
+dvc-gs
 scikit-learn
