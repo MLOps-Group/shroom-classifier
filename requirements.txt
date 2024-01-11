@@ -9,3 +9,4 @@ wandb
 dvc
 dvc-gdrive
 scikit-learn
+google-api-python-client>=2.0.0
