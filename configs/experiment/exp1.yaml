@@ -1,2 +1,12 @@
+model_name: "ShroomClassifierMobileNetV3Large100"
+
 DATA_PATH: ../data/raw
-N_CLASSES: 418
+
+
+batch_size: 32
+learning_rate: 0.001
+num_epochs: 10
+seed: 42
+n_classes: 418
+
+
