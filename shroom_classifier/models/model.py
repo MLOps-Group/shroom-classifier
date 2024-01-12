@@ -8,10 +8,8 @@ from timm.data.transforms_factory import create_transform
 from timm.loss import BinaryCrossEntropy 
 from torch import optim
 import torch
-import matplotlib.pyplot as plt
-import wandb
-import numpy as np
-from sklearn.metrics import precision_recall_fscore_support, accuracy_score
+from shroom_classifier.visualization.train_plots import plot_probs
+from shroom_classifier.evaluation.metrics import get_metrics
 
 class ShroomClassifierResNet(LightningModule):
     def __init__(self, num_classes: int):
@@ -76,45 +74,6 @@ class ShroomClassifierResNet(LightningModule):
         return optimizer
     
 
-def get_metrics(y_true: np.ndarray, y_hat: np.ndarray) -> (float, float, float, float, float):
-    ''' Computes classification metrics:
-         - Accuracy
-        - Precision
-        - Recall
-        - F1-score
-        - Support
-
-        Args:
-            y_true: True labels (N_CLASSES)
-            y_hat: Predicted labels (N_CLASSES)
-
-        Returns:
-            accuracy: Accuracy score
-            precision: Precision score
-            recall: Recall score
-            f1: F1 score
-    '''
-    
-    accuracy = accuracy_score(y_true, y_hat)
-    precision, recall, f1, support = precision_recall_fscore_support(y_true, y_hat, average="macro", zero_division=0)
-
-    return accuracy, precision, recall, f1, support
 
 
-def plot_probs(y_true: np.ndarray, probs: np.ndarray) -> wandb.Image:
-    ''' Plots the probabilities of the predicted classes.
 
-        Args:
-            y_true: True labels (BATCH_SIZE, N_CLASSES)
-            probs: Predicted probabilities (BATCH_SIZE, N_CLASSES)
-
-        Returns:
-            fig: Figure containing the plot
-    '''
-    fig, ax = plt.subplots(figsize=(10, 10))
-    ax.bar(range(len(probs)), probs, label = "Predicted probabilities")
-    ax.bar(range(len(probs)), y_true, alpha=0.3, color = "green", width = 5, label = "True label")
-    ax.grid(linestyle='--', linewidth=1, axis='y')
-    img = wandb.Image(fig)
-    plt.close()
-    return img
