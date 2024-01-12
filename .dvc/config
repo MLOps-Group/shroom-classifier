@@ -1,7 +1,7 @@
 [core]
     remote = remote_storage
-['remote "myremote"']
-    url = gs://a_bucket_full_of_mushrooms
+# ['remote "myremote"']
+#     url = gs://a_bucket_full_of_mushrooms
 ['remote "remote_storage"']
     url = gs://shroom_bucket/
     version_aware = true
