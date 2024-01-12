@@ -8,14 +8,14 @@ from timm.data.transforms_factory import create_transform
 from timm.loss import BinaryCrossEntropy 
 from torch import optim
 import torch
-import matplotlib.pyplot as plt
-import wandb
-import numpy as np
-from sklearn.metrics import precision_recall_fscore_support, accuracy_score
+from shroom_classifier.visualization.train_plots import plot_probs
+from shroom_classifier.evaluation.metrics import get_metrics
 
 class ShroomClassifierResNet(LightningModule):
     def __init__(self, num_classes: int):
         super().__init__()
+        self.save_hyperparameters()
+        
         self.model = timm.create_model('resnet50.a1_in1k', pretrained=True, num_classes=num_classes)
         self.preprocesser = create_transform(**resolve_data_config(self.model.pretrained_cfg))
         self.loss = BinaryCrossEntropy()
