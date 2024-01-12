@@ -10,7 +10,7 @@ COPY requirements_dev.txt requirements_dev.txt
 COPY pyproject.toml pyproject.toml
 COPY LICENSE LICENSE
 COPY README.md README.md
-COPY data/ data/
+COPY ../data/ data/
 COPY Makefile Makefile
 
 WORKDIR /
