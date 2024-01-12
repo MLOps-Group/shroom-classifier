@@ -36,6 +36,11 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 
+## Run app
+run_app:
+	uvicorn --reload --port 8000 shroom_classifier.app.main:app
+
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
