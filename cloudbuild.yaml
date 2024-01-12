@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/shroom-project-410914/first-shroom-image-test', '-f', '/dockerfiles/train_model', '.'] #'.']
+  args: ['build', '-t', 'gcr.io/shroom-project-410914/first-shroom-image-test', '-f', '/dockerfiles/train_model.dockerfile', '.'] #'.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/shroom-project-410914/first-shroom-image-test'] #just set own image name
 
