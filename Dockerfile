@@ -2,13 +2,15 @@
 FROM  --platform=linux/amd64 python:3.10-slim
 
 # Install required system packages and Google Cloud SDK
-RUN apt-get update
-RUN apt-get install -y google-cloud-sdk
-RUN apt-get install --no-install-recommends -y build-essential gcc curl && \
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install --y google-cloud-sdk -y build-essential gcc curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 # Set the working directory
 WORKDIR /app
+
 # Authenticate with Google Cloud using the service account key
 COPY shroom-project-410914-7503fcf85328.json /app/key.json
 RUN gcloud auth activate-service-account --key-file=/app/key.json
