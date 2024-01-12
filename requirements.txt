@@ -9,3 +9,6 @@ wandb
 dvc
 dvc-gdrive
 scikit-learn
+fastapi
+uvicorn
+python-multipart
