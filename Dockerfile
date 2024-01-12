@@ -4,7 +4,7 @@ FROM  --platform=linux/amd64 python:3.10-slim
 # Install required system packages and Google Cloud SDK
 RUN apt-get update
 RUN apt-get install -y google-cloud-sdk
-RUN apt-get install --no-install-recommends -y build-essential gcc
+RUN apt-get install --no-install-recommends -y build-essential gcc curl && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
@@ -32,7 +32,7 @@ COPY Makefile Makefile
 # Download data from Google Cloud Storage bucket
 RUN gsutil -m cp -r gs://shroom_bucket/* /app/data/
 
-WORKDIR /
+#WORKDIR /
 RUN pip install -U pip setuptools wheel
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
