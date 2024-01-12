@@ -1,14 +1,27 @@
-torch >= 2.1.0
-pytorch-lightning
-hydra-core
-torchvision
-timm
+# general imports
 matplotlib
 pandas
+
+# model imports
+torch >= 1.2.0
+pytorch-lightning
+scikit-learn
+torchvision
+timm
+
+# experiment imports
+hydra-core
 wandb
+
+# data imports
 dvc
 dvc-gdrive
-scikit-learn
+dvc-gs
+
+# app imports
 fastapi
 uvicorn
 python-multipart
+
+# cloud imports
+google-api-python-client>=2.0.0
