@@ -13,6 +13,12 @@ WORKDIR /app
 COPY shroom-project-410914-7503fcf85328.json /app/key.json
 RUN gcloud auth activate-service-account --key-file=/app/key.json
 
+# Install Google Cloud SDK
+RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
+    tar -xf /tmp/google-cloud-sdk.tar.gz -C /app && \
+    /app/google-cloud-sdk/install.sh --quiet && \
+    rm /tmp/google-cloud-sdk.tar.gz
+
 
 COPY requirements.txt requirements.txt
 COPY requirements_dev.txt requirements_dev.txt
