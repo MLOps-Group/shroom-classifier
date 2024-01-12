@@ -10,7 +10,7 @@ COPY requirements_dev.txt requirements_dev.txt
 COPY pyproject.toml pyproject.toml
 COPY LICENSE LICENSE
 COPY README.md README.md
-COPY shroom-classifier/ shroom-classifier/
+COPY shroom_classifier/ shroom_classifier/
 COPY data/ data/
 COPY Makefile Makefile
 
