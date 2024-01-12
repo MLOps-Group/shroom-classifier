@@ -62,8 +62,8 @@ class ShroomPredictor:
         labels = self.super_categories[top_k_idx.cpu()].squeeze().tolist()
         
         return {
-            "probs" : top_k, 
-            "index": top_k_idx,
+            "probs" : top_k.cpu(), 
+            "index": top_k_idx.cpu(),
             "labels" : labels,
         }
     
