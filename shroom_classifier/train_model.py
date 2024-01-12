@@ -15,7 +15,7 @@ def train():
     preprocesser = model.preprocesser
 
     train_dataset = ShroomDataset("sample", datapath="data/processed/", preprocesser=preprocesser)
-    train_dataset = torch.utils.data.Subset(train_dataset, range(0, 100))
+    # train_dataset = torch.utils.data.Subset(train_dataset, range(0, 100))
     train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=8)
 
     # val_dataset = ShroomDataset("val", datapath="data/processed", preprocesser=preprocesser)
