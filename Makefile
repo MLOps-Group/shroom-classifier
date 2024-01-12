@@ -9,7 +9,7 @@
 #################################################################################
 
 PROJECT_NAME = shroom_classifier
-PYTHON_VERSION = 3.8.10
+PYTHON_VERSION := 3.10
 PYTHON_INTERPRETER = python
 
 #################################################################################
@@ -34,6 +34,11 @@ dev_requirements: requirements
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+
+
+## Run app
+run_app:
+	uvicorn --reload --port 8000 shroom_classifier.app.main:app
 
 
 #################################################################################
