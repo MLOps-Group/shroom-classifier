@@ -20,7 +20,7 @@ def root():
 @app.post("/predict")
 async def predict(file: UploadFile = File(...), k: int = 5):
     # Load the model
-    predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
+    predictor = ShroomPredictor("models/dev/model_dct9b3c3_v3/model.ckpt")
 
     # Read the image file
     os.makedirs(".tmp/images", exist_ok=True)

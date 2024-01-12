@@ -71,7 +71,7 @@ class ShroomPredictor:
 
 if __name__ == "__main__":
     # predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
-    predictor = ShroomPredictor("wandb:mlops_papersummarizer/dev/model-p6k4qly6:v2")
+    predictor = ShroomPredictor("wandb:mlops_papersummarizer/dev/model-dct9b3c3:v3")
     
     probs = predictor.predict("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
     print(predictor.top_k_preds("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG"))
