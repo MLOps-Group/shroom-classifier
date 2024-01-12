@@ -2,10 +2,10 @@
 FROM  --platform=linux/amd64 python:3.10-slim
 
 # Install required system packages and Google Cloud SDK
-RUN apt-get update && \
-    apt-get install -y google-cloud-sdk && \
-    apt-get install --no-install-recommends -y build-essential gcc && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-get install -y google-cloud-sdk
+RUN apt-get install --no-install-recommends -y build-essential gcc
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
