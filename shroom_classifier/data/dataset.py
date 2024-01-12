@@ -4,6 +4,7 @@ import numpy as np
 import torch
 from os import path
 from PIL import Image
+from shroom_classifier.data.utils import image_to_tensor
 
 N_CLASSES = 1392
 N_SUPER_CLASSES = 418
@@ -53,17 +54,23 @@ class ShroomDataset(Dataset):
                 super_category: Super category of the image as a torch tensor of shape (N_SUPER_CLASSES)
         '''
 
-        if self.preprocesser is not None:
-            filename = self.images[index]["file_name"]
-            if not path.exists(filename):
-                filename = path.join(self.datapath, filename)
-            img = Image.open(filename)
-            img = self.preprocesser(img)
+        filename = self.images[index]["file_name"]
+        if not path.exists(filename):
+            filename = path.join(self.datapath, filename)
+            
+        img = image_to_tensor(filename, self.preprocesser)
 
-        else:
-            img = Image.open(self.images[index]["file_name"])
-            img = np.array(img)
-            img = torch.tensor(img).permute(2, 0, 1).float()
+        # if self.preprocesser is not None:
+        #     filename = self.images[index]["file_name"]
+        #     if not path.exists(filename):
+        #         filename = path.join(self.datapath, filename)
+        #     img = Image.open(filename)
+        #     img = self.preprocesser(img)
+
+        # else:
+        #     img = Image.open(self.images[index]["file_name"])
+        #     img = np.array(img)
+        #     img = torch.tensor(img).permute(2, 0, 1).float()
 
         label_dict = [cat for cat in self.categories if cat['id'] == self.annotations[index]['category_id']].pop()
 
