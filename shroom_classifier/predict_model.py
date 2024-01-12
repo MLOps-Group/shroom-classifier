@@ -1,6 +1,7 @@
 import torch
 from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data.utils import image_to_tensor
+from shroom_classifier.models import download_model
 from PIL import Image
 import json
 import numpy as np
@@ -22,10 +23,12 @@ class ShroomPredictor:
         
         
     def load_model(self, model_path):
+        # download model if needed
         if model_path.startswith("wandb:"):
-            raise NotImplementedError("Wandb loading not implemented")
-        else:   
-            self.model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=self.device)
+            model_path = download_model(model_path[6:])
+        
+        # load model
+        self.model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=self.device)
             
     def get_probs(self, image):
         self.model.eval()
@@ -45,8 +48,6 @@ class ShroomPredictor:
         # predict
         with torch.no_grad():
             logits = self.model(image)
-        
-        # print("logits:", logits)
         
         return logits.softmax(dim=1)
 
@@ -69,7 +70,8 @@ class ShroomPredictor:
     
 
 if __name__ == "__main__":
-    predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
+    # predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
+    predictor = ShroomPredictor("wandb:mlops_papersummarizer/dev/model-p6k4qly6:v2")
     
     probs = predictor.predict("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
     print(predictor.top_k_preds("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG"))
