@@ -3,10 +3,15 @@ FROM  --platform=linux/amd64 python:3.10-slim
 
 # Install required system packages and Google Cloud SDK
 
+# Install required system packages and Google Cloud SDK
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y build-essential gcc curl && \
+    apt-get install -y curl && \
+    curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
+    tar -xf /tmp/google-cloud-sdk.tar.gz -C /app && \
+    /app/google-cloud-sdk/install.sh --quiet && \
+    rm /tmp/google-cloud-sdk.tar.gz && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-
+    
 # Set the working directory
 WORKDIR /app
 
