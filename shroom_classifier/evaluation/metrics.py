@@ -7,7 +7,6 @@ def get_metrics(y_true: ndarray, y_hat: ndarray) -> (float, float, float, float,
         - Precision
         - Recall
         - F1-score
-        - Support
 
         Args:
             y_true: True labels (N_CLASSES)
@@ -21,6 +20,6 @@ def get_metrics(y_true: ndarray, y_hat: ndarray) -> (float, float, float, float,
     '''
     
     accuracy = accuracy_score(y_true, y_hat)
-    precision, recall, f1, support = precision_recall_fscore_support(y_true, y_hat, average="macro", zero_division=0)
+    precision, recall, f1, _ = precision_recall_fscore_support(y_true, y_hat, average="macro", zero_division=0)
 
-    return accuracy, precision, recall, f1, support
+    return accuracy, precision, recall, f1

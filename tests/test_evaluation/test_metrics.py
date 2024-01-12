@@ -12,13 +12,12 @@ def test_get_metrics():
     true_recall = np.array([1, 0, 0]).mean()
     true_f1 = 2 * true_precision * true_recall / (true_precision + true_recall)
     
-    accuracy, precision, recall, f1, support = get_metrics(y_true, y_hat)
+    accuracy, precision, recall, f1 = get_metrics(y_true, y_hat)
     
     print("accuracy:", accuracy)
     print("precision:", precision)
     print("recall:", recall)
     print("f1:", f1)
-    print("support:", support)
     
     assert np.isclose(accuracy, true_accuracy), f"accuracy: {accuracy}, true_accuracy: {true_accuracy}"
     assert np.isclose(precision, true_precision), f"precision: {precision}, true_precision: {true_precision}"
