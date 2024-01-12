@@ -5,7 +5,6 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.callbacks import Callback, LearningRateMonitor
-
 import wandb
 
 
@@ -22,11 +21,11 @@ def train():
     preprocesser = model.preprocesser
 
     train_dataset = ShroomDataset("sample", datapath="data/processed/", preprocesser=preprocesser)
-    train_dataset = torch.utils.data.Subset(train_dataset, range(0, 100))
+    # train_dataset = torch.utils.data.Subset(train_dataset, range(0, 100))
     train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=8)
 
-    # val_dataset = ShroomDataset("val", datapath="data/processed", preprocesser=preprocesser)
-    # val_datalaoder = DataLoader(val_dataset, batch_size=64, shuffle=True, num_workers=8)
+    val_dataset = ShroomDataset("val", datapath="data/raw", preprocesser=preprocesser)
+    val_datalaoder = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=8)
 
     wandb_logger = WandbLogger(entity = WANDB_ENTITY, project = PROJECT_NAME, mode = MODE, log_model = "all")
 
