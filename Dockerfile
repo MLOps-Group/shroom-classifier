@@ -4,26 +4,24 @@ FROM  --platform=linux/amd64 python:3.10-slim
 # Install required system packages and Google Cloud SDK
 
 # Install required system packages and Google Cloud SDK
+# Install required system packages and Google Cloud SDK
 RUN apt-get update && \
     apt-get install -y curl && \
     curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
-    tar -xf /tmp/google-cloud-sdk.tar.gz -C /app && \
-    /app/google-cloud-sdk/install.sh --quiet && \
-    rm /tmp/google-cloud-sdk.tar.gz && \
+    tar -xzf /tmp/google-cloud-sdk.tar.gz -C /tmp && \
+    /tmp/google-cloud-sdk/install.sh --quiet && \
+    rm -rf /tmp/google-cloud-sdk && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
-    
-# Set the working directory
-WORKDIR /app
 
 # Authenticate with Google Cloud using the service account key
 COPY shroom-project-410914-7503fcf85328.json /app/key.json
-RUN gcloud auth activate-service-account --key-file=/app/key.json
+RUN /app/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file=/app/key.json --quiet
 
 # Install Google Cloud SDK
-RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
-    tar -xf /tmp/google-cloud-sdk.tar.gz -C /app && \
-    /app/google-cloud-sdk/install.sh --quiet && \
-    rm /tmp/google-cloud-sdk.tar.gz
+#RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
+#    tar -xf /tmp/google-cloud-sdk.tar.gz -C /app && \
+#    /app/google-cloud-sdk/install.sh --quiet && \
+#    rm /tmp/google-cloud-sdk.tar.gz
 
 
 COPY requirements.txt requirements.txt
@@ -36,7 +34,11 @@ COPY Makefile Makefile
 
 
 # Download data from Google Cloud Storage bucket
-RUN gsutil -m cp -r gs://shroom_bucket/* /app/data/
+RUN /app/google-cloud-sdk/bin/gsutil -m cp -r gs://shroom_bucket/* /app/data/
+
+
+# Download data from Google Cloud Storage bucket
+#RUN gsutil -m cp -r gs://shroom_bucket/* /app/data/
 
 #WORKDIR /
 RUN pip install -U pip setuptools wheel
