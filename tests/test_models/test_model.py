@@ -4,7 +4,7 @@ import hydra
 
 # def test_model():
 #     # create a config object
-#     with hydra.initialize(version_base=None, config_path="../../configs/"):
+#     with hydra.initialize(version_base=None, config_path="../../configs/pytest_config"):
 #         cfg = hydra.compose(config_name="test_values.yaml")#, overrides=["app.user=test_user"])
     
 #     # load the model

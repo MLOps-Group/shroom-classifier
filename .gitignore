@@ -178,6 +178,7 @@ cython_debug/
 
 *.ckpt
 
+logs/
 wandb/
 outputs/
 /data
