@@ -1,7 +1,7 @@
 import torch
 from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data.utils import image_to_tensor
-from shroom_classifier.models import download_model
+from shroom_classifier.models import load_model
 from PIL import Image
 import json
 import numpy as np
@@ -23,12 +23,8 @@ class ShroomPredictor:
         
         
     def load_model(self, model_path):
-        # download model if needed
-        if model_path.startswith("wandb:"):
-            model_path = download_model(model_path[6:])
+        self.model, _ = load_model(model_path, device=self.device)
         
-        # load model
-        self.model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=self.device)
             
     def get_probs(self, image):
         self.model.eval()
