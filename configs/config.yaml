@@ -1,21 +1,21 @@
 defaults:
-    - experiment: exp1
+    - train: train_default
 
-train_data:
-    datapath: data/processed
-    dataname: sample
-    val: sample
+# train_data:
+#     datapath: data/processed
+#     dataname: sample
+#     val: sample
 
-val_data:
-    datapath: data/processed
-    dataname: sample
-    val: sample
-dev:
-    test: "HELLO WORLD!!"
+# val_data:
+#     datapath: data/processed
+#     dataname: sample
+#     val: sample
+# dev:
+#     test: "HELLO WORLD!!"
 
-wandb:
-  project: "shroom-classifier"
-  entity: "mlops_shroomclassifier"
-  mode: "disabled"
-  log_model: "all"
-  tags: ["exp1"]
+# wandb:
+#   project: "shroom-classifier"
+#   entity: "mlops_shroomclassifier"
+#   mode: "disabled"
+#   log_model: "all"
+#   tags: ["exp1"]
