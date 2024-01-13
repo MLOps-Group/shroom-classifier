@@ -55,6 +55,12 @@ coverage:
 data:
 	python $(PROJECT_NAME)/data/make_dataset.py
 
+
+## Train model
+train: config_file = train_default
+train:
+	python $(PROJECT_NAME)/train_model.py train_config=$(config_file)
+
 #################################################################################
 # Documentation RULES                                                           #
 #################################################################################
