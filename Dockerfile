@@ -16,13 +16,6 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
-
-
-# Install required system packages
-#RUN apt-get update && \
-#    apt-get install -y curl python3 python3-pip && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Install Google Cloud SDK
 RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
     tar -xzf /tmp/google-cloud-sdk.tar.gz -C /usr/local && \
