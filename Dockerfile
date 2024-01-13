@@ -17,9 +17,9 @@ RUN apt-get update && \
 
 
 # Install Google Cloud SDK
-RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
-    tar -xzf /tmp/google-cloud-sdk.tar.gz -C /usr/local && \
-    rm -rf /tmp/google-cloud-sdk /tmp/google-cloud-sdk.tar.gz
+#RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
+#    tar -xzf /tmp/google-cloud-sdk.tar.gz -C /usr/local && \
+#    rm -rf /tmp/google-cloud-sdk /tmp/google-cloud-sdk.tar.gz
 
 # Add Google Cloud SDK to the PATH
 ENV PATH $PATH:/usr/local/google-cloud-sdk/bin
