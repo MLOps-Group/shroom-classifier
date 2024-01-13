@@ -26,7 +26,7 @@ checkpoint_callback:
     monitor: val/accuracy
     mode: max
     save_top_k: 1
-    dirpath: models/checkpoints/
+    dirpath: ${LOG_DIR}/models/checkpoints/
     filename: 'epoch={epoch}_val_acc={val/accuracy:.2f}'
     auto_insert_metric_name: False
 
@@ -34,8 +34,10 @@ lr_monitor:
     logging_interval: 'step'
 
 wandb:
-  project: "shroom-classifier"
-  entity: "mlops_papersummarizer"
-  mode: "disabled"
-  log_model: "all"
-  tags: ["default_train"]
+    project: "shroom-classifier"
+    entity: "mlops_papersummarizer"
+    mode: "online"
+    log_model: "all"
+    dir: ${LOG_DIR}/wandb/
+    save_dir: ${LOG_DIR}/wandb/
+    tags: ["train_1"]

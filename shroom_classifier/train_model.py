@@ -1,25 +1,20 @@
 from shroom_classifier import ShroomClassifierResNet
-from shroom_classifier.data import N_SUPER_CLASSES, ShroomDataset
+from shroom_classifier.data import ShroomDataset
 from torch.utils.data import DataLoader
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.callbacks import Callback, LearningRateMonitor
+from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 import wandb
 import torch
 import hydra
-
-# WANDB_ENTITY = "mlops_papersummarizer"      # Wandb entity name
-# PROJECT_NAME = "dev"                        # Wandb project name
-# MODE = 'online'                             # Wandb mode (online/offline)
-# MONITOR = 'accuracy'                        # Validation metric to monitor (saves the best performing model)
-# MODEL_DIR = 'models/'                       # Directory to save the model
+import os
+import re
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base = None)
-def train(cfg):
+def train(cfg):   
     # extract train config
-    config = cfg.train
+    config = cfg.train_config
 
     # init model
     model = ShroomClassifierResNet(**config.model)
@@ -40,8 +35,10 @@ def train(cfg):
     lr_monitor = LearningRateMonitor(**config.lr_monitor)
 
     # init wandb
-    wandb_logger = WandbLogger(**config.wandb, config=dict(config))
+    os.makedirs(config.wandb.save_dir, exist_ok=True)
+    wandb_logger = WandbLogger(**config.wandb, config=eval(str(config)))
 
+    # init trainer
     trainer = Trainer(**config.trainer, logger=wandb_logger, callbacks=[checkpoint_callback, lr_monitor])
     trainer.fit(model, train_dataloader, val_dataloader)
 
