@@ -40,6 +40,12 @@ clean:
 run_app:
 	uvicorn --reload --port 8000 shroom_classifier.app.main:app
 
+## Get coverage report
+coverage:
+	python -m pip install coverage
+	coverage run -m pytest tests/
+	coverage report -m
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
