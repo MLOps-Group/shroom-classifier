@@ -42,7 +42,6 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        make requirements
         make dev_requirements
 
     - name: Test with pytest
