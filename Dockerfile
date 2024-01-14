@@ -12,6 +12,7 @@ FROM  --platform=linux/amd64 python:3.10-slim
 
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc && \
+    apt-get install -y curl && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY Makefile Makefile
@@ -21,20 +22,19 @@ COPY pyproject.toml pyproject.toml
 COPY LICENSE LICENSE
 COPY README.md README.md
 COPY shroom_classifier/ shroom_classifier/
+COPY configs/ configs/
 COPY data.dvc data.dvc
+
 
 WORKDIR /
 RUN pip install -U pip setuptools wheel
 RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install . --no-deps --no-cache-dir
-
-RUN pip install dvc "dvc[gs]"
-RUN dvc init --no-scm
-RUN dvc remote add -d myremote gs://shroom_bucket/
+RUN pip install -e . --no-deps --no-cache-dir
 
 RUN dvc init --no-scm
 RUN dvc remote add -d remote_storage gs://shroom_bucket/
 RUN dvc remote modify remote_storage version_aware true
-RUN dvc pull --force
+# Download data from Google Cloud Storage bucket
+RUN dvc pull data/processed/ --force
 
-ENTRYPOINT ["python", "-u", "/app/shroom_classifier/train_model.py"]
+ENTRYPOINT ["python", "-u", "shroom_classifier/train_model.py"]
