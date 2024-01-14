@@ -5,10 +5,7 @@ FROM --platform=linux/amd64 python:3.8-slim
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc && \
     apt clean && rm -rf /var/lib/apt/lists/* \
-
-# Set environment variables
-# copy the project files to the working directory
-
+    
 COPY requirements.txt code/requirements.txt
 COPY requirements_dev.txt code/requirements_dev.txt
 COPY pyproject.toml code/pyproject.toml
