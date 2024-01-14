@@ -7,8 +7,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+        # BRANCH: ${GITHUB_REF##*/}
+        SERVICE_NAME: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+        PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+        project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+        export_default_credentials: true
+
+    # Download the file locally
+    - name: Get file
+      run: |-
+        gsutil cp gs://BUCKET_NAME/path/to/file .
     
     - name: Build the Docker train image
       run: |
