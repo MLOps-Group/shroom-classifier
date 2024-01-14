@@ -9,15 +9,12 @@ RUN apt update && \
 # Set environment variables
 # copy the project files to the working directory
 
-COPY wandb_api_key code/wandb_api_key
 COPY requirements.txt code/requirements.txt
 COPY requirements_dev.txt code/requirements_dev.txt
 COPY pyproject.toml code/pyproject.toml
 COPY shroom_classifier/ code/shroom_classifier/
 COPY Makefile code/Makefile
 COPY configs/ code/configs/
-
-ENV WANDB_API_KEY=416ecbb9a7adab841c5ca0c1f9d5f742dac3cf01
 
 # Set the working directory
 WORKDIR /code
