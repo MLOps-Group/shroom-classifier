@@ -9,6 +9,7 @@ steps:
   entrypoint: 'bash'
   args: ['-c', 'docker build -t gcr.io/$_PROJECT_ID/$_CONTAINER_NAME --build-arg WANDB_API_KEY=$$WANDB_API_KEY .']
   secretEnv: ['WANDB_API_KEY']
+  dir: '/'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME'] #just set own image name
 
