@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-        # BRANCH: ${GITHUB_REF##*/}
-        SERVICE_NAME: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+        BRANCH: ${GITHUB_REF##*/}
+        # SERVICE_NAME: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
         PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
 
     steps:
@@ -27,7 +27,7 @@ jobs:
     # Download the file locally
     - name: Get file
       run: |-
-        gsutil cp gs://BUCKET_NAME/path/to/file .
+        gsutil cp gs://shroom_bucket .
     
     - name: Build the Docker train image
       run: |
