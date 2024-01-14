@@ -47,10 +47,10 @@ jobs:
     - name: Get data
       run: |
         mkdir -p data/processed/sample
-        RUN dvc init --no-scm
-        RUN dvc remote add -d remote_storage gs://shroom_bucket/
-        RUN dvc remote modify remote_storage version_aware true
-        RUN dvc pull data/processed/ --force
+        dvc init --no-scm
+        dvc remote add -d remote_storage gs://shroom_bucket/
+        dvc remote modify remote_storage version_aware true
+        dvc pull data/processed/ --force
 
     - name: Test with pytest
       run: |
