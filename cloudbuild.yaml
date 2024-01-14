@@ -6,6 +6,7 @@ substitutions:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
   args: ['build', '-t', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME', '--build-arg WANDB_API_KEY=$$WANDB_API_KEY', '.'] #'.'
   dir: '/workspace'
 - name: 'gcr.io/cloud-builders/docker'
