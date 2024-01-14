@@ -1,7 +1,54 @@
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/shroom-project-410914/shroom_docker', '.'] #'.'
-  dir: '/workspace'
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/shroom-project-410914/shroom_docker'] #just set own image name
+substitutions:
+  PROJECT_ID: shroom-project-410914
+  SECRET_NAME: wandb_api_key
+  SECRET_VERSION: latest
+  CONTAINER_NAME: shroom_docker
 
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud secrets versions access $SECRET_VERSION \
+          --secret=$SECRET_NAME \
+          --project=$PROJECT_ID \
+          > /workspace/wandb_api_key
+
+        docker build -t gcr.io/$PROJECT_ID/$CONTAINER_NAME \
+          --build-arg WANDB_API_KEY=$(cat /workspace/wandb_api_key) .
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/$CONTAINER_NAME']
+
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 'gcr.io/$PROJECT_ID/$CONTAINER_NAME', '.'] #'.'
+#   dir: '/workspace'
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['push', 'gcr.io/$PROJECT_ID/$CONTAINER_NAME'] #just set own image name
+
+
+
+
+# substitutions:
+#   _SECRET_MANAGER_PROJECT_ID: your_project_id
+#   _SECRET_MANAGER_SECRET_NAME: your_secret_name
+#   _SECRET_MANAGER_SECRET_VERSION: latest
+
+# steps:
+#   - name: 'gcr.io/cloud-builders/docker'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         gcloud secrets versions access $_SECRET_MANAGER_SECRET_VERSION \
+#           --secret=$_SECRET_MANAGER_SECRET_NAME \
+#           --project=$_SECRET_MANAGER_PROJECT_ID \
+#           > /workspace/wandb_api_key
+
+#         docker build -t gcr.io/$PROJECT_ID/your_image_name \
+#           --build-arg WANDB_API_KEY=$(cat /workspace/wandb_api_key) .
+
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: ['push', 'gcr.io/$PROJECT_ID/your_image_name']
