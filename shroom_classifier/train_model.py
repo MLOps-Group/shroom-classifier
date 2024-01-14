@@ -10,7 +10,6 @@ import hydra
 import os
 import re
 
-
 @hydra.main(config_path="../configs", config_name="config", version_base = None)
 def train(cfg):   
     # extract train config
