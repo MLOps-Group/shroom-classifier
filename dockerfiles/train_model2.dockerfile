@@ -1,10 +1,10 @@
 # Base Image
 FROM --platform=linux/amd64 python:3.8-slim
-FROM google/cloud-sdk:alpine as gcloud
-WORKDIR /app
-ARG KEY_FILE_CONTENT
-RUN echo $KEY_FILE_CONTENT | gcloud auth activate-service-account --key-file=- \
-  && gsutil cp gs://shroom_bucket/ .
+# FROM google/cloud-sdk:alpine as gcloud
+# WORKDIR /app
+# ARG KEY_FILE_CONTENT
+# RUN echo $KEY_FILE_CONTENT | gcloud auth activate-service-account --key-file=- \
+#   && gsutil cp gs://shroom_bucket/ .
 
 # install python
 RUN apt update && \
@@ -32,7 +32,7 @@ COPY configs/ code/configs/
 WORKDIR /code
 
 # Install required system packages
-RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+# RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 RUN make docker_requirements
 
 

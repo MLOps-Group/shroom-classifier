@@ -1,4 +1,6 @@
 steps:
+- name: 'gcr.io/cloud-builders/gsutil'
+    args: ['cp', 'gs://shroom_bucket', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/shroom-project-410914/first-shroom-image-test_2', '.', '-f', 'dockerfiles/train_model.dockerfile'] #'.'
   dir: '/workspace'

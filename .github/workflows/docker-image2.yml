@@ -42,11 +42,12 @@ jobs:
       # Download the file locally
       - name: Get_file
         run: |-
-          # mkdir -p data/processed
-          gsutil cp -r gs://shroom_bucket/data/processed/categories.npy .
-          gsutil cp -r gs://shroom_bucket/data/processed/sample.json .
-          gsutil cp -r gs://shroom_bucket/data/processed/sample/10000_Abortiporus_biennis/ .
-
+          mkdir -p data/processed
+          gsutil cp -r gs://shroom_bucket/data/processed/categories.npy data/processed/categories.npy
+          gsutil cp -r gs://shroom_bucket/data/processed/sample.json data/processed/sample.json
+          gsutil cp -r gs://shroom_bucket/data/processed/sample/10000_Abortiporus_biennis/ data/processed/sample/10000_Abortiporus_biennis/
+          echo $(PWD)
+          ls
 
       - name: Build the Docker train image
         run: |
