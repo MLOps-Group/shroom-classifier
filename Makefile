@@ -60,6 +60,26 @@ train: config_file = train_default
 train:
 	python $(PROJECT_NAME)/train_model.py train_config=$(config_file)
 
+
+#################################################################################
+## Docker RULES                                                                 #
+#################################################################################
+
+## Docker requirements
+docker_requirements:
+	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
+
+## Build docker image
+build_docker:
+	docker build -t $(PROJECT_NAME)-train . -f dockerfiles/train_model.dockerfile
+
+## Run docker image
+run_docker: image = train
+run_docker:
+	docker run $(PROJECT_NAME)-$(image)
+
 #################################################################################
 # Documentation RULES                                                           #
 #################################################################################
