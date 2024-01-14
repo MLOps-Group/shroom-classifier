@@ -21,20 +21,20 @@ COPY pyproject.toml pyproject.toml
 COPY LICENSE LICENSE
 COPY README.md README.md
 COPY shroom_classifier/ shroom_classifier/
-COPY data.dvc data.dvc
+# COPY data.dvc data.dvc
 
 WORKDIR /
 RUN pip install -U pip setuptools wheel
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
-RUN pip install dvc "dvc[gs]"
-RUN dvc init --no-scm
-RUN dvc remote add -d myremote gs://shroom_bucket/
+# RUN pip install dvc "dvc[gs]"
+# RUN dvc init --no-scm
+# RUN dvc remote add -d myremote gs://shroom_bucket/
 
-RUN dvc init --no-scm
-RUN dvc remote add -d remote_storage gs://shroom_bucket/
-RUN dvc remote modify remote_storage version_aware true
-RUN dvc pull --force
+# RUN dvc init --no-scm
+# RUN dvc remote add -d remote_storage gs://shroom_bucket/
+# RUN dvc remote modify remote_storage version_aware true
+# RUN dvc pull --force
 
 ENTRYPOINT ["python", "-u", "/app/shroom_classifier/train_model.py"]

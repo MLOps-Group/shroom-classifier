@@ -7,16 +7,16 @@ model:
     num_classes: 418
 
 train_dataset:
-    datapath: data/processed
-    dataname: sample
+    datapath: data/raw
+    dataname: train
 
 train_dataloader:
     batch_size: 32
     shuffle: True
 
 val_dataset:
-    datapath: data/processed
-    dataname: sample
+    datapath: data/raw
+    dataname: val
 
 val_dataloader:
     batch_size: 32
