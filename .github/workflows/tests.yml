@@ -47,7 +47,6 @@ jobs:
     - name: Get data
       run: |
         mkdir -p data/processed/sample
-        dvc init --no-scm
         dvc remote add -d remote_storage gs://shroom_bucket/
         dvc remote modify remote_storage version_aware true
         dvc pull data/processed/ --force
