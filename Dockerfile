@@ -5,16 +5,16 @@ FROM --platform=linux/amd64 python:3.8-slim
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc && \
     apt clean && rm -rf /var/lib/apt/lists/* \
-
-COPY requirements.txt /requirements.txt
-COPY requirements_dev.txt /requirements_dev.txt
-COPY pyproject.toml /pyproject.toml
-COPY shroom_classifier/ /shroom_classifier/
-COPY Makefile /Makefile
-COPY configs/ /configs/
+    
+COPY requirements.txt code/requirements.txt
+COPY requirements_dev.txt code/requirements_dev.txt
+COPY pyproject.toml code/pyproject.toml
+COPY shroom_classifier/ code/shroom_classifier/
+COPY Makefile code/Makefile
+COPY configs/ code/configs/
 
 # Set the working directory
-WORKDIR /
+WORKDIR /code
 
 # Install required system packages
 RUN make docker_requirements
