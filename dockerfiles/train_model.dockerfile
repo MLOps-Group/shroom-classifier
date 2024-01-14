@@ -8,7 +8,7 @@ RUN apt update && \
 
 
 # copy the project files to the working directory
-COPY data.dvc code/data.dvc
+# COPY data.dvc code/data.dvc
 COPY requirements.txt code/requirements.txt
 COPY requirements_dev.txt code/requirements_dev.txt
 COPY pyproject.toml code/pyproject.toml
@@ -23,8 +23,8 @@ WORKDIR /code
 RUN make docker_requirements
 
 # Get data
-RUN dvc init --no-scm
-RUN dvc remote add -d myremote gs://shroom_bucket
+# RUN dvc init --no-scm
+# RUN dvc remote add -d myremote gs://shroom_bucket
 
 # Train the model
 ENTRYPOINT ["python", "-u", "shroom_classifier/train_model.py"]

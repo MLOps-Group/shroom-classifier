@@ -1,0 +1,10 @@
+# config_cpu.yaml
+workerPoolSpecs:
+    machineSpec:
+        machineType: n1-highmem-2
+    replicaCount: 1
+    containerSpec:
+        imageUri: gcr.io/shroom-project-410914/train_shrooms
+        args: 
+          - train_config.train_dataset.datapath
+          - /gcs/shroom_bucket/raw
