@@ -5,6 +5,14 @@ substitutions:
   _CONTAINER_NAME: shroom_docker
 
 steps:
+ - name: 'ubuntu'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        apt-get update && apt-get install -y \
+          google-cloud-sdk
+          
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args:
