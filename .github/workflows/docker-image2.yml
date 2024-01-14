@@ -42,8 +42,8 @@ jobs:
       # Download the file locally
       - name: Get_file
         run: |-
-          mkdir -p data/processed
-          gsutil cp -r gs://shroom_bucket/data/processed data/processed
+          # mkdir -p data/processed
+          gsutil cp -r gs://shroom_bucket/data/processed .
 
 
       - name: Build the Docker train image
