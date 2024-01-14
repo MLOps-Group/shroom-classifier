@@ -43,7 +43,9 @@ jobs:
       - name: Get_file
         run: |-
           # mkdir -p data/processed
-          gsutil cp -r gs://shroom_bucket/data/processed .
+          gsutil cp -r gs://shroom_bucket/data/processed/categories.npy .
+          gsutil cp -r gs://shroom_bucket/data/processed/sample.json .
+          gsutil cp -r gs://shroom_bucket/data/processed/sample/10000_Abortiporus_biennis/ .
 
 
       - name: Build the Docker train image
