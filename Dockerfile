@@ -1,40 +1,30 @@
-#Worked before
-#RUN apt-get update && \
-#    apt-get install -y curl && \
-#    curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-366.0.0-linux-x86_64.tar.gz -o /tmp/google-cloud-sdk.tar.gz && \
-#    tar -xzf /tmp/google-cloud-sdk.tar.gz -C /tmp && \
-#    /tmp/google-cloud-sdk/install.sh --quiet && \
-#    rm -rf /tmp/google-cloud-sdk && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Base Image
+FROM --platform=linux/amd64 python:3.8-slim
 
-# Base image
-FROM  --platform=linux/amd64 python:3.10-slim
-
+# install python
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY Makefile Makefile
-COPY requirements.txt requirements.txt
-COPY requirements_dev.txt requirements_dev.txt
-COPY pyproject.toml pyproject.toml
-COPY LICENSE LICENSE
-COPY README.md README.md
-COPY shroom_classifier/ shroom_classifier/
-# COPY data.dvc data.dvc
 
-WORKDIR /
-RUN pip install -U pip setuptools wheel
-RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install . --no-deps --no-cache-dir
+# copy the project files to the working directory
+# COPY data.dvc code/data.dvc
+COPY requirements.txt code/requirements.txt
+COPY requirements_dev.txt code/requirements_dev.txt
+COPY pyproject.toml code/pyproject.toml
+COPY shroom_classifier/ code/shroom_classifier/
+COPY Makefile code/Makefile
+COPY configs/ code/configs/
 
-# RUN pip install dvc "dvc[gs]"
+# Set the working directory
+WORKDIR /code
+
+# Install required system packages
+RUN make docker_requirements
+
+# Get data
 # RUN dvc init --no-scm
-# RUN dvc remote add -d myremote gs://shroom_bucket/
+# RUN dvc remote add -d myremote gs://shroom_bucket
 
-# RUN dvc init --no-scm
-# RUN dvc remote add -d remote_storage gs://shroom_bucket/
-# RUN dvc remote modify remote_storage version_aware true
-# RUN dvc pull --force
-
+# Train the model
 ENTRYPOINT ["python", "-u", "shroom_classifier/train_model.py"]
