@@ -1,8 +1,8 @@
 substitutions:
-  PROJECT_ID: shroom-project-410914
-  SECRET_NAME: wandb_api_key
-  SECRET_VERSION: latest
-  CONTAINER_NAME: shroom_docker
+  _PROJECT_ID: shroom-project-410914
+  _SECRET_NAME: wandb_api_key
+  _SECRET_VERSION: latest
+  _CONTAINER_NAME: shroom_docker
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
@@ -10,16 +10,16 @@ steps:
     args:
       - '-c'
       - |
-        gcloud secrets versions access $SECRET_VERSION \
-          --secret=$SECRET_NAME \
-          --project=$PROJECT_ID \
+        gcloud secrets versions access $_SECRET_VERSION \
+          --secret=$_SECRET_NAME \
+          --project=$_PROJECT_ID \
           > /workspace/wandb_api_key
 
-        docker build -t gcr.io/$PROJECT_ID/$CONTAINER_NAME \
+        docker build -t gcr.io/$_PROJECT_ID/$_CONTAINER_NAME \
           --build-arg WANDB_API_KEY=$(cat /workspace/wandb_api_key) .
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/$CONTAINER_NAME']
+    args: ['push', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME']
 
 # steps:
 # - name: 'gcr.io/cloud-builders/docker'
