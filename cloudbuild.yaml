@@ -1,7 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/shroom-project-410914/first-shroom-image-test', '.'] #'.'
+  args: ['build', '-t', 'gcr.io/shroom-project-410914/shroom_docker', '.'] #'.'
   dir: '/workspace'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/shroom-project-410914/first-shroom-image-test'] #just set own image name
+  args: ['push', 'gcr.io/shroom-project-410914/shroom_docker'] #just set own image name
 
