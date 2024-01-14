@@ -4,7 +4,7 @@ workerPoolSpecs:
         machineType: n1-highmem-2
     replicaCount: 1
     containerSpec:
-        imageUri: gcr.io/shroom-project-410914/train_shrooms
+        imageUri: gcr.io/shroom-project-410914/first-shroom-image-test
         args: 
           - train_config.train_dataset.datapath
           - /gcs/shroom_bucket/raw

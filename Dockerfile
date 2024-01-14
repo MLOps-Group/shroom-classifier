@@ -37,4 +37,4 @@ RUN pip install . --no-deps --no-cache-dir
 # RUN dvc remote modify remote_storage version_aware true
 # RUN dvc pull --force
 
-ENTRYPOINT ["python", "-u", "/app/shroom_classifier/train_model.py"]
+ENTRYPOINT ["python", "-u", "shroom_classifier/train_model.py"]
