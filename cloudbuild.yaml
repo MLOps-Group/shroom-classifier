@@ -6,9 +6,8 @@ substitutions:
 
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  # entrypoint: 'bash'
-  args: ['build', '-t', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME', '--build-arg', 'WANDB_API_KEY=$$WANDB_API_KEY', '.']
-  dir: '/workspace'
+  entrypoint: 'bash'
+  args: ['-c' 'docker build', '-t', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME', '--build-arg', 'WANDB_API_KEY=$$WANDB_API_KEY', '.']
   secretEnv: ['WANDB_API_KEY']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME'] #just set own image name
