@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shroom-project-410914",
+  "private_key_id": "981a45784005f72f551e8c49f0c9f3bbcf2a7994",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCqxxGq3wOniggG\n2Z7r6qLnqDK7Sia4gh7u5PISetI043XDSj/A3BRmjdD8Rfh32L4uQkFMLi8QvQ89\nDDOxERbYPyHmPff//grt9ji47ZP+CXpe4i+LCBR+XvRG6rs7pRa4QwzprTVH1Np3\nu9PZchq6LPTG0McWHJrR3M5rGmcZTJAfMddeI5XuC6hvc89n3W5FDPbYZN8bLN+y\nEQwkil5oPKUCpeMmeWO+87OrJGqg4oej6JbxD3BCxdKtLDUUN5+Y4jkI37930p0C\nc3YICixod8utksUenHtXipZ6vN//FypoRIKw85EBlNUitNHxrqsLCGWXsk0yY/Lq\nKgBzoq/HAgMBAAECggEAAVLVgW8ped/dx1hiStw3nABy7xCGIU083tnVQZqx8RbZ\n7XHCzSkQpETV0pj/X6FFVloEGtOLYNZ5s/k1BaPLn763Ouap6Hal8FKg/Xw15H3t\nUDmosRmEbpKV9/C8yglWcatKy0GzMMyv4Q9BZNwcUes2kHJ57j6VgpfglD9+x8bn\nGsNyUK8SL5KMDNtr1YmlggzWSlMHSvjmFQBbqvzrTrVDV+uGndmXh+rQAHK8qfXr\n3js7XBgU/CUEVpByLNWlCp+KgY2zues8Q79eFpaEN13Z/KVdRVLhAidcCAr57xBP\nga5n6PC3D2q/qmpz6wvMdAs09GauZplN+WH8Ba8aEQKBgQDRUnz27vxdTvgfg6s3\nVWAzMDZlZibV/rIBxg48bC+iPp+V3NUKIlQqyvb1GV8IDwA8gEycKpitXRtGqIMn\nXJm4FBRA9gs8MaEF0iLL3cPRTRKlO/laOEMz5JdEq6c/ZdVhazTWlsuGeTPmCDDJ\nEhSheCN0ePLiBw0EYUoRhBECdwKBgQDQ3DJxaiukljX2KLX+TGyA5TcqguTW0W4h\nngcndYeNAns6i0uXV31XAklSi1nCRIw7AYCb9yqCIDz4TY/y09L1rQwvUqBQoegO\nk0AB2VQrt5p4BbVlXnFytIm+nabdhwaHXRU01nv+g5QxcRLJ334QtZcSzFiOj4ic\nnGhsYodBMQKBgC1L8mrlUItImX0IWzbALO8m0b6jmmfYk+C6YT5GExDDCHm/rgJh\nZ2FTRpnHgb8Wr/BnuyxYM23gphRmRutvqHwjLDbah5fhDX1a+diwBr32NcC397/E\nSRajsvBTTP/1I3XPY0HEpApXlBmFUDlSxlAi1VlRCw5KhFCcVRDxSVUFAoGAOXW6\n8vTQmPEyW0yL9TA1Uai96pYkOu1XLSx6r2JoLmUWXd7gpvxM4VkhrvHjecy9/6XE\nKiRvr2kLHQzJo3afPTOkfIhwzn4ch5X/MAMIYxaaCpcXdpHrCDGfC6/3rk5tf2Qe\nZ3Dyn+y3InsHPj6cQiCTNXq+ikn2vY9SMy9QIqECgYEApGjGGsEeyUVCiam9+z84\n9STPbsmDaKW6aAT1Ew+O/WL+IiAUmm3YYMGHDcw+JmHzYI4+nO6tzxdN/URc+4FT\nOFmoqlxnhmD4nGk1XF42COW/MocbBjwBt2KnfH730OLNmBP0X6HWFnViSxZtNqBd\nq5qyXZOhjeyZGK//g7BvBXg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mrdocker@shroom-project-410914.iam.gserviceaccount.com",
+  "client_id": "115976604013772498807",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mrdocker%40shroom-project-410914.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
