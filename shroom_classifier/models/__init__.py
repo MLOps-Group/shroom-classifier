@@ -1,4 +1,6 @@
 import wandb
+from shroom_classifier.models.model import ShroomClassifierResNet
+import torch
 
 def download_model(full_name:str, download_path:str = "models/"):
     """
@@ -25,6 +27,19 @@ def download_model(full_name:str, download_path:str = "models/"):
     path = artifact.download(download_path) # download artifact
  
     return path + "/model.ckpt"
+
+
+def load_model(model_path, device: torch.device = None):
+    # download model if needed
+    if model_path.startswith("wandb:"):
+        model_path = download_model(model_path[6:])
+    
+    # load model
+    model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=device)
+    
+    return model, model_path
+        
+        
 
 
 if __name__ == "__main__":

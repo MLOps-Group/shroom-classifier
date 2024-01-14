@@ -23,7 +23,6 @@ create_environment:
 ## Install Python Dependencies
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 	$(PYTHON_INTERPRETER) -m pip install -e .
 
 ## Install Developer Python Dependencies
@@ -40,6 +39,12 @@ clean:
 run_app:
 	uvicorn --reload --port 8000 shroom_classifier.app.main:app
 
+## Get coverage report
+coverage:
+	python -m pip install coverage
+	coverage run -m pytest tests/
+	coverage report -m
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
@@ -48,6 +53,12 @@ run_app:
 ## Process raw data into processed data
 data:
 	python $(PROJECT_NAME)/data/make_dataset.py
+
+
+## Train model
+train: config_file = train_default
+train:
+	python $(PROJECT_NAME)/train_model.py train_config=$(config_file)
 
 #################################################################################
 # Documentation RULES                                                           #
