@@ -46,16 +46,28 @@ jobs:
           gsutil cp -r gs://shroom_bucket/data/processed data/processed
 
 
-      # Build docker image
-      - name: Image_build
-        run: |-
-          docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME .
+      - name: Build the Docker train image
+        run: |
+          echo "${{ secrets.DOCKER_HUB_TOKEN_LUKAS }}" | docker login \
+            -u "${{ secrets.DOCKER_HUB_USERNAME_LUKAS }}" --password-stdin docker.io
+            docker build . --file dockerfiles/train_model.dockerfile \
+            --tag docker.io/${{ secrets.DOCKER_HUB_USERNAME_LUKAS }}/${{ secrets.DOCKER_HUB_REPOSITORY_LUKAS }}:$GITHUB_SHA
+            docker push docker.io/${{ secrets.DOCKER_HUB_USERNAME_LUKAS }}/${{ secrets.DOCKER_HUB_REPOSITORY_LUKAS }}:$GITHUB_SHA
 
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - run: |
-          gcloud auth configure-docker -q
+      - name: Run the Docker image
+        run: |
+          docker run docker.io/${{ secrets.DOCKER_HUB_USERNAME_LUKAS }}/${{ secrets.DOCKER_HUB_REPOSITORY_LUKAS }}:$GITHUB_SHA
 
-      # Push image to Google Container Registry
-      - name: Image_push
-        run: |-
-          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
+      # # Build docker image
+      # - name: Image_build
+      #   run: |-
+      #     docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME .
+
+      # # Configure docker to use the gcloud command-line tool as a credential helper
+      # - run: |
+      #     gcloud auth configure-docker -q
+
+      # # Push image to Google Container Registry
+      # - name: Image_push
+      #   run: |-
+      #     docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
