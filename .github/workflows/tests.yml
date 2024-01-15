@@ -46,9 +46,8 @@ jobs:
         ls
 
     - name: Test lint with ruff
-      run: |
-        ruff check .
-        continue-on-error: true
+      run: ruff check .
+      continue-on-error: true
 
     - name: Test with pytest
       run: |
