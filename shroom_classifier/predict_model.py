@@ -6,7 +6,20 @@ import numpy as np
 
 
 class ShroomPredictor:
-    def __init__(self, model_path, device: torch.device = None):
+    def __init__(self, model_path, device: torch.device = None, **kwargs):
+        """
+        Create a predictor object for the shroom classifier model.
+        
+        Parameters
+        ----------
+        model_path: str
+            The path to the model checkpoint. If the path starts with "wandb:", the model will be downloaded from wandb.
+        device: torch.device
+            A torch device to load the model on.
+        **kwargs:
+            Additional arguments to pass to the `shroom_classifier.models.load_model()` function.
+        """
+        
         # get data info
         info = json.load(open("data/processed/sample.json", "rb"))
         self.super_categories = np.unique([x["supercategory"] for x in info["categories"]])
@@ -16,17 +29,18 @@ class ShroomPredictor:
 
         # load model
         self.model_path = model_path
-        self.load_model(model_path)
+        self.load_model(model_path, **kwargs)
 
-    def load_model(self, model_path):
-        self.model, _ = load_model(model_path, device=self.device)
+    def load_model(self, model_path, **kwargs):
+        self.model, _ = load_model(model_path, device=self.device, **kwargs)
 
     def get_probs(self, image):
         self.model.eval()
 
         if isinstance(image, str):
-            image = image_to_tensor(image)
+            # image = image_to_tensor(image)
             # image = self.model.preprocesser(image)
+            image = image_to_tensor(image, preprocesser=self.model.preprocesser)
 
         # move to device
         image = image.to(self.device)
