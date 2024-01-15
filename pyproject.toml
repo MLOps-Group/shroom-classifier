@@ -28,6 +28,7 @@ line-length = 120
 
 [tool.ruff.lint.per-file-ignores]
 "shroom_classifier/data/__init__.py" = ["F401"]
+"shroom_classifier/__init__.py" = ["F401"]
 
 [tool.coverage.run]
 omit = [
