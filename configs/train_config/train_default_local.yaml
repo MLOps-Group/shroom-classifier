@@ -1,0 +1,47 @@
+seed: 42
+
+trainer:
+    max_epochs: 10
+
+model:
+    num_classes: 418
+
+train_dataset:
+    datapath: data/processed
+    dataname: sample
+
+train_dataloader:
+    batch_size: 32
+    shuffle: True
+    num_workers: 8
+    persistent_workers: True
+
+val_dataset:
+    datapath: data/processed
+    dataname: sample
+
+val_dataloader:
+    batch_size: 32
+    shuffle: False
+    num_workers: 8
+    persistent_workers: True
+
+checkpoint_callback:
+    monitor: val/accuracy
+    mode: max
+    save_top_k: 1
+    dirpath: ${LOG_DIR}/models/checkpoints/
+    filename: 'epoch={epoch}_val_acc={val/accuracy:.2f}'
+    auto_insert_metric_name: False
+
+lr_monitor:
+    logging_interval: 'step'
+
+wandb:
+    project: "shroom-classifier"
+    entity: "mlops_papersummarizer"
+    mode: "disabled"
+    log_model: "all"
+    dir: ${LOG_DIR}/wandb/
+    save_dir: ${LOG_DIR}/wandb/
+    tags: ["default_train"]
