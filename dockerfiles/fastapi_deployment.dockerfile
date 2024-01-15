@@ -22,7 +22,7 @@ WORKDIR /
 # ARG WANDB_API_KEY
 # ENV WANDB_API_KEY=$WANDB_API_KEY
 # Install required system packages
-RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
+# RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
 RUN make docker_requirements
 
 
