@@ -59,8 +59,11 @@ class ShroomDataset(Dataset):
         filename = self.images[index]["file_name"]
         if not path.exists(filename):
             filename = path.join(self.datapath, filename)
-
-        img = image_to_tensor(filename, self.preprocesser)
+            
+        try:
+            img = image_to_tensor(filename, self.preprocesser)
+        except:
+            return self.__getitem__((index + 1) % len(self))
 
         # if self.preprocesser is not None:
         #     filename = self.images[index]["file_name"]

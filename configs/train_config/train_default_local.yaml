@@ -7,8 +7,8 @@ model:
     num_classes: 418
 
 train_dataset:
-    datapath: /gcs/shroom_bucket/data/raw
-    dataname: train
+    datapath: data/processed
+    dataname: sample
 
 train_dataloader:
     batch_size: 32
@@ -17,8 +17,8 @@ train_dataloader:
     persistent_workers: True
 
 val_dataset:
-    datapath: /gcs/shroom_bucket/data/raw
-    dataname: val
+    datapath: data/processed
+    dataname: sample
 
 val_dataloader:
     batch_size: 32
@@ -40,7 +40,7 @@ lr_monitor:
 wandb:
     project: "shroom-classifier"
     entity: "mlops_papersummarizer"
-    mode: "online"
+    mode: "disabled"
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
