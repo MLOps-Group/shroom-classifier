@@ -16,7 +16,8 @@ COPY configs/ configs/
 
 # Set the working directory
 WORKDIR /
-
+ARG WANDB_API_KEY
+ENV WANDB_API_KEY=$WANDB_API_KEY
 # Install required system packages
 RUN make docker_requirements
 
