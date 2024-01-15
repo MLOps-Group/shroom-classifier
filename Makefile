@@ -39,9 +39,7 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 
-## Run app
-run_app:
-	uvicorn --reload --port 8000 shroom_classifier.app.main:app
+
 
 ## Get coverage report
 coverage:
@@ -49,6 +47,18 @@ coverage:
 	coverage run -m pytest tests/
 	coverage report -m
 
+#################################################################################
+# DEPLOYMENT RULES                                                              #
+#################################################################################
+
+## Run app
+run_app:
+	uvicorn --reload --port 8000 shroom_classifier.app.main:app
+
+## Requirements for deployment
+deployment_requirements:
+	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
 #################################################################################
 # PROJECT RULES                                                                 #
