@@ -13,13 +13,26 @@ jobs:
       PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
       CONTAINER_NAME: predict
       REGION: europe-west1
-      SERVICE_NAME: predict-function
+      SERVICE_NAME: ${{ github.event.repository.name }}-predict
 
     steps:
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    - name: 'Use gcloud CLI'
+      run: 'gcloud info'
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Build the container image
       run: |
-        echo ls
-        echo docker build -t gcr.io/$PROJECT_ID/$CONTAINER_NAME:latest . --file dockerfiles/fastapi_deployment.dockerfile
+        docker build -t gcr.io/$PROJECT_ID/$CONTAINER_NAME:latest . --file dockerfiles/fastapi_deployment.dockerfile
 
     - name: Push the container image to Container Registry
       run: |
