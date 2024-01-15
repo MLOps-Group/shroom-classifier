@@ -52,8 +52,9 @@ coverage:
 #################################################################################
 
 ## Run app
+run_app: port = 8000
 run_app:
-	uvicorn --reload --port 8000 shroom_classifier.app.main:app
+	uvicorn --reload --port $(port) shroom_classifier.app.main:app
 
 ## Requirements for deployment
 deployment_requirements:
