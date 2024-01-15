@@ -31,8 +31,10 @@ def download_model(full_name: str, download_path: str = "models/"):
 
     api = wandb.Api()  # start wandb api
     artifact = api.artifact(full_name)  # load artifact
-    path = artifact.download(download_path)  # download artifact
-
+    if not os.path.exists(download_path):
+        path = artifact.download(download_path)  # download artifact
+    else:
+        path = download_path
     return path + "/model.ckpt"
 
 

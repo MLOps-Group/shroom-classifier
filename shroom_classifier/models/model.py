@@ -30,12 +30,12 @@ class ShroomClassifierResNet(LightningModule):
         images, classes, super_classes = batch
         y_hat = self(images)
         loss = self.loss(y_hat, super_classes)
+        self.logger.experiment.log({"trainer/global_step": self.global_step})
 
         # Log metrics
         if self.global_step % 20 == 0:
             if self.logger is not None:
                 self.logger.experiment.log({"train/loss": loss})
-                self.logger.experiment.log({"trainer/global_step": self.global_step})
 
             probs = torch.nn.functional.softmax(y_hat, dim=1).detach().cpu().numpy()
             prediction = probs.argmax(axis=1)

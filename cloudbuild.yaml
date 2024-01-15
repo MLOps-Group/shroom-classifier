@@ -1,9 +1,19 @@
+substitutions:
+  _PROJECT_ID: shroom-project-410914
+  _SECRET_NAME: wandb_api_key
+  _SECRET_VERSION: latest
+  _IMAGE_NAME: shroom_docker_train
+
 steps:
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '-r', 'gs://shroom_bucket/', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/shroom-project-410914/first-shroom-image-test_2', '.', '-f', 'dockerfiles/train_model.dockerfile'] #'.'
+  entrypoint: 'bash'
+  args: ['-c', 'docker build -t gcr.io/$_PROJECT_ID/$_IMAGE_NAME --build-arg WANDB_API_KEY=$$WANDB_API_KEY . -f dockerfiles/train_model.dockerfile']
+  secretEnv: ['WANDB_API_KEY']
   dir: '/workspace'
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/shroom-project-410914/first-shroom-image-test_2'] #just set own image name
+  args: ['push', 'gcr.io/$_PROJECT_ID/$_IMAGE_NAME'] 
 
+availableSecrets:
+  secretManager:
+  - versionName: projects/$_PROJECT_ID/secrets/$_SECRET_NAME/versions/$_SECRET_VERSION
+    env: WANDB_API_KEY
