@@ -20,7 +20,7 @@ def root():
 @app.post("/predict")
 async def predict(file: UploadFile = File(...), k: int = 5):
     # Load the model
-    predictor = ShroomPredictor("models/dev/model_dct9b3c3_v3/model.ckpt")
+    predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
 
     # Read the image file
     os.makedirs(".tmp/images", exist_ok=True)
