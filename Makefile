@@ -62,7 +62,7 @@ deployment_requirements:
 	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
 ## Build docker image
-build_docker_app:
+build_docker_app: 
 	docker build -t $(PROJECT_NAME)-app . -f dockerfiles/fastapi_deployment.dockerfile
 
 #################################################################################
@@ -102,9 +102,12 @@ run_docker:
 
 
 # Fetch API key from Google Cloud Secret Manager
+get_api_key: SECRET_VERSION = latest
+get_api_key: SECRET_NAME = wandb_api_key
+get_api_key: PROJECT_ID = shroom-project-410914
 get_api_key:
 	export WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
-	echo "WANDB_API_KEY=${WANDB_API_KEY}"
+	echo "WANDB_API_KEY=$(WANDB_API_KEY)"
 
 #################################################################################
 # Documentation RULES                                                           #

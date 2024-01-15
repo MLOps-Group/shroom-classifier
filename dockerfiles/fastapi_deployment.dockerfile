@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:experimental
 # Base Image
 FROM --platform=linux/amd64 python:3.8-slim
 
@@ -7,6 +8,7 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/* 
 
 EXPOSE $PORT
+EXPOSE $WANDB_API_KEY
 
 COPY requirements.txt requirements.txt
 COPY requirements_dev.txt requirements_dev.txt
@@ -17,9 +19,10 @@ COPY configs/ configs/
 
 # Set the working directory
 WORKDIR /
-ARG WANDB_API_KEY
-ENV WANDB_API_KEY=$WANDB_API_KEY
+# ARG WANDB_API_KEY
+# ENV WANDB_API_KEY=$WANDB_API_KEY
 # Install required system packages
+RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
 RUN make docker_requirements
 
 
