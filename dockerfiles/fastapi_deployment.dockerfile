@@ -18,7 +18,7 @@ ENV WANDB_API_KEY=$WANDB_API_KEY
 COPY shroom_classifier shroom_classifier
 COPY Makefile Makefile
 
-RUN make docker_requirements
+RUN make deploy_requirements
 
 # CMD exec uvicorn simple_fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1
 CMD make run_app
