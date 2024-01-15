@@ -1,29 +1,29 @@
 seed: 42
 
 trainer:
-    max_epochs: 1
+    max_epochs: 10
 
 model:
     num_classes: 418
 
 train_dataset:
-    datapath: data/raw
+    datapath: /gcs/shroom_bucket/data/raw
     dataname: train
 
 train_dataloader:
     batch_size: 32
     shuffle: True
-    num_workers: 7
+    num_workers: 8
     persistent_workers: True
 
 val_dataset:
-    datapath: data/raw
+    datapath: /gcs/shroom_bucket/data/raw
     dataname: val
 
 val_dataloader:
     batch_size: 32
     shuffle: False
-    num_workers: 7
+    num_workers: 8
     persistent_workers: True
 
 checkpoint_callback:
@@ -40,7 +40,7 @@ lr_monitor:
 wandb:
     project: "shroom-classifier"
     entity: "mlops_papersummarizer"
-    mode: "disabled"
+    mode: "online"
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
