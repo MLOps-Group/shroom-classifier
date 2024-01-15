@@ -1,2 +1,18 @@
 model:
   num_classes: 418
+  model_path: "wandb:mlops_papersummarizer/dev/model-dct9b3c3:v3"
+  download_path: "logs/tests/models/"
+
+data:
+  train:
+    datapath: data/processed
+    dataname: sample
+  val:
+    datapath: data/processed
+    dataname: sample
+
+
+predict:
+  test_file: data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG
+  k: 5
+
