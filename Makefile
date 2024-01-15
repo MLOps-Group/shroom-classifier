@@ -60,6 +60,10 @@ deployment_requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
 	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
+## Build docker image
+build_docker_app:
+	docker build -t $(PROJECT_NAME)-app . -f dockerfiles/fastapi_deployment.dockerfile
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
