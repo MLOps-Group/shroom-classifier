@@ -12,6 +12,10 @@ PROJECT_NAME = shroom_classifier
 PYTHON_VERSION := 3.10
 PYTHON_INTERPRETER = python
 
+# GOOGLE CLOUD
+PROJECT_ID = shroom-project-410914
+SECRET_NAME = wandb_api_key
+SECRET_VERSION = latest
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
@@ -79,6 +83,13 @@ build_docker:
 run_docker: image = train
 run_docker:
 	docker run $(PROJECT_NAME)-$(image)
+
+
+
+# Fetch API key from Google Cloud Secret Manager
+get_api_key:
+	export WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
+	echo "WANDB_API_KEY=${WANDB_API_KEY}"
 
 #################################################################################
 # Documentation RULES                                                           #
