@@ -1,6 +1,10 @@
 import wandb
 from shroom_classifier.models.model import ShroomClassifierResNet
 import torch
+import os
+
+os.environ["WANDB_DIR"] = "logs/wandb"
+os.makedirs(os.environ["WANDB_DIR"], exist_ok=True)
 
 
 def download_model(full_name: str, download_path: str = "models/"):
@@ -32,10 +36,29 @@ def download_model(full_name: str, download_path: str = "models/"):
     return path + "/model.ckpt"
 
 
-def load_model(model_path, device: torch.device = None):
+def load_model(model_path, device: torch.device = None, **kwargs):
+    """
+    Load a model from a checkpoint.
+    
+    Parameters
+    ----------
+    model_path: str
+        The path to the model checkpoint. If the path starts with "wandb:", the model will be downloaded from wandb.
+    device: torch.device
+        The device to load the model on.
+    **kwargs:
+        Additional arguments to pass to the model class.
+        
+    Returns
+    -------
+    model: ShroomClassifierResNet
+        The loaded model.
+    model_path: str
+        The path to the loaded model.
+    """
     # download model if needed
     if model_path.startswith("wandb:"):
-        model_path = download_model(model_path[6:])
+        model_path = download_model(model_path[6:], **kwargs)
 
     # load model
     model = ShroomClassifierResNet.load_from_checkpoint(model_path, map_location=device)
