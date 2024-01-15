@@ -4,38 +4,22 @@ FROM --platform=linux/amd64 python:3.8-slim
 # install python
 RUN apt update && \
     apt install --no-install-recommends -y build-essential gcc && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+    apt clean && rm -rf /var/lib/apt/lists/* 
 
-
-# Copy the service account key file
-# COPY shroom-project-410914-7503fcf85328.json /tmp/shroom-project-410914-7503fcf85328.json
-
-# # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
-# ENV GOOGLE_APPLICATION_CREDENTIALS=/tmp/keyfile.json
-
-# copy the project files to the working directory
-# COPY data.dvc code/data.dvc
-COPY data/ code/data/
-COPY requirements.txt code/requirements.txt
-COPY requirements_dev.txt code/requirements_dev.txt
-COPY pyproject.toml code/pyproject.toml
-COPY shroom_classifier/ code/shroom_classifier/
-COPY Makefile code/Makefile
-COPY configs/ code/configs/
+    
+COPY requirements.txt requirements.txt
+COPY requirements_dev.txt requirements_dev.txt
+COPY pyproject.toml pyproject.toml
+COPY shroom_classifier/ shroom_classifier/
+COPY Makefile Makefile
+COPY configs/ configs/
 
 # Set the working directory
-WORKDIR /code
-
+WORKDIR /
+ARG WANDB_API_KEY
+ENV WANDB_API_KEY=$WANDB_API_KEY
 # Install required system packages
-RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 RUN make docker_requirements
-
-
-# Get data
-# RUN dvc init --no-scm
-# RUN dvc remote add -d remote_storage gs://shroom_bucket
-# RUN dvc remote modify remote_storage version_aware true
-# RUN dvc pull --force
 
 # Train the model
 ENTRYPOINT ["python", "-u", "shroom_classifier/train_model.py"]
