@@ -65,6 +65,10 @@ deployment_requirements:
 build_docker_app: 
 	docker build -t $(PROJECT_NAME)-app . -f dockerfiles/fastapi_deployment.dockerfile
 
+## Docker run app
+run_docker_app:
+	docker run -e PORT=8000 $(PROJECT_NAME)-app
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
