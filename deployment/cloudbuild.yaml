@@ -10,8 +10,13 @@ substitutions:
 steps:
 
 # Build the container image
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME:latest', '.', '-f', 'dockerfiles/fastapi_deployment.dockerfile'] 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$_PROJECT_ID/$_CONTAINER_NAME:latest', '.', '-f', 'dockerfiles/fastapi_deployment.dockerfile'] 
+  entrypoint: 'bash'
+  args: ['-c', 'docker build -t gcr.io/$_PROJECT_ID/$_CONTAINER_NAME:latest --build-arg WANDB_API_KEY=$$WANDB_API_KEY . -f dockerfiles/fastapi_deployment.dockerfile']
+  secretEnv: ['WANDB_API_KEY']
+  dir: '/workspace'
 
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
