@@ -44,7 +44,20 @@ jobs:
         python -m pip install --upgrade pip
         make dev_requirements
 
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    - name: Get data
+      run: |
+        mkdir -p data/processed/sample
+        gsutil cp gs://shroom_bucket/data/processed/categories.npy ./data/processed/
+        gsutil cp gs://shroom_bucket/data/processed/sample.json ./data/processed/
+        gsutil cp -r gs://shroom_bucket/data/processed/sample/10000_Abortiporus_biennis/ ./data/processed/sample/
+        echo $(PWD)
+        ls
+
     - name: Test with pytest
       run: |
+        wandb login ${{ secrets.WANDB_API_KEY }}
         pip install pytest
         pytest -v
