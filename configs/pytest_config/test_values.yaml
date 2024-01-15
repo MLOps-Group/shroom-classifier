@@ -15,3 +15,4 @@ data:
 predict:
   test_file: data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG
   k: 5
+
