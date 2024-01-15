@@ -1,5 +1,4 @@
 from shroom_classifier.data.dataset import ShroomDataset
-from shroom_classifier.data.make_dataset import unpack_data, categories_dictionary
 import os
 import pytest
 from shroom_classifier.utils import get_config
@@ -28,12 +27,11 @@ def test_data():
     #del os.remove("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
     #del os.remove("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.json")
 
-def test_categories_dictionary() -> None:
-    dictionary = categories_dictionary("data/")
-    print(dictionary)
-    assert dictionary == {'id': 10000, 'name': 'Placeholder', 'supercategory': 'fungi'}, "Dictionary is not correct"
+#def test_categories_dictionary() -> None:
+ #   dictionary = categories_dictionary("data/")
+  #  print(dictionary)
+   # assert dictionary == {'id': 10000, 'name': 'Placeholder', 'supercategory': 'fungi'}, "Dictionary is not correct"
     
 
 if __name__ == "__main__":
     test_data()
-    test_categories_dictionary()

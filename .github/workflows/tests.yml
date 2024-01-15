@@ -45,7 +45,11 @@ jobs:
         echo $(PWD)
         ls
 
+    - name: Test lint with ruff
+      run: |
+        ruff check .
+
     - name: Test with pytest
       run: |
         wandb login ${{ secrets.WANDB_API_KEY }}
-        pytest tests/ -v
+        pytest --cov=shroom_classifier tests/ -v

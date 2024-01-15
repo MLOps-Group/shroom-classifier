@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import wandb
 from shroom_classifier.visualization.train_plots import plot_probs
 
