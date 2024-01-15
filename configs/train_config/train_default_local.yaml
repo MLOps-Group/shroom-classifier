@@ -38,9 +38,9 @@ lr_monitor:
     logging_interval: 'step'
 
 wandb:
-    project: "shroom-classifier"
+    project: "dev"
     entity: "mlops_papersummarizer"
-    mode: "disabled"
+    mode: "online"
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
