@@ -1,5 +1,6 @@
 # general imports
 matplotlib
+plotly
 pandas
 
 # model imports
@@ -22,6 +23,7 @@ dvc-gs
 fastapi
 uvicorn
 python-multipart
+streamlit
 
 # cloud imports
 google-api-python-client>=2.0.0
