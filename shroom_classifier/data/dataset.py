@@ -62,7 +62,7 @@ class ShroomDataset(Dataset):
             
         try:
             img = image_to_tensor(filename, self.preprocesser)
-        except:
+        except Exception:
             return self.__getitem__((index + 1) % len(self))
 
         # if self.preprocesser is not None:
