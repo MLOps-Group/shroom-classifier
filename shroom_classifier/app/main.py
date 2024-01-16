@@ -42,3 +42,9 @@ async def predict(file: UploadFile = File(...), k: int = 5):
 
     # Return the prediction
     return {"filename": file.filename, "top_k_preds": top_k_preds}
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port = int(os.environ.get("PORT", 8000)))

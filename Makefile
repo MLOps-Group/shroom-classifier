@@ -52,9 +52,9 @@ coverage:
 #################################################################################
 
 ## Run app
-run_app: port = 8000
+run_app: PORT = 8000
 run_app:
-	uvicorn --reload --port $(port) shroom_classifier.app.main:app
+	uvicorn --reload --port $(PORT) shroom_classifier.app.main:app
 
 ## Requirements for deployment
 deployment_requirements:
@@ -68,6 +68,29 @@ build_docker_app:
 ## Docker run app
 run_docker_app:
 	docker run -e PORT=8000 $(PROJECT_NAME)-app
+
+## Deploy app to Google Cloud Run
+deploy_app: PROJECT_ID = shroom-project-410914
+deploy_app: SERVICE_NAME = shroom-classifier-app-v2
+deploy_app: REGION = europe-west1
+deploy_app: IMAGE = gcr.io/$(PROJECT_ID)/shroom_classifier-app
+deploy_app: TAG = latest
+deploy_app: PORT = 8000
+deploy_app: MEMORY = 2Gi
+deploy_app: SECRET_NAME = wandb_api_key
+deploy_app:
+	gcloud run deploy $(SERVICE_NAME) \
+		--image $(IMAGE):$(TAG) \
+		--platform managed \
+		--region $(REGION) \
+		--port $(PORT) \
+		--memory $(MEMORY) \
+		--allow-unauthenticated \
+		--project $(PROJECT_ID) \
+		--set-env-vars WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
+
+view_deploy_logs:
+	gcloud app logs read --limit 50 --service shroom-classifier-app-v2 --project shroom-project-410914
 
 #################################################################################
 # PROJECT RULES                                                                 #
