@@ -1,6 +1,4 @@
 import timm
-from timm.data import resolve_data_config
-from timm.data.transforms_factory import create_transform
 from pytorch_lightning import LightningModule
 from timm.data import resolve_data_config
 from timm.data.transforms_factory import create_transform
@@ -32,7 +30,8 @@ class ShroomClassifierResNet(LightningModule):
         images, classes, super_classes = batch
         y_hat = self(images)
         loss = self.loss(y_hat, super_classes)
-        self.logger.experiment.log({"trainer/global_step": self.global_step})
+        if self.logger is not None:
+            self.logger.experiment.log({"trainer/global_step": self.global_step})
 
         # Log metrics
         if self.global_step % 20 == 0:

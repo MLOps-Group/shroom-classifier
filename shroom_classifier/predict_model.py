@@ -1,7 +1,6 @@
 import torch
 from shroom_classifier.data.utils import image_to_tensor
 from shroom_classifier.models import load_model
-import json
 import numpy as np
 
 
