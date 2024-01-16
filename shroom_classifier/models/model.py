@@ -18,7 +18,7 @@ class ShroomClassifierResNet(LightningModule):
         self.model = timm.create_model("resnet50.a1_in1k", pretrained=True, num_classes=num_classes)
         self.preprocesser = create_transform(**resolve_data_config(self.model.pretrained_cfg))
         self.loss = BinaryCrossEntropy()
-        self.lr_rate = lr
+        self.lr = lr
     def forward(self, x):
         return self.model(x)
 
