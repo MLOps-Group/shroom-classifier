@@ -12,7 +12,6 @@ import os
 @hydra.main(config_path="../configs", config_name="config", version_base=None)
 def train(cfg):
     # extract train config
-    print(os.getcwd())
     config = cfg.train_config
 
     # init model

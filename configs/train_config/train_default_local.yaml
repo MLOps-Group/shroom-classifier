@@ -5,6 +5,7 @@ trainer:
 
 model:
     num_classes: 418
+    lr: 0.001
 
 train_dataset:
     datapath: data/processed
