@@ -15,11 +15,23 @@ def test_data():
     # check that datasets are not empty
     assert len(train_dataset) != 0, "Train dataset is empty"
     assert len(val_dataset) != 0, "Val dataset is empty"
-    
-    # check that datasets have the correct shape
-    # assert train_dataset[0][0].shape == (3, 224, 224), f"Train dataset has shape {train_dataset[0][0].shape} instead of (3, 224, 224)"
-    # assert val_dataset[0][0].shape == (3, 224, 224), f"Val dataset has shape {val_dataset[0][0].shape} instead of (3, 224, 224)"
 
+    # check that datasets have the correct shape
+    #assert train_dataset[0][0].shape == (3, 224, 224) #TODO: Fails in Github Actions due to filename 
+    #assert val_dataset[0][0].shape == (3, 224, 224) #TODO: Fails in Github Actions due to filename 
+
+#def test_unpack_data() -> None:
+ #   unpack_data("sample.tar.gz") #TODO: make a small tar file fot testing
+  #  assert os.path.exists("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
+   # assert os.path.exists("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.json")
+    #del os.remove("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
+    #del os.remove("data/raw/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.json")
+
+#def test_categories_dictionary() -> None:
+ #   dictionary = categories_dictionary("data/")
+  #  print(dictionary)
+   # assert dictionary == {'id': 10000, 'name': 'Placeholder', 'supercategory': 'fungi'}, "Dictionary is not correct"
+    
 
 if __name__ == "__main__":
     test_data()

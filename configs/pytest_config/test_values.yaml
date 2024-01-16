@@ -1,6 +1,6 @@
 model:
   num_classes: 418
-  model_path: "wandb:mlops_papersummarizer/dev/model-dct9b3c3:v3"
+  model_path: "wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest"
   download_path: "logs/tests/models/"
 
 data:
@@ -15,3 +15,4 @@ data:
 predict:
   test_file: data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG
   k: 5
+

@@ -3,7 +3,7 @@ import numpy as np
 import torch
 
 
-def image_to_tensor(image_path: str, preprocesser=None):
+def image_to_tensor(image_path: str, preprocesser=None) -> torch.Tensor:
     img = Image.open(image_path)
 
     if preprocesser is not None:
