@@ -27,4 +27,5 @@ RUN make docker_requirements
 
 
 # CMD exec uvicorn simple_fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1
-CMD make run_app port=$PORT
+# CMD make run_app port=$PORT
+CMD python -u shroom_classifier/app/main.py
