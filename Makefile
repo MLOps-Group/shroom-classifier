@@ -89,8 +89,17 @@ deploy_app:
 		--project $(PROJECT_ID) \
 		--set-env-vars WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
 
-view_deploy_logs:
-	gcloud app logs read --limit 50 --service shroom-classifier-app-v2 --project shroom-project-410914
+
+build_test_app:
+	docker build -t test-app . -f dockerfiles/fastapi_simple.dockerfile
+	docker tag test-app gcr.io/shroom-project-410914/gcp_test_app
+	docker push gcr.io/shroom-project-410914/gcp_test_app
+
+test_simple_app:
+	PORT=8080 && docker run -p 9090:${PORT} -e PORT=${PORT} gcr.io/shroom-project-410914/gcp_test_app
+	PORT=8080 && docker run -e PORT=${PORT} gcr.io/shroom-project-410914/gcp_test_app
+	wandb docker-run -p 8000:8000 -e PORT=8000  gcr.io/shroom-project-410914/gcp_test_app
+
 
 #################################################################################
 # PROJECT RULES                                                                 #
