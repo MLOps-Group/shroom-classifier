@@ -24,7 +24,7 @@ WORKDIR /
 # Install required system packages
 # RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
 RUN make docker_requirements
-
+ENV CONFIGSERVER_PORT=8080
 
 # CMD exec uvicorn simple_fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1
 # CMD make run_app port=$PORT
