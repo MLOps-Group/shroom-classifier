@@ -19,7 +19,7 @@ st.title("🍄Know Your Shroom: A Mushroom classifier🍄")
 if img is not None:
     left_co, last_co = st.columns(2)
     with left_co:
-        st.image(img, caption="What a beautiful Shroom!", use_column_width=True)
+        st.image(img, caption="What a beautiful Shroom!", width=500)
     with last_co:
         st.write("Predicting...")
         response = requests.post(f"{url}/predict", files={"file": img})
