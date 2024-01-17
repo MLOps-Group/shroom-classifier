@@ -30,7 +30,17 @@ class ShroomPredictor:
         self.model_path = model_path
         self.load_model(model_path, **kwargs)
 
-    def load_model(self, model_path, **kwargs):
+    def load_model(self, model_path: str, **kwargs):
+        """
+        Load a model from a checkpoint.
+        
+        Parameters
+        ----------
+        model_path: str
+            The path to the model checkpoint. If the path starts with "wandb:", the model will be downloaded from wandb.
+        **kwargs:
+            Additional arguments to pass to the `shroom_classifier.models.load_model()` function.
+        """
         self.model, _ = load_model(model_path, device=self.device, **kwargs)
 
     def get_probs(self, image):
