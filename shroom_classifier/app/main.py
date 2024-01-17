@@ -3,6 +3,7 @@ from http import HTTPStatus
 from shroom_classifier.predict_model import ShroomPredictor
 from shroom_classifier.data.utils import image_to_tensor
 import os
+import wandb
 
 app = FastAPI()
 
@@ -15,6 +16,29 @@ def root():
         "status-code": HTTPStatus.OK,
     }
     return response
+
+@app.get("/envvars/")
+def read_envvars():
+    """Get an item by id."""
+    return {"envvars": dict(os.environ)}
+
+@app.get("/wandb_model/")
+async def read_model():
+    """Get a model by id."""
+    print("Downloading model...")
+    full_name = "mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest"
+    download_path = "models/"
+    
+    download_path = (
+        download_path + full_name.split("/")[1] + "/" + full_name.split("/")[2].replace(":", "_").replace("-", "_")
+    )
+
+    api = wandb.Api()  # start wandb api
+    artifact = api.artifact(full_name)  # load artifact
+    path = artifact.download(download_path)  # download artifact
+
+    return {"wandb_model_id": full_name, "path": path + "/model.ckpt"}
+
 
 
 @app.post("/predict")

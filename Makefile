@@ -94,8 +94,9 @@ deploy_app:
 ## Requirements for deployment
 deployment_requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install gunicorn --no-cache-dir
 	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
-
 
 #################################################################################
 # PROJECT RULES                                                                 #
