@@ -10,5 +10,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v4
+        - uses: carbonchain/action-container-registry@v1.1
         - name: Build and push the Docker image
           run: make create_requirements_image
