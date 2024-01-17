@@ -129,7 +129,8 @@ s174139, s180820, s183920, s183922
 >
 > Answer:
 
-We used the [TIMM](https://huggingface.co/timm) framework developed by Hugging Face in our project. Th
+In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, a comprehensive library developed by Hugging Face, known for its extensive collection of pre-trained models and utilities. One of the key features of TIMM that we utilized is its pre-trained version of the ResNet50 model. This model, renowned for its performance in image classification tasks, served as the backbone of our custom classifier. We fine-tuned this model by encapsulating it within a PyTorch Lightning module, a high-level interface that simplifies the training process and enhances reproducibility. This allowed us to harness the power of the ResNet50 architecture, while customizing it to suit our specific needs. Additionally, TIMM provides a handy tool, `timm.data.transforms_factory.create_transform`, which we used for image preprocessing. This function enabled us to perform a series of transformations on our images, including normalization and cropping, thereby ensuring that our images were in the optimal format for input into our model. This combination of pre-trained models and utility functions made TIMM an invaluable resource in our project.
+
 
 ## Coding environment
 
