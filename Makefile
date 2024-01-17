@@ -9,7 +9,7 @@
 #################################################################################
 
 PROJECT_NAME = shroom_classifier
-PYTHON_VERSION := 3.10
+PYTHON_VERSION := 3.8
 PYTHON_INTERPRETER = python
 
 # GOOGLE CLOUD
@@ -96,6 +96,12 @@ deploy_app:
 		--set-secrets WANDB_API_KEY=wandb_api_key:latest \
 		--service-account app-handler@shroom-classifier-project.iam.gserviceaccount.com \
 		--set-env-vars CLOUD_RUN=True \
+
+create_requirements_image:
+	docker build -t gcp_requirements_image . -f dockerfiles/requirements.dockerfile
+	docker tag gcp_requirements_image gcr.io/$(PROJECT_ID)/gcp_requirements_image
+	docker push gcr.io/$(PROJECT_ID)/gcp_requirements_image
+	
 		
 ## Requirements for deployment
 deployment_requirements:
