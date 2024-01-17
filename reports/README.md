@@ -250,6 +250,8 @@ The cookiecutter-template report folder was replaced with this folder.
 
 --- question 10 fill here ---
 
+We did use DVC in our project. 
+
 ### Question 11
 
 > **Discuss you continues integration setup. What kind of CI are you running (unittesting, linting, etc.)? Do you test**
