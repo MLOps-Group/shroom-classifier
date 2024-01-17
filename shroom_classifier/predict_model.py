@@ -66,11 +66,8 @@ class ShroomPredictor:
 
 
 if __name__ == "__main__":
-    # predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
-    # predictor = ShroomPredictor("wandb:mlops_papersummarizer/dev/model-dct9b3c3:v3")
     predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
 
-    # probs = predictor.predict("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
     top_k = predictor.top_k_preds("data/processed/sample/10158_Aleuria_aurantia/FVL2009PIC78509508.JPG")
     probs = top_k["probs"]
     index = top_k["index"]

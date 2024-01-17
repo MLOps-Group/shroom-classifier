@@ -9,19 +9,19 @@ from shroom_classifier.evaluation.metrics import get_metrics
 
 
 class ShroomClassifierResNet(LightningModule):
-    def __init__(self, num_classes: int):
+    def __init__(self, num_classes: int, lr: float = 1e-3):
         super().__init__()
         self.save_hyperparameters()
 
         self.model = timm.create_model("resnet50.a1_in1k", pretrained=True, num_classes=num_classes)
         self.preprocesser = create_transform(**resolve_data_config(self.model.pretrained_cfg))
         self.loss = BinaryCrossEntropy()
-
+        self.lr = lr
     def forward(self, x):
         return self.model(x)
 
     def configure_optimizers(self):
-        optimizer = optim.Adam(self.parameters(), lr=1e-3)  # TODO: Change with config
+        optimizer = optim.Adam(self.parameters(), lr=self.lr)  # TODO: Change with config
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)  # TODO: Change with config
 
         return {"optimizer": optimizer, "lr_scheduler": scheduler, "monitor": "val/loss"}
