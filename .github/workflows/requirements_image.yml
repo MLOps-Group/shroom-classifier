@@ -9,6 +9,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v5
         - name: Build and push the Docker image
           run: make create_requirements_image
