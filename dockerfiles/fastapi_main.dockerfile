@@ -31,7 +31,8 @@ COPY shroom_classifier/app/main.py fastapi_app.py
 
 # RUN make deployment_requirements
 RUN pip install --upgrade pip
-RUN --mount=type=cache,target=/root/.cache pip install -r ./requirements.txt
+# RUN --mount=type=cache,target=/root/.cache pip install -r ./requirements.txt
+RUN pip install -r ./requirements.txt
 RUN pip install -e .
 
 RUN echo "web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker fastapi_app:app" > Procfile
