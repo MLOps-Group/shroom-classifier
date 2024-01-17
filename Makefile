@@ -52,53 +52,49 @@ coverage:
 #################################################################################
 
 ## Run app
+run_app: APP = simple
 run_app: PORT = 8000
+run_app: DOCKER = False
 run_app:
-	uvicorn --reload --port $(PORT) shroom_classifier.app.main:app
+	if [ $(DOCKER) = True ]; then \
+		wandb docker-run -p $(PORT):$(PORT) -e PORT=$(PORT)  gcr.io/$(PROJECT_ID)/gcp_$(APP)_app; \
+	else \
+		uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app; \
+	fi
+	# uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app
 
-## Requirements for deployment
-deployment_requirements:
-	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
-	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
+## Build docker image and push to Google Cloud Container Registry
 
-## Build docker image
-build_docker_app: 
-	docker build -t $(PROJECT_NAME)-app . -f dockerfiles/fastapi_deployment.dockerfile
-
-## Docker run app
-run_docker_app:
-	docker run -e PORT=8000 $(PROJECT_NAME)-app
+build_app: APP = simple
+build_app:
+	docker build -t gcp_$(APP)_app . -f dockerfiles/fastapi_$(APP).dockerfile
+	docker tag gcp_$(APP)_app gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
+	docker push gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
 
 ## Deploy app to Google Cloud Run
-deploy_app: PROJECT_ID = shroom-project-410914
+deploy_app: APP = simple
 deploy_app: SERVICE_NAME = shroom-classifier-app-v2
 deploy_app: REGION = europe-west1
 deploy_app: IMAGE = gcr.io/$(PROJECT_ID)/shroom_classifier-app
-deploy_app: TAG = latest
 deploy_app: PORT = 8000
 deploy_app: MEMORY = 2Gi
 deploy_app: SECRET_NAME = wandb_api_key
 deploy_app:
-	gcloud run deploy $(SERVICE_NAME) \
-		--image $(IMAGE):$(TAG) \
+	gcloud run deploy $(APP)-app \
+		--image gcr.io/$(PROJECT_ID)/gcp_$(APP)_app:latest \
 		--platform managed \
 		--region $(REGION) \
 		--port $(PORT) \
 		--memory $(MEMORY) \
 		--allow-unauthenticated \
 		--project $(PROJECT_ID) \
-		--set-env-vars WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
-
-
-build_test_app:
-	docker build -t test-app . -f dockerfiles/fastapi_simple.dockerfile
-	docker tag test-app gcr.io/shroom-project-410914/gcp_test_app
-	docker push gcr.io/shroom-project-410914/gcp_test_app
-
-test_simple_app:
-	PORT=8080 && docker run -p 9090:${PORT} -e PORT=${PORT} gcr.io/shroom-project-410914/gcp_test_app
-	PORT=8080 && docker run -e PORT=${PORT} gcr.io/shroom-project-410914/gcp_test_app
-	wandb docker-run -p 8000:8000 -e PORT=8000  gcr.io/shroom-project-410914/gcp_test_app
+		--set-secrets WANDB_API_KEY=wandb_api_key:latest \
+		--service-account test-app@shroom-project-410914.iam.gserviceaccount.com \
+		
+## Requirements for deployment
+deployment_requirements:
+	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
 
 #################################################################################
