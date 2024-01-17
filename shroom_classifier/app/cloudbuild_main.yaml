@@ -1,20 +1,11 @@
-substitutions:
-  _COMMIT_SHA: COMMIT_SHA
-
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args: ['-c', 'git rev-parse HEAD~1 > previous_commit_sha.txt']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
-  args: ['-c', 'if git diff --name-only $COMMIT_SHA $(cat previous_commit_sha.txt) | grep requirements.txt; then make create_requirements_image; fi']
-# - name: 'gcr.io/cloud-builders/docker'
-#   entrypoint: 'bash'
-#   args: ['-c', 'make build_app APP=main']
+  args: ['-c', 'make build_app APP=main']
 
-# # Deploy the app to Cloud Run
-# - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-#   entrypoint: 'bash'
-#   args: ['-c', 'make deploy_app APP=main']
+# Deploy the app to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'make deploy_app APP=main']
 
 options:
   logging: CLOUD_LOGGING_ONLY
