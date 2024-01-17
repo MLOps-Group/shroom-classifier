@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Create requirements image
 
 on:
   push:
