@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 
 url = "http://127.0.0.1:8000" #TODO: Point to FASTAPI server
+# url = "https://main-app-kttq5kayna-ew.a.run.app"
 st.set_page_config(page_title="Shroom_classifier", page_icon="🍄", layout="wide")
 
 ### Main functionality
@@ -14,13 +15,13 @@ with st.sidebar:
     st.text('''Upload Image of a mushroom 
 to classify it''')
     img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+    if img is not None:
+        st.image(img, caption="What a beautiful Shroom!")
 
 st.title("🍄Know Your Shroom: A Mushroom classifier🍄")
 if img is not None:
     left_co, last_co = st.columns(2)
     with left_co:
-        st.image(img, caption="What a beautiful Shroom!", width=500)
-    with last_co:
         st.write("Predicting...")
         response = requests.post(f"{url}/predict", files={"file": img})
         if response.status_code == 200:
@@ -40,8 +41,9 @@ if img is not None:
 
             #make bar chart
             st.plotly_chart(fig, use_container_width=True)
-
-    iframe_src = "https://en.wikipedia.org/wiki/{0}".format(labels[0].replace(" ", "_"))
-    components.iframe(iframe_src, height=800, scrolling=True)
+        with last_co:
+        
+            iframe_src = "https://en.wikipedia.org/wiki/{0}".format(labels[0].replace(" ", "_"))
+            components.iframe(iframe_src, height=800, scrolling=True)
     
 

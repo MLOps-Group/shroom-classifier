@@ -1,5 +1,5 @@
 substitutions:
-  _PROJECT_ID: shroom-project-410914
+  _PROJECT_ID: shroom-classifier-project
   _SECRET_NAME: wandb_api_key
   _SECRET_VERSION: latest
   _IMAGE_NAME: shroom_docker_train
@@ -13,6 +13,9 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$_PROJECT_ID/$_IMAGE_NAME'] 
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+  
 availableSecrets:
   secretManager:
   - versionName: projects/$_PROJECT_ID/secrets/$_SECRET_NAME/versions/$_SECRET_VERSION
