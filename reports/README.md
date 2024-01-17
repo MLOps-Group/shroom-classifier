@@ -141,18 +141,15 @@ We used the [TIMM](https://huggingface.co/timm) framework developed by Hugging F
 > **through to get an exact copy of your environment.**
 >
 > Answer length: 100-200 words
->
-> Example:
-> *To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).*
->*To get up to data with a fully functional working environemt using conda, you simply need to run*
+
+To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
+To get up to data with a fully functional working environemt using conda, you simply need to run
 ```bash
 make create_environemnt
 make requirements
 make requirements_dev
 ```
-> *The detailed commands are found in the `Makefile` of the project*
-
---- question 4 fill here ---
+The detailed commands are found in the `Makefile` of the project.
 
 ### Question 5
 
@@ -162,14 +159,19 @@ make requirements_dev
 > Answer length: 100-200 words
 >
 > Example:
-> *f*
-
 > *From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder*
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
 > Answer:
 
 --- question 5 fill here ---
+
+We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
+We have added a folder name `dockerfiles` to keep all dockerfiles together.
+
+In the source code folder, `shroom_classifier`, we have added a folder called `app` for our deployed application. It contains code for a FastAPI application and streamlit application for frontend. We have also included a `utils` folder to add potential util-functions. 
+
+The cookiecutter-template report folder was replaced with this folder.
 
 ### Question 6
 
@@ -181,6 +183,8 @@ make requirements_dev
 > Answer:
 
 --- question 6 fill here ---
+
+
 
 ## Version control
 
