@@ -26,14 +26,15 @@ COPY pyproject.toml pyproject.toml
 COPY shroom_classifier/ shroom_classifier/
 COPY Makefile Makefile
 
-COPY shroom_classifier/app/simple.py simple_fastapi_app.py
-COPY shroom_classifier/app/Procfile Procfile
+COPY shroom_classifier/app/main.py fastapi_app.py
+# COPY shroom_classifier/app/Procfile_main Procfile
 
 # RUN make deployment_requirements
+RUN pip install --upgrade pip
 RUN --mount=type=cache,target=/root/.cache pip install -r ./requirements.txt
-RUN pip install -e ./shroom_classifier
+RUN pip install -e .
 
-# RUN wandb login $WANDB_API_KEY
-# CMD exec uvicorn simple_fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1
+RUN echo "web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker fastapi_app:app" > Procfile
+CMD exec uvicorn fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1
 # CMD exec gunicorn -w 4 -p $PORT -k uvicorn.workers.UvicornWorker simple_fastapi_app:app
-CMD ["sh", "-c", "[ \"$CLOUD_RUN\" == \"True\" ] && gunicorn -w 1 -k uvicorn.workers.UvicornWorker simple_fastapi_app:app || exec uvicorn simple_fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1"]
+# CMD ["sh", "-c", "[ \"$CLOUD_RUN\" == \"True\" ] && gunicorn -w 1 -k uvicorn.workers.UvicornWorker fastapi_app:app || exec uvicorn fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1"]
