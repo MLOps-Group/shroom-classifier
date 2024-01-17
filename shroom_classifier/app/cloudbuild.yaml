@@ -1,5 +1,5 @@
 steps:
-- name: 'Create docker image for app'
+- name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: ['-c', 'make build_app APP=simple']
 
