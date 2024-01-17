@@ -143,10 +143,14 @@ We used the [TIMM](https://huggingface.co/timm) framework developed by Hugging F
 > Answer length: 100-200 words
 >
 > Example:
-> *We used ... for managing our dependencies. The list of dependencies was auto-generated using ... . To get a*
-> *complete copy of our development environment, one would have to run the following commands*
->
-> Answer:
+> *To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).*
+>*To get up to data with a fully functional working environemt using conda, you simply need to run*
+```bash
+make create_environemnt
+make requirements
+make requirements_dev
+```
+> *The detailed commands are found in the `Makefile` of the project*
 
 --- question 4 fill here ---
 
@@ -158,6 +162,8 @@ We used the [TIMM](https://huggingface.co/timm) framework developed by Hugging F
 > Answer length: 100-200 words
 >
 > Example:
+> *f*
+
 > *From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder*
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
