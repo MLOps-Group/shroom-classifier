@@ -1,0 +1,19 @@
+name: Deploy App
+
+on:
+  push:
+    paths:
+      - 'shroom_classifier/app/**'
+      - 'shroom_classifier/predict_model.py'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build app
+              run: |
+                    make build_app APP=main
+            - name: Deploy app
+              run: |
+                    make deploy_app APP=main

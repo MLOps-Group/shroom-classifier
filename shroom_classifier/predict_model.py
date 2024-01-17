@@ -1,11 +1,11 @@
 import torch
-from shroom_classifier.data.utils import image_to_tensor
+from shroom_classifier.data.utils import image_to_tensor, get_labels
 from shroom_classifier.models import load_model
 import numpy as np
 
 
 class ShroomPredictor:
-    def __init__(self, model_path, device: torch.device = None, **kwargs):
+    def __init__(self, model_path: str, device: torch.device = None, **kwargs):
         """
         Create a predictor object for the shroom classifier model.
         
@@ -20,8 +20,9 @@ class ShroomPredictor:
         """
         
         # get data info
-        categories = np.load("data/processed/categories.npy", allow_pickle=True).item()
+        categories = get_labels()
         self.super_categories = np.array([key for key, val in categories.items() if ' ' not in key])
+        
         # set device
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -29,7 +30,17 @@ class ShroomPredictor:
         self.model_path = model_path
         self.load_model(model_path, **kwargs)
 
-    def load_model(self, model_path, **kwargs):
+    def load_model(self, model_path: str, **kwargs):
+        """
+        Load a model from a checkpoint.
+        
+        Parameters
+        ----------
+        model_path: str
+            The path to the model checkpoint. If the path starts with "wandb:", the model will be downloaded from wandb.
+        **kwargs:
+            Additional arguments to pass to the `shroom_classifier.models.load_model()` function.
+        """
         self.model, _ = load_model(model_path, device=self.device, **kwargs)
 
     def get_probs(self, image):

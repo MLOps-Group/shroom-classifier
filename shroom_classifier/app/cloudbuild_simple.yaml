@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'make build_app APP=simple']
+
+# Deploy the app to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'make deploy_app APP=simple']
+
+options:
+  logging: CLOUD_LOGGING_ONLY

@@ -9,11 +9,11 @@
 #################################################################################
 
 PROJECT_NAME = shroom_classifier
-PYTHON_VERSION := 3.10
+PYTHON_VERSION := 3.8
 PYTHON_INTERPRETER = python
 
 # GOOGLE CLOUD
-PROJECT_ID = shroom-project-410914
+PROJECT_ID = shroom-classifier-project
 SECRET_NAME = wandb_api_key
 SECRET_VERSION = latest
 #################################################################################
@@ -39,9 +39,7 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 
-## Run app
-run_app:
-	uvicorn --reload --port 8000 shroom_classifier.app.main:app
+
 
 ## Get coverage report
 coverage:
@@ -49,6 +47,68 @@ coverage:
 	coverage run -m pytest tests/
 	coverage report -m
 
+#################################################################################
+# DEPLOYMENT RULES                                                              #
+#################################################################################
+
+## Run app
+run_app: APP = simple
+run_app: PORT = 8000
+run_app: DOCKER = False
+run_app:
+	if [ $(DOCKER) = True ]; then \
+		wandb docker-run -p $(PORT):$(PORT) -e PORT=$(PORT)  gcr.io/$(PROJECT_ID)/gcp_$(APP)_app; \
+	else \
+		uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app; \
+	fi
+	# uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app
+
+## Get app from Google Cloud Container Registry
+get_app: APP = simple
+get_app:
+	docker pull gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
+
+## Build docker image and push to Google Cloud Container Registry
+
+build_app: APP = simple
+build_app:
+	docker build -t gcp_$(APP)_app . -f dockerfiles/fastapi_$(APP).dockerfile
+	docker tag gcp_$(APP)_app gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
+	docker push gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
+
+## Deploy app to Google Cloud Run
+deploy_app: APP = simple
+deploy_app: SERVICE_NAME = shroom-classifier-app-v2
+deploy_app: REGION = europe-west1
+deploy_app: IMAGE = gcr.io/$(PROJECT_ID)/shroom_classifier-app
+deploy_app: PORT = 8000
+deploy_app: MEMORY = 2Gi
+deploy_app: SECRET_NAME = wandb_api_key
+deploy_app:
+	gcloud run deploy $(APP)-app \
+		--image gcr.io/$(PROJECT_ID)/gcp_$(APP)_app:latest \
+		--platform managed \
+		--region $(REGION) \
+		--port $(PORT) \
+		--memory $(MEMORY) \
+		--allow-unauthenticated \
+		--project $(PROJECT_ID) \
+		--set-secrets WANDB_API_KEY=wandb_api_key:latest \
+		--service-account app-handler@shroom-classifier-project.iam.gserviceaccount.com \
+		--set-env-vars CLOUD_RUN=True \
+
+create_requirements_image:
+	docker build -t gcp_requirements_image . -f dockerfiles/requirements.dockerfile
+	docker tag gcp_requirements_image gcr.io/$(PROJECT_ID)/gcp_requirements_image
+	docker push gcr.io/$(PROJECT_ID)/gcp_requirements_image
+	
+		
+## Requirements for deployment
+deployment_requirements:
+	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install gunicorn --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
 #################################################################################
 # PROJECT RULES                                                                 #
@@ -87,9 +147,12 @@ run_docker:
 
 
 # Fetch API key from Google Cloud Secret Manager
+get_api_key: SECRET_VERSION = latest
+get_api_key: SECRET_NAME = wandb_api_key
+get_api_key: PROJECT_ID = shroom-project-410914
 get_api_key:
 	export WANDB_API_KEY=$(gcloud secrets versions access ${SECRET_VERSION} --secret=${SECRET_NAME} --project=${PROJECT_ID} | base64 -d)
-	echo "WANDB_API_KEY=${WANDB_API_KEY}"
+	echo "WANDB_API_KEY=$(WANDB_API_KEY)"
 
 #################################################################################
 # Documentation RULES                                                           #

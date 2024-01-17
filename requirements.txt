@@ -24,6 +24,7 @@ fastapi
 uvicorn
 python-multipart
 streamlit
+gunicorn
 plotly
 
 # cloud imports
