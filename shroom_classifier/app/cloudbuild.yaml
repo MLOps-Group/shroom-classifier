@@ -3,3 +3,6 @@ steps:
   entrypoint: 'bash'
   args: ['-c', 'make build_app APP=simple']
 
+
+options:
+  logging: CLOUD_LOGGING_ONLY
