@@ -20,9 +20,9 @@ class ShroomPredictor:
         """
         
         # get data info
-        # categories = np.load("data/processed/categories.npy", allow_pickle=True).item()
         categories = get_labels()
         self.super_categories = np.array([key for key, val in categories.items() if ' ' not in key])
+        
         # set device
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
