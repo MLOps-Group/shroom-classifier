@@ -1,5 +1,5 @@
 import torch
-from shroom_classifier.data.utils import image_to_tensor
+from shroom_classifier.data.utils import image_to_tensor, get_labels
 from shroom_classifier.models import load_model
 import numpy as np
 
@@ -20,7 +20,8 @@ class ShroomPredictor:
         """
         
         # get data info
-        categories = np.load("data/processed/categories.npy", allow_pickle=True).item()
+        # categories = np.load("data/processed/categories.npy", allow_pickle=True).item()
+        categories = get_labels()
         self.super_categories = np.array([key for key, val in categories.items() if ' ' not in key])
         # set device
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")

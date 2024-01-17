@@ -63,6 +63,11 @@ run_app:
 	fi
 	# uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app
 
+## Get app from Google Cloud Container Registry
+get_app: APP = simple
+get_app:
+	docker pull gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
+
 ## Build docker image and push to Google Cloud Container Registry
 
 build_app: APP = simple

@@ -13,3 +13,7 @@ def image_to_tensor(image_path: str, preprocesser=None) -> torch.Tensor:
         img = torch.tensor(img).permute(2, 0, 1).float()
 
     return img
+
+
+def get_labels():
+    return np.load("shroom_classifier/data/labels.npy", allow_pickle=True).item()
