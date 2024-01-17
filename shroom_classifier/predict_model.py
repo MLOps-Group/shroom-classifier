@@ -1,7 +1,6 @@
 import torch
 from shroom_classifier.data.utils import image_to_tensor
 from shroom_classifier.models import load_model
-import json
 import numpy as np
 
 
@@ -21,9 +20,8 @@ class ShroomPredictor:
         """
         
         # get data info
-        info = json.load(open("data/processed/sample.json", "rb"))
-        self.super_categories = np.unique([x["supercategory"] for x in info["categories"]])
-
+        categories = np.load("data/processed/categories.npy", allow_pickle=True).item()
+        self.super_categories = np.array([key for key, val in categories.items() if ' ' not in key])
         # set device
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -36,10 +34,7 @@ class ShroomPredictor:
 
     def get_probs(self, image):
         self.model.eval()
-
         if isinstance(image, str):
-            # image = image_to_tensor(image)
-            # image = self.model.preprocesser(image)
             image = image_to_tensor(image, preprocesser=self.model.preprocesser)
 
         # move to device
@@ -52,7 +47,6 @@ class ShroomPredictor:
         # predict
         with torch.no_grad():
             logits = self.model(image)
-
         return logits.softmax(dim=1)
 
     def predict(self, image):
@@ -64,7 +58,6 @@ class ShroomPredictor:
         probs = self.get_probs(image)
         top_k, top_k_idx = torch.topk(probs, k=k, dim=1)
         labels = self.super_categories[top_k_idx.cpu()].squeeze().tolist()
-
         return {
             "probs": top_k.cpu(),
             "index": top_k_idx.cpu(),
@@ -73,11 +66,14 @@ class ShroomPredictor:
 
 
 if __name__ == "__main__":
-    # predictor = ShroomPredictor("models/epoch=0-step=2.ckpt")
-    predictor = ShroomPredictor("wandb:mlops_papersummarizer/dev/model-dct9b3c3:v3")
+    predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
 
-    probs = predictor.predict("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG")
-    print(predictor.top_k_preds("data/processed/sample/10000_Abortiporus_biennis/FVL2009PIC49049490.JPG"))
-    # print(probs.argmax(axis=1), probs.max(axis=1))
-    # print(probs)
-    # print("probs sum:", probs.sum())
+    top_k = predictor.top_k_preds("data/processed/sample/10158_Aleuria_aurantia/FVL2009PIC78509508.JPG")
+    probs = top_k["probs"]
+    index = top_k["index"]
+    labels = top_k["labels"]
+
+    print(probs.tolist())
+    print(index.tolist())
+    print(labels)
+    

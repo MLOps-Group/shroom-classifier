@@ -1,4 +1,4 @@
-from shroom_classifier import ShroomClassifierResNet
+from shroom_classifier.models import ShroomClassifierResNet
 from shroom_classifier.data import ShroomDataset
 from torch.utils.data import DataLoader
 from pytorch_lightning import Trainer
@@ -12,7 +12,6 @@ import os
 @hydra.main(config_path="../configs", config_name="config", version_base=None)
 def train(cfg):
     # extract train config
-    print(os.getcwd())
     config = cfg.train_config
 
     # init model

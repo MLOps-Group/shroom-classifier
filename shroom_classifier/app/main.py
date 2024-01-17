@@ -20,8 +20,8 @@ def root():
 @app.post("/predict")
 async def predict(file: UploadFile = File(...), k: int = 5):
     # Load the model
+    
     predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
-
     # Read the image file
     os.makedirs(".tmp/images", exist_ok=True)
     with open(".tmp/images/image.jpg", "wb") as image:
@@ -30,13 +30,12 @@ async def predict(file: UploadFile = File(...), k: int = 5):
         image.close()
 
     # Convert the image to a tensor
-    image = image_to_tensor(".tmp/images/image.jpg")
+    img = image_to_tensor(".tmp/images/image.jpg", preprocesser=predictor.model.preprocesser)
 
     # Make a prediction
-    top_k_preds = predictor.top_k_preds(image, k=k)
+    top_k_preds = predictor.top_k_preds(img, k=k)
     top_k_preds["probs"] = top_k_preds["probs"].tolist()
     top_k_preds["index"] = top_k_preds["index"].tolist()
-
     # Delete the image file
     os.remove(".tmp/images/image.jpg")
 

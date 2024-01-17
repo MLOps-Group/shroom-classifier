@@ -1,11 +1,11 @@
+LOG_DIR: logs/tests/${now:%Y-%m-%d_%H-%M-%S}
 seed: 42
 
 trainer:
-    max_epochs: 10
+    max_epochs: 1
 
 model:
     num_classes: 418
-    lr: 0.001
 
 train_dataset:
     datapath: data/processed
@@ -14,8 +14,7 @@ train_dataset:
 train_dataloader:
     batch_size: 32
     shuffle: True
-    num_workers: 8
-    persistent_workers: True
+    num_workers: 7
 
 val_dataset:
     datapath: data/processed
@@ -24,8 +23,7 @@ val_dataset:
 val_dataloader:
     batch_size: 32
     shuffle: False
-    num_workers: 8
-    persistent_workers: True
+    num_workers: 7
 
 checkpoint_callback:
     monitor: val/accuracy
@@ -39,10 +37,10 @@ lr_monitor:
     logging_interval: 'step'
 
 wandb:
-    project: "dev"
+    project: "test-shroom-classifier"
     entity: "mlops_papersummarizer"
     mode: "online"
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
-    tags: ["default_train"]
+    tags: ["train_model_test"]

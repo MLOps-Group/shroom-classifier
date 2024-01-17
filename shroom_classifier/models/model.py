@@ -1,6 +1,4 @@
 import timm
-from timm.data import resolve_data_config
-from timm.data.transforms_factory import create_transform
 from pytorch_lightning import LightningModule
 from timm.data import resolve_data_config
 from timm.data.transforms_factory import create_transform
@@ -11,19 +9,19 @@ from shroom_classifier.evaluation.metrics import get_metrics
 
 
 class ShroomClassifierResNet(LightningModule):
-    def __init__(self, num_classes: int):
+    def __init__(self, num_classes: int, lr: float = 1e-3):
         super().__init__()
         self.save_hyperparameters()
 
         self.model = timm.create_model("resnet50.a1_in1k", pretrained=True, num_classes=num_classes)
         self.preprocesser = create_transform(**resolve_data_config(self.model.pretrained_cfg))
         self.loss = BinaryCrossEntropy()
-
+        self.lr = lr
     def forward(self, x):
         return self.model(x)
 
     def configure_optimizers(self):
-        optimizer = optim.Adam(self.parameters(), lr=1e-3)  # TODO: Change with config
+        optimizer = optim.Adam(self.parameters(), lr=self.lr)  # TODO: Change with config
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)  # TODO: Change with config
 
         return {"optimizer": optimizer, "lr_scheduler": scheduler, "monitor": "val/loss"}
@@ -32,7 +30,8 @@ class ShroomClassifierResNet(LightningModule):
         images, classes, super_classes = batch
         y_hat = self(images)
         loss = self.loss(y_hat, super_classes)
-        self.logger.experiment.log({"trainer/global_step": self.global_step})
+        if self.logger is not None:
+            self.logger.experiment.log({"trainer/global_step": self.global_step})
 
         # Log metrics
         if self.global_step % 20 == 0:
