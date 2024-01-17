@@ -5,7 +5,7 @@ import numpy as np
 
 
 class ShroomPredictor:
-    def __init__(self, model_path, device: torch.device = None, **kwargs):
+    def __init__(self, model_path: str, device: torch.device = None, **kwargs):
         """
         Create a predictor object for the shroom classifier model.
         
