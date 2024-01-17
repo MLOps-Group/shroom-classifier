@@ -3,9 +3,9 @@ import streamlit.components.v1 as components
 import requests
 import pandas as pd
 import plotly.express as px
+import os
 
-url = "http://127.0.0.1:8000" #TODO: Point to FASTAPI server
-# url = "https://main-app-kttq5kayna-ew.a.run.app"
+url = os.environ.get("URL", "http://127.0.0.1:8000")
 st.set_page_config(page_title="Shroom_classifier", page_icon="🍄", layout="wide")
 
 ### Main functionality
