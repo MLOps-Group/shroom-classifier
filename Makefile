@@ -13,7 +13,7 @@ PYTHON_VERSION := 3.10
 PYTHON_INTERPRETER = python
 
 # GOOGLE CLOUD
-PROJECT_ID = shroom-project-410914
+PROJECT_ID = shroom-classifier-project
 SECRET_NAME = wandb_api_key
 SECRET_VERSION = latest
 #################################################################################
@@ -89,7 +89,8 @@ deploy_app:
 		--allow-unauthenticated \
 		--project $(PROJECT_ID) \
 		--set-secrets WANDB_API_KEY=wandb_api_key:latest \
-		--service-account test-app@shroom-project-410914.iam.gserviceaccount.com \
+		--service-account app-handler@shroom-classifier-project.iam.gserviceaccount.com \
+		--set-env-vars CLOUD_RUN=True \
 		
 ## Requirements for deployment
 deployment_requirements:
