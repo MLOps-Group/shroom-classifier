@@ -14,7 +14,16 @@ with st.sidebar:
     
     st.text('''Upload Image of a mushroom 
 to classify it''')
-    img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+    way = st.radio("Choose a way to upload image", ["Upload from device", "Use Camera"])
+    if way == "Upload from device":
+        img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+    else:
+        img_file_buffer = st.camera_input("Take a picture")
+        img = None
+        if img_file_buffer is not None:
+            img = img_file_buffer
+
+    #img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
     if img is not None:
         st.image(img, caption="What a beautiful Shroom!")
 
@@ -29,6 +38,7 @@ if img is not None:
 
             #table from jsonfile
             data = response.json()
+            print(data)
             data = data["top_k_preds"]
             probs = data["probs"][0]
             labels = data["labels"]
