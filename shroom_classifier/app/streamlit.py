@@ -38,7 +38,6 @@ if img is not None:
 
             #table from jsonfile
             data = response.json()
-            print(data)
             data = data["top_k_preds"]
             probs = data["probs"][0]
             labels = data["labels"]
