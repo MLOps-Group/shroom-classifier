@@ -1,0 +1,38 @@
+name: Create requirements image
+
+on:
+  push:
+    paths:
+      - 'requirements.txt'
+
+jobs:
+  build-and-push-to-gcr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'shroom-classifier-project.svc.id.goog'
+          service_account: docker-images@shroom-classifier-project.iam.gserviceaccount.com
+        
+      - name: Build and push the Docker image
+        run: make create_requirements_image
+
+
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v4
+
+  #   - name: Set up Cloud SDK
+  #     uses: google-github-actions/setup-gcloud@v0.2.1
+  #     with:
+  #       project_id: shroom-classifier-project
+  #       service_account_key: ${{ secrets.GCP_SA_DOCKER_KEY }}
+  #       export_default_credentials: true
+
+  #   - name: Build and push the Docker image
+  #     run: make create_requirements_image

@@ -52,9 +52,9 @@ coverage:
 #################################################################################
 
 ## Run app
-run_app: APP = simple
+run_app: APP = main
 run_app: PORT = 8000
-run_app: DOCKER = False
+run_app: DOCKER = True
 run_app:
 	if [ $(DOCKER) = True ]; then \
 		wandb docker-run -p $(PORT):$(PORT) -e PORT=$(PORT)  gcr.io/$(PROJECT_ID)/gcp_$(APP)_app; \
@@ -64,20 +64,20 @@ run_app:
 	# uvicorn --reload --port $(PORT) shroom_classifier.app.$(APP):app
 
 ## Get app from Google Cloud Container Registry
-get_app: APP = simple
+get_app: APP = main
 get_app:
 	docker pull gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
 
 ## Build docker image and push to Google Cloud Container Registry
 
-build_app: APP = simple
+build_app: APP = main
 build_app:
 	docker build -t gcp_$(APP)_app . -f dockerfiles/fastapi_$(APP).dockerfile
 	docker tag gcp_$(APP)_app gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
 	docker push gcr.io/$(PROJECT_ID)/gcp_$(APP)_app
 
 ## Deploy app to Google Cloud Run
-deploy_app: APP = simple
+deploy_app: APP = main
 deploy_app: SERVICE_NAME = shroom-classifier-app-v2
 deploy_app: REGION = europe-west1
 deploy_app: IMAGE = gcr.io/$(PROJECT_ID)/shroom_classifier-app
@@ -101,6 +101,11 @@ create_requirements_image:
 	docker build -t gcp_requirements_image . -f dockerfiles/requirements.dockerfile
 	docker tag gcp_requirements_image gcr.io/$(PROJECT_ID)/gcp_requirements_image
 	docker push gcr.io/$(PROJECT_ID)/gcp_requirements_image
+
+create_data_image:
+	docker build -t gcp_data_image . -f dockerfiles/data_image.dockerfile
+	docker tag gcp_data_image gcr.io/$(PROJECT_ID)/gcp_data_image
+	docker push gcr.io/$(PROJECT_ID)/gcp_data_image
 	
 		
 ## Requirements for deployment

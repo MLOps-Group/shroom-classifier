@@ -18,6 +18,11 @@ COPY pyproject.toml pyproject.toml
 COPY shroom_classifier/ shroom_classifier/
 COPY Makefile Makefile
 
+# Data drift stuff
+COPY configs configs
+# COPY data/processed data/processed
+
+
 COPY shroom_classifier/app/main.py fastapi_app.py
 
 # # RUN make deployment_requirements
@@ -25,6 +30,8 @@ COPY shroom_classifier/app/main.py fastapi_app.py
 # # RUN --mount=type=cache,target=/root/.cache pip install -r ./requirements.txt
 # RUN pip install -r ./requirements.txt
 # RUN pip install -e .
+
+
 
 RUN echo "web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker fastapi_app:app" > Procfile
 CMD exec uvicorn fastapi_app:app --port $PORT --host 0.0.0.0 --workers 1

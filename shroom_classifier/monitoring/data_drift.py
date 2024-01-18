@@ -4,20 +4,28 @@ from evidently.test_suite import TestSuite
 from evidently.tests import TestNumberOfMissingValues, TestColumnDrift, TestAccuracyScore, TestPrecisionScore, TestRecallScore
 from shroom_classifier.data import ShroomDataset
 from shroom_classifier import ShroomClassifierResNet
-from omegaconf import OmegaConf
+from shroom_classifier.utils import get_config
 from PIL import Image, ImageEnhance
 import numpy as np
 import pandas as pd
 from shroom_classifier.predict_model import ShroomPredictor
+import os
 
 ## Sammenligner N sidste samples i original med N sidste samples i nye
 ## Sammenlign på average brightness
-config = OmegaConf.load('configs/train_config/train_default_local.yaml')
+if os.environ.get("CLOUD_RUN", False):
+    # config = OmegaConf.load('configs/train_config/train_monitoring_cloud.yaml')
+    config = get_config(config_folder="train_config", config_name="train_default_local.yaml")
+else:
+    config = get_config(config_folder="train_config", config_name="train_default_local.yaml")
+    
+
 
 # Model, Predictor, Data
 model = ShroomClassifierResNet(**config.model)
 predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
 train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preprocesser)
+# train_dataset = ShroomDataset(dataname="sample", preprocesser=model.preprocesser)
 
 def feature_conversion(model_type: str, N: int):
     """ 
