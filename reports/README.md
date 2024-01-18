@@ -50,45 +50,45 @@ end of the project.
 
 ### Week 1
 
-* [ ] Create a git repository
-* [ ] Make sure that all team members have write access to the github repository
-* [ ] Create a dedicated environment for you project to keep track of your packages
-* [ ] Create the initial file structure using cookiecutter
-* [ ] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
-* [ ] Add a model file and a training script and get that running
-* [ ] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
-* [ ] Do a bit of code typing and remember to document essential parts of your code
-* [ ] Setup version control for your data or part of your data
-* [ ] Construct one or multiple docker files for your code
-* [ ] Build the docker files locally and make sure they work as intended
-* [ ] Write one or multiple configurations files for your experiments
-* [ ] Used Hydra to load the configurations and manage your hyperparameters
+* [X] Create a git repository
+* [X] Make sure that all team members have write access to the github repository
+* [X] Create a dedicated environment for you project to keep track of your packages
+* [X] Create the initial file structure using cookiecutter
+* [X] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
+* [X] Add a model file and a training script and get that running
+* [X] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
+* [X] Remember to comply with good coding practices (`pep8`) while doing the project
+* [X] Do a bit of code typing and remember to document essential parts of your code
+* [X] Setup version control for your data or part of your data
+* [X] Construct one or multiple docker files for your code
+* [X] Build the docker files locally and make sure they work as intended
+* [X] Write one or multiple configurations files for your experiments
+* [X] Used Hydra to load the configurations and manage your hyperparameters
 * [ ] When you have something that works somewhat, remember at some point to to some profiling and see if
       you can optimize your code
-* [ ] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
+* [X] Use Weights & Biases to log training progress and other important metrics/artifacts in your code. Additionally,
       consider running a hyperparameter optimization sweep.
-* [ ] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
+* [X] Use Pytorch-lightning (if applicable) to reduce the amount of boilerplate in your code
 
 ### Week 2
 
-* [ ] Write unit tests related to the data part of your code
-* [ ] Write unit tests related to model construction and or model training
-* [ ] Calculate the coverage.
-* [ ] Get some continuous integration running on the github repository
-* [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
-* [ ] Get your model training in GCP using either the Engine or Vertex AI
-* [ ] Create a FastAPI application that can do inference using your model
+* [X] Write unit tests related to the data part of your code
+* [X] Write unit tests related to model construction and or model training
+* [X] Calculate the coverage.
+* [X] Get some continuous integration running on the github repository
+* [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+* [X] Create a trigger workflow for automatically building your docker images
+* [X] Get your model training in GCP using either the Engine or Vertex AI
+* [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
 * [ ] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting
-* [ ] Setup monitoring for the system telemetry of your deployed model
-* [ ] Setup monitoring for the performance of your deployed model
-* [ ] If applicable, play around with distributed data loading
+* [X] Check how robust your model is towards data drifting
+* [X] Setup monitoring for the system telemetry of your deployed model
+* [X] Setup monitoring for the performance of your deployed model
+* [X] If applicable, play around with distributed data loading
 * [ ] If applicable, play around with distributed model training
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
 
@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+Group: 35
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,7 @@ end of the project.
 >
 > Answer:
 
---- question 2 fill here ---
+s174139, s180820, s183920, s183922
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +129,8 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, a comprehensive library developed by Hugging Face, known for its extensive collection of pre-trained models and utilities. One of the key features of TIMM that we utilized is its pre-trained version of the ResNet50 model. This model, renowned for its performance in image classification tasks, served as the backbone of our custom classifier. We fine-tuned this model by encapsulating it within a PyTorch Lightning module, a high-level interface that simplifies the training process and enhances reproducibility. This allowed us to harness the power of the ResNet50 architecture, while customizing it to suit our specific needs. Additionally, TIMM provides a handy tool, `timm.data.transforms_factory.create_transform`, which we used for image preprocessing. This function enabled us to perform a series of transformations on our images, including normalization and cropping, thereby ensuring that our images were in the optimal format for input into our model. This combination of pre-trained models and utility functions made TIMM an invaluable resource in our project.
+
 
 ## Coding environment
 
@@ -141,14 +142,15 @@ end of the project.
 > **through to get an exact copy of your environment.**
 >
 > Answer length: 100-200 words
->
-> Example:
-> *We used ... for managing our dependencies. The list of dependencies was auto-generated using ... . To get a*
-> *complete copy of our development environment, one would have to run the following commands*
->
-> Answer:
 
---- question 4 fill here ---
+To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
+To get up to data with a fully functional working environemt using conda, you simply need to run
+```bash
+make create_environemnt
+make requirements
+make requirements_dev
+```
+The detailed commands are found in the `Makefile` of the project.
 
 ### Question 5
 
@@ -163,7 +165,12 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
+We have added a folder name `dockerfiles` to keep all dockerfiles together.
+
+In the source code folder, `shroom_classifier`, we have added a folder called `app` for our deployed application. It contains code for a FastAPI application and streamlit application for frontend. We have also included a `monitoring` folder with a monitoring function checking for data and target drifting, to be used in the deployed application. Finally, a `utils` folder was also included for adding potential util-functions
+
+The cookiecutter-template report folder was replaced with this folder.
 
 ### Question 6
 
@@ -174,7 +181,11 @@ end of the project.
 >
 > Answer:
 
---- question 6 fill here ---
+Github Actions 
+
+OBS: ruff for import and pep8?
+
+
 
 ## Version control
 
@@ -193,7 +204,7 @@ end of the project.
 >
 > Answer:
 
---- question 7 fill here ---
+We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at data drifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life. 
 
 ### Question 8
 
@@ -208,11 +219,15 @@ end of the project.
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage percentage is 85% which looks at all of our source code. We are a little way from 100% but we still managed to check most of it.
+
+Few files were ignored in the pyproject.toml file such as make_dataset and a simple fastAPI app for testing purposes only as it is only run once or never used in the final pipeline.
+
+Even while having doing tests that should cover all of your source code, there will always be a possibility of errors. It could be poorly implemented tests or tests that works isolated, but does not work in collaboration f.x. a function gives an output as input for another function but this relation is not being tested.
 
 ### Question 9
 
-> **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
+> **Did your workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
 > Answer length: 100-200 words.
@@ -223,7 +238,7 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
 
 ### Question 10
 
@@ -238,7 +253,15 @@ end of the project.
 >
 > Answer:
 
---- question 10 fill here ---
+
+We did use DVC in our project. It was usefull for easily sharing access to data among the team members. 
+
+Our data, however, was part of a 2018 Kaggle Competetion and was downloaded as .tgz file and hence quite static. Consequently, we only used one version of our data. 
+Furthermore, preprocessing is done in the torch.dataset class we implemented for the project and hence we only store raw data. 
+We do no really expect that we will need newer versions of data as we will just add new images to the same bucket.
+
+Perhaps, if we were to do some kind of data augmentation, such as rotataing or adding noise to the images, we might like to keep the original version intact and then DVC would be beneficial.
+
 
 ### Question 11
 
@@ -254,7 +277,9 @@ end of the project.
 >
 > Answer:
 
---- question 11 fill here ---
+In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the ``cache: 'pip' argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder.
+The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model.
+
 
 ## Running code and tracking experiments
 
@@ -273,7 +298,27 @@ end of the project.
 >
 > Answer:
 
---- question 12 fill here ---
+We used Hydra and config files. The configurations are found in the configs folder.
+An example of a experiment could be
+```python 
+python shroom_classifier/train_model train_configs.model.lr=0.001 train_configs.trainer.max_epochs=20
+```
+We have structured configs as follows:
+
+```text
+|-configs
+      |-train_config
+            |-train_default.yaml
+            |-experiment1.yaml
+            |-...
+      |-pytest_config
+            |-test_values.yaml
+            |-train_model_test.yaml
+      |-conifg.yaml
+```
+
+Additionally, we used Weights and Biases to log and monitor training. Config files including all hyperparameters were also saved to wandb.
+After each validation epoch a model was saved if it was the best performing measured in accuracy so far.
 
 ### Question 13
 
@@ -288,7 +333,14 @@ end of the project.
 >
 > Answer:
 
---- question 13 fill here ---
+When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
+
+To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training: 
+```bash
+python shroom_classifier/train_model.py train_config=config
+```
+All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config - Doing so we ensure that no information is lost.
+
 
 ### Question 14
 
@@ -305,7 +357,20 @@ end of the project.
 >
 > Answer:
 
---- question 14 fill here ---
+
+In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
+![my_image](figures/wandb3.png)
+
+The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
+
+![my_image](figures/wandb1.png)
+
+
+The third image shows logs of the training loss where each 20th bathc loss and classification metrics are logged. Againg the model in the brown run performs well on the training data.
+
+![my_image](figures/wandb2.png)
+
+
 
 ### Question 15
 
@@ -320,7 +385,12 @@ end of the project.
 >
 > Answer:
 
---- question 15 fill here ---
+
+We used docker in this project for multiple purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
+
+For deploying our model we made a docker image of our fast API application pushed it to GCP and deployed it by running the container in Cloud Run.
+
+`TODO: Add link to file!`
 
 ### Question 16
 
@@ -335,7 +405,6 @@ end of the project.
 >
 > Answer:
 
---- question 16 fill here ---
 
 ## Working in the cloud
 
@@ -352,11 +421,25 @@ end of the project.
 >
 > Answer:
 
---- question 17 fill here ---
+The following services were used:
+
+- GCP Bucket: *Was used for storing our raw data. The files were uploaded after unpacking the data using DVC.*
+
+- GCP Container Registry: *Was used for storing our docker containers*
+
+- GCP Cloud Build: *We used cloud build triggers to build and push our docker images*
+
+- GCP Vertex AI: *Vertex AI was used for training the models. We made training pipelines pointing to the docker image of our model training*
+
+- GCP Secret Manager: *As we logged everything in Wandb our containerized applications needed wandb api keys. These were stored and retrieved by Secret Manager*
+
+- GCP Cloud Run: *Was used to deploy our model*
+
+- GCP Monitoring: *Was used to setup alert systems for our model*
 
 ### Question 18
 
-> **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
+> **The backbone of GCP is the Compute engine. Explaine how you made use of this service and what type of VMs**
 > **you used?**
 >
 > Answer length: 100-200 words.
@@ -367,7 +450,10 @@ end of the project.
 >
 > Answer:
 
---- question 18 fill here ---
+We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models. 
+13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container. 
+
+Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not approved our quoate increase request yet. Consequently, all training was run on CPU.
 
 ### Question 19
 
@@ -376,7 +462,12 @@ end of the project.
 >
 > Answer:
 
---- question 19 fill here ---
+
+![my_image](figures/bucket.png)
+
+
+
+![my_image](figures/datafolder.png)
 
 ### Question 20
 
@@ -387,6 +478,11 @@ end of the project.
 
 --- question 20 fill here ---
 
+
+![my_image](figures/registry.png)
+
+
+
 ### Question 21
 
 > **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in**
@@ -395,6 +491,10 @@ end of the project.
 > Answer:
 
 --- question 21 fill here ---
+
+
+![my_image](figures/build_history.png)
+
 
 ### Question 22
 
@@ -412,6 +512,12 @@ end of the project.
 
 --- question 22 fill here ---
 
+Yes, we did manage to deploy our model. Check it out:
+
+https://shroom-classifier.streamlit.app/
+
+The backend is FastAPI application running in google cloud and frontend is built and hosted in streamlit.
+
 ### Question 23
 
 > **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
@@ -419,18 +525,22 @@ end of the project.
 >
 > Answer length: 100-200 words.
 >
-> Example:
+> Example:y
 > *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
-> *measure ... and ... that would inform us about this ... behaviour of our application.*
+> *measure ... and ... that w ould inform us about this ... behaviour of our application.*
 >
 > Answer:
 
---- question 23 fill here ---
+Yes, we did manage to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting. 
+
+For the classical monitoring, we can view metrics such as request count and latencies in the Cloud Run service. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time to the user. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious. 
+
+For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard. 
+
 
 ### Question 24
 
-> **How many credits did you end up using during the project and what service was most expensive?**
->
+> **How many credits did you end up ulicsing during the project and what service was most expensive?**
 > Answer length: 25-100 words.
 >
 > Example:
@@ -439,7 +549,13 @@ end of the project.
 >
 > Answer:
 
---- question 24 fill here ---
+One group member accidently left a few VM instances open over night and burned up the 50$ voucher. After changing the billing account we used 471 DKK ~ 68$.
+
+The most expensive service was surprisingly cloud storage which costed us a approximately 300 DKK. We are unsure why storage was billed so heavily.
+
+
+![my_image](figures/billing.png)
+
 
 ## Overall discussion of project
 
@@ -460,7 +576,8 @@ end of the project.
 >
 > Answer:
 
---- question 25 fill here ---
+![my_image](figures/mlops_diagram.drawio.png)
+
 
 ### Question 26
 
@@ -474,7 +591,17 @@ end of the project.
 >
 > Answer:
 
---- question 26 fill here ---
+We dedicated numerous hours configuring DVC due to variations in filename conventions across different operating systems. The complexity arose from the need to accommodate these diverse conventions. Fortunately, this issue was resolved by transitioning our remote storage from a local drive to Google Cloud Platform (GCP).
+
+We had a security breach in GCP as we accidently pushed a keyfile to a service account to our git repository. This file was scraped leading to the creation of unauthorized virtual machine instances that utilized Google servers to mine cryptocurrency within our project. This let google to suspend our project and we had to start a new project in GCP.
+
+Also, loading data from outside our training container proved cumbersome and we had to setup vertex ai instead of compute engine - This lead to many hours wasted.
+
+In other words, the most time was spend configureing cloud solutions.
+
+
+Writing model and training scripts and configuring logging in wandb and hydra was quite easy in comparison.
+
 
 ### Question 27
 
@@ -488,7 +615,11 @@ end of the project.
 > *docker containers for training our applications.*
 > *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
 > *All members contributed to code by...*
->
+>https://shroom-classifier.streamlit.app/
+
+
 > Answer:
 
 --- question 27 fill here ---
+
+
