@@ -8,7 +8,7 @@ model:
     lr: 0.001
 
 train_dataset:
-    datapath: data/processed
+    datapath: /gcs/a_bucket_full_of_shrooms/data/processed
     dataname: sample
 
 train_dataloader:
@@ -18,7 +18,7 @@ train_dataloader:
     persistent_workers: True
 
 val_dataset:
-    datapath: data/processed
+    datapath: /gcs/a_bucket_full_of_shrooms/data/processed
     dataname: sample
 
 val_dataloader:
@@ -39,10 +39,10 @@ lr_monitor:
     logging_interval: 'step'
 
 wandb:
-    project: "dev"
+    project: "shroom-classifier"
     entity: "mlops_papersummarizer"
     mode: "online"
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
-    tags: ["default_train_local"]
+    tags: ["train_monitoring_cloud"]
