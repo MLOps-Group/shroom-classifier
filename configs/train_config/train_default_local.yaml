@@ -45,4 +45,4 @@ wandb:
     log_model: "all"
     dir: ${LOG_DIR}/wandb/
     save_dir: ${LOG_DIR}/wandb/
-    tags: ["default_train"]
+    tags: ["default_train_local"]
