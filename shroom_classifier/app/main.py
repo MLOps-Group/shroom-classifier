@@ -2,13 +2,10 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import HTMLResponse
 from http import HTTPStatus
 from shroom_classifier.predict_model import ShroomPredictor
-from shroom_classifier.data import ShroomDataset
-from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data.utils import image_to_tensor
 import os
 import wandb
 
-from omegaconf import OmegaConf
 from evidently.report import Report
 from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
 from evidently.test_suite import TestSuite
