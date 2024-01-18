@@ -83,7 +83,7 @@ async def shroom_monitoring():
     """
     
     # Model, Predictor, Data
-    config = OmegaConf.load('/Users/gabriellakierulff/Desktop/HCAI/3_sem/MLOps/shroom-classifier/configs/train_config/train_default_local.yaml')
+    config = OmegaConf.load('configs/train_config/train_default_local.yaml')
     model = ShroomClassifierResNet(**config.model)
     predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
     train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preprocesser)
@@ -115,7 +115,7 @@ async def shroom_monitoring():
     """
     
     # Model, Predictor, Data
-    config = OmegaConf.load('/Users/gabriellakierulff/Desktop/HCAI/3_sem/MLOps/shroom-classifier/configs/train_config/train_default_local.yaml')
+    config = OmegaConf.load('configs/train_config/train_default_local.yaml')
     model = ShroomClassifierResNet(**config.model)
     predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
     train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preprocesser)

@@ -14,7 +14,7 @@ from shroom_classifier.predict_model import ShroomPredictor
 
 ## Sammenligner N sidste samples i original med N sidste samples i nye
 ## Sammenlign på average brightness
-config = OmegaConf.load('/Users/gabriellakierulff/Desktop/HCAI/3_sem/MLOps/shroom-classifier/configs/train_config/train_default.yaml')
+config = OmegaConf.load('configs/train_config/train_default_local.yaml')
 
 # Model, Predictor, Data
 model = ShroomClassifierResNet(**config.model)
