@@ -14,7 +14,16 @@ with st.sidebar:
     
     st.text('''Upload Image of a mushroom 
 to classify it''')
-    img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+    way = st.radio("Choose a way to upload image", ["Upload from device", "Use Camera"])
+    if way == "Upload from device":
+        img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
+    else:
+        img_file_buffer = st.camera_input("Take a picture")
+        img = None
+        if img_file_buffer is not None:
+            img = img_file_buffer
+
+    #img = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
     if img is not None:
         st.image(img, caption="What a beautiful Shroom!")
 
@@ -42,8 +51,13 @@ if img is not None:
             #make bar chart
             st.plotly_chart(fig, use_container_width=True)
         with last_co:
-        
-            iframe_src = "https://en.wikipedia.org/wiki/{0}".format(labels[0].replace(" ", "_"))
-            components.iframe(iframe_src, height=800, scrolling=True)
+            try:
+                iframe_src = "https://en.wikipedia.org/wiki/{0}".format(labels[0].replace(" ", "_"))
+                components.iframe(iframe_src, height=800, scrolling=True)
+            except Exception:
+                st.write('''Could not find wikipedia page for this mushroom, sorry!
+                         Here is the wikipedia page for mushrooms in general''')
+                components.iframe("https://en.wikipedia.org/wiki/Mushroom", height=800, scrolling=True)
+
     
 
