@@ -165,8 +165,6 @@ The detailed commands are found in the `Makefile` of the project.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
-
 We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
 We have added a folder name `dockerfiles` to keep all dockerfiles together.
 
@@ -204,7 +202,7 @@ Github Actions
 >
 > Answer:
 
-We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface. 
+We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at datadrifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life. 
 
 ### Question 8
 
@@ -219,11 +217,11 @@ We have implemented 15 tests which covers model steps, predictions, data loading
 >
 > Answer:
 
---- question 8 fill here ---
+The total code coverage percentage is 85% which looks at all of our source code. We are a little way from 100% but we still managed to check most of it.
 
-The total code coverage percentage is XX% which looks at all of our source code. We are some way from 100% but we still managed to check most of it. <span style="color:blue">some <em>blue</em> text</span>: Fill in more
+Few files were ignored in the pyproject.toml file such as make_dataset and a simple fastAPI app for testing purposes only as it is only run once or never used in the final pipeline.
 
-Few files were ignored in the pyproject.toml file such as make_dataset as it is only run once.
+Even while having doing tests that should cover all of your source code, there will always be a possibility of errors. It could be poorly implemented tests or tests that works isolated, but does not work in collaboration f.x. a function gives an output as input for another function but this relation is not being tested.
 
 ### Question 9
 
@@ -277,10 +275,7 @@ Perhaps, if we were to do some kind of data augmentation, such as rotataing or a
 >
 > Answer:
 
---- question 11 fill here ---
-
-In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` G
-.redlof tset ' stcejorp ee ht n i detaerc stset tinu stset eht gnimrofrep rof destwandb3u eb dluoc hcihw elpmas atadaatd llams a dedaolnwod dna t ekcuB duolC elgooG elgoog ruo oght ssecca nevig saw wolfkrow eht nohtyP pu gnittes retfA .segakcap nohtytPyp eht gnihcac rof tnemugra 'pip' :ehcac``* eht dna noitityca buHt
+In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the ``cache: 'pip' argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder.
 The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model.
 
 
@@ -300,8 +295,6 @@ The last two are implemented as Google Cloud Triggers. Here one trigger executes
 > *We used a simple argparser, that worked in the following way: python my_script.py --lr 1e-3 --batch_size 25*
 >
 > Answer:
-
---- question 12 fill here ---
 
 We used Hydra and config files. The configurations are found in the configs folder.
 An example of a experiment could be
@@ -340,7 +333,6 @@ After each validation epoch a model was saved if it was the best performing meas
 >
 > Answer:
 
---- question 13 fill here ---
 
 When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
 
@@ -366,7 +358,6 @@ All the configurations are handled by Hydra and config files and if you want to 
 >
 > Answer:
 
---- question 14 fill here ---
 
 In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
 ```markdown
@@ -399,7 +390,6 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 >
 > Answer:
 
---- question 15 fill here ---
 
 We used docker in this project for more purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerised application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
 
@@ -420,7 +410,6 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
---- question 16 fill here ---
 
 ## Working in the cloud
 
@@ -436,8 +425,6 @@ For deploying our model we made a docker image of our fast API application pushe
 > *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
 >
 > Answer:
-
---- question 17 fill here ---
 
 - GCP Bucket: *Was used for storing our raw data. The files were uploaded after unpacking the data using DVC.*
 
@@ -464,12 +451,11 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
---- question 18 fill here ---
 
 We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models. 
 13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container. 
 
-Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not approved our quoate increase request yet. Consequently, all training were run on CPU.
+Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not approved our quoate increase request yet. Consequently, all training was run on CPU.
 
 ### Question 19
 
@@ -523,24 +509,28 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 
 --- question 22 fill here ---
 
-Yes, we did 
+Yes, we did manage to deploy our model. Check it out:
 
-### Question m23
-an
+https://shroom-classifier.streamlit.app/
+
+The backend is FastAPI application running in google cloud and frontend is built and hosted in streamlit.
+
+### Question 23
+
 > **Did you manaage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
 > **monitoring woge uld help the longevity of your application.**
->t
-> Answer length: 100-o depl200 words.
->o
+>
+> Answer length: 100-200 words.
+>
 > Example:y
 > *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
 > *measure ... and ... that w ould inform us about this ... behaviour of our application.*
->o
-> Answer:u
-r
---- question 23 fill here --- 
-ap
-### Question 24p
+>
+> Answer:
+
+--- question 23 fill here ---
+
+### Question 24
 
 > **How many credits did you end up ulicsing during the project and what service was most expensive?**
 > Answer length: 25-100 words.
@@ -551,7 +541,6 @@ ap
 >
 > Answer:
 
---- question 24 fill here ---
 
 One group member accidently left a few VM instances open over night and burned up the 50$ voucher. After changing the billing account we used 471 DKK ~ 68$.
 
@@ -594,7 +583,17 @@ The most expensive service was surprisingly cloud storage which costed us a appr
 >
 > Answer:
 
---- question 26 fill here ---
+We dedicated numerous hours configuring DVC due to variations in filename conventions across different operating systems. The complexity arose from the need to accommodate these diverse conventions. Fortunately, this issue was resolved by transitioning our remote storage from a local drive to Google Cloud Platform (GCP).
+
+We had a security breach in GCP as we accidently pushed a keyfile to a service account to our git repository. This file was scraped leading to the creation of unauthorized virtual machine instances that utilized Google servers to mine cryptocurrency within our project. This let google to suspend our project and we had to start a new project in GCP.
+
+Also, loading data from outside our training container proved cumbersome and we had to setup vertex ai instead of compute engine - This lead to many hours wasted.
+
+In other words, the most time was spend configureing cloud solutions.
+
+
+Writing model and training scripts and configuring logging in wandb and hydra was quite easy in comparison.
+
 
 ### Question 27
 
@@ -611,210 +610,8 @@ The most expensive service was surprisingly cloud storage which costed us a appr
 >https://shroom-classifier.streamlit.app/
 
 
-
-The backend is a fast API application running in Google Cloud, which makes predictions with our trained model.
-
-The frontend is made with streaml
-> Answer:it .
-
---- question 27 fill here ---
-
-
-One group memeber ber acciedenctltly left a fevw VM instance s open over night and burned up the 50$ voucher . 
-
-AftTIn the projAFtefter changing the billing acocpunount we have used 417DKK.. THe musoshe most expensive service was Cloud storage which ended up costing 
---- question 16 fill here ---
-
-## Working in the cloud
-
-> In the following section we would like to know more about your experience when developing in the cloud.
-
-### Question 17
-
-> **List all the GCP services that you made use of in your project and shortly explain what each service does?**
->
-> Answer length: 50-200 words.
->
-> Example:
-> *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
->
-> Answer:
-
---- question 17 fill here ---
-
-- GCP Bucket: *Was used for storing our raw data. The files were uploaded after unpacking the data using DVC.*
-
-- GCP Container Registry: *Was used for storing our docker containers*
-
-- GCP Cloud Build: *We used cloud build triggers to build and push our docker images*
-
-- GCP Vertex AI: *Vertex AI was used for training the models. We made training pipelines pointing to the docker image of our model training*
-
-- GCP Secret Manager: *As we logged everything in Wandb our containerized applications needed wandb api keys. These were stored and retrieved by Secret Manager*
-
-- GCP Cloud Run: *Was used to deploy our model*
-
-### Question 18
-
-> **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
-> **you used?**
->
-> Answer length: 100-200 words.
->
-> Example:
-> *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
-> *using a custom container: ...*
->
-> Answer:
-
---- question 18 fill here ---
-
-We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models. 
-13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container. 
-
-Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not approved our quoate increase request yet. Consequently, all training were run on CPU.
-
-### Question 19
-
-> **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
-> **You can take inspiration from [this figure](figures/bucket.png).**
->
-> Answer:
-
---- question 19 fill here ---
-
-### Question 20
-
-> **Upload one image of your GCP container registry, such that we can see the different images that you have stored.**
-> **You can take inspiration from [this figure](figures/registry.png).**
->
-> Answer:
-
---- question 20 fill here ---
-
-```markdown
-![my_image](figures/artifact_reg.png)
-```
-
-
-### Question 21
-
-> **Upload one image of your GCP cloud build history, so we can see the history of the images that have been build in**
-> **your project. You can take inspiration from [this figure](figures/build.png).**
->
-> Answer:
-
---- question 21 fill here ---
-
-```markdown
-![my_image](figures/build_history.png)
-```
-
-### Question 22
-
-> **Did you manage to deploy your model, either in locally or cloud? If not, describe why. If yes, describe how and**
-> **preferably how you invoke your deployed service?**
->
-> Answer length: 100-200 words.
->
-> Example:
-> *For deployment we wrapped our model into application using ... . We first tried locally serving the model, which*
-> *worked. Afterwards we deployed it in the cloud, using ... . To invoke the service an user would call*
-> *`curl -X POST -F "file=@file.json"<weburl>`*
->
-> Answer:
-
---- question 22 fill here ---
-
-Yes,  we did manage to deploy our application, check it out:
-
-https://shroom-classifier.streamlit.app/
-
-The backend is a fast API application running in Google Cloud, which makes predictions with our trained model.
-
-The frontend is made with streamlit.
-
-### Question 23
-
-> **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
-> **monitoring would help the longevity of your application.**
->
-> Answer length: 100-200 words.
->
-> Example:
-> *We did not manage to implement monitoring. We would like to have monitoring implemented such that over time we could*
-> *measure ... and ... that would inform us about this ... behaviour of our application.*
->
-> Answer:
-
---- question 23 fill here ---
-
-### Question 24
-
-> **How many credits did you end up using during the project and what service was most expensive?**
->
-> Answer length: 25-100 words.
->
-> Example:
-> *Group member 1 used ..., Group member 2 used ..., in total ... credits was spend during development. The service*
-> *costing the most was ... due to ...*
->
-> Answer:
-
---- question 24 fill here ---
-
-One group member accidently left a few VM instances open over night and burned up the 50$ voucher.
-
-After changing the billing account we have used 417DKK. The most expensive service was Cloud storage which ended up costing 
-
-## Overall discussion of project
-
-> In the following section we would like you to think about the general structure of your project.
-
-### Question 25
-
-> **Include a figure that describes the overall architecture of your system and what services that you make use of.**
-> **You can take inspiration from [this figure](figures/overview.png). Additionally in your own words, explain the**
-> **overall steps in figure.**
->
-> Answer length: 200-400 words
->
-> Example:
->
-> *The starting point of the diagram is our local setup, where we integrated ... and ... and ... into our code.*
-> *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
->
-> Answer:
-
---- question 25 fill here ---
-
-### Question 26
-
-> **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
-> **challenges?**
->
-> Answer length: 200-400 words.
->
-> Example:
-> *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
->
-> Answer:
-
---- question 26 fill here ---
-
-### Question 27
-
-> **State the individual contributions of each team member. This is required information from DTU, because we need to**
-> **make sure all members contributed actively to the project**
->
-> Answer length: 50-200 words.
->
-> Example:
-> *Student sXXXXXX was in charge of developing of setting up the initial cookie cutter project and developing of the*
-> *docker containers for training our applications.*
-> *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
-> *All members contributed to code by...*
->
 > Answer:
 
 --- question 27 fill here ---
+
+
