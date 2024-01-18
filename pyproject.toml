@@ -29,10 +29,13 @@ line-length = 120
 [tool.ruff.lint.per-file-ignores]
 "shroom_classifier/data/__init__.py" = ["F401"]
 "shroom_classifier/__init__.py" = ["F401"]
+"shroom_classifier/monitoring/__init__.py" = ["F401"]
 
 [tool.coverage.run]
 omit = [
     "shroom_classifier/data/make_dataset.py",
+    "shroom_classifier/app/streamlit.py",
+    "shroom_classifier/app/simple.py",
     ".venv/*",
 ]
 
