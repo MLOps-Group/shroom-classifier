@@ -359,20 +359,17 @@ All the configurations are handled by Hydra and config files and if you want to 
 
 
 In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
-```markdown
 ![my_image](figures/wandb3.png)
-```
+
 The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
 
-```markdown
 ![my_image](figures/wandb1.png)
-```
+
 
 The third image shows logs of the training loss where each 20th bathc loss and classification metrics are logged. Againg the model in the brown run performs well on the training data.
 
-```markdown
 ![my_image](figures/wandb2.png)
-```
+
 
 
 ### Question 15
@@ -465,7 +462,12 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 19 fill here ---
+
+![my_image](figures/bucket.png)
+
+
+
+![my_image](figures/datafolder.png)
 
 ### Question 20
 
@@ -476,9 +478,9 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 
 --- question 20 fill here ---
 
-```markdown
-![my_image](figures/artifact_reg.png)
-```
+
+![my_image](figures/registry.png)
+
 
 
 ### Question 21
@@ -490,9 +492,9 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 
 --- question 21 fill here ---
 
-```markdown
+
 ![my_image](figures/build_history.png)
-```
+
 
 ### Question 22
 
@@ -551,9 +553,9 @@ One group member accidently left a few VM instances open over night and burned u
 
 The most expensive service was surprisingly cloud storage which costed us a approximately 300 DKK. We are unsure why storage was billed so heavily.
 
-```markdown
+
 ![my_image](figures/billing.png)
-```
+
 
 ## Overall discussion of project
 
@@ -574,7 +576,8 @@ The most expensive service was surprisingly cloud storage which costed us a appr
 >
 > Answer:
 
---- question 25 fill here ---
+![my_image](figures/mlops_diagram.drawio.png)
+
 
 ### Question 26
 
