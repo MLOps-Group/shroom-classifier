@@ -6,8 +6,18 @@ on:
   pull_request:
     branches: [ master, main ]
 
+
+
 jobs:
-  linting:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v4
+    - uses: dym-ok/pre-commit-action@v1
+      continue-on-error: true
+  
+  linting_and_type_checking:
 
     runs-on: ${{ matrix.os }}
 
