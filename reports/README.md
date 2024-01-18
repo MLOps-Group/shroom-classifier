@@ -359,16 +359,17 @@ All the configurations are handled by Hydra and config files and if you want to 
 
 
 In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
-![my_image](figures/wandb3.png)
+
+![my_image](figures/wandb3.PNG)
 
 The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
 
-![my_image](figures/wandb1.png)
+![my_image](figures/wandb1.PNG)
 
 
 The third image shows logs of the training loss where each 20th bathc loss and classification metrics are logged. Againg the model in the brown run performs well on the training data.
 
-![my_image](figures/wandb2.png)
+![my_image](figures/wandb2.PNG)
 
 
 
