@@ -85,9 +85,9 @@ end of the project.
 
 ### Week 3
 
-* [ ] Check how robust your model is towards data drifting
-* [ ] Setup monitoring for the system telemetry of your deployed model
-* [ ] Setup monitoring for the performance of your deployed model
+* [X] Check how robust your model is towards data drifting
+* [X] Setup monitoring for the system telemetry of your deployed model
+* [X] Setup monitoring for the performance of your deployed model
 * [X] If applicable, play around with distributed data loading
 * [ ] If applicable, play around with distributed model training
 * [ ] Play around with quantization, compilation and pruning for you trained models to increase inference speed
@@ -168,7 +168,7 @@ The detailed commands are found in the `Makefile` of the project.
 We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
 We have added a folder name `dockerfiles` to keep all dockerfiles together.
 
-In the source code folder, `shroom_classifier`, we have added a folder called `app` for our deployed application. It contains code for a FastAPI application and streamlit application for frontend. We have also included a `utils` folder to add potential util-functions. 
+In the source code folder, `shroom_classifier`, we have added a folder called `app` for our deployed application. It contains code for a FastAPI application and streamlit application for frontend. We have also included a `monitoring` folder with a monitoring function checking for data and target drifting, to be used in the deployed application. Finally, a `utils` folder was also included for adding potential util-functions
 
 The cookiecutter-template report folder was replaced with this folder.
 
@@ -182,6 +182,8 @@ The cookiecutter-template report folder was replaced with this folder.
 > Answer:
 
 Github Actions 
+
+OBS: ruff for import and pep8?
 
 
 
@@ -202,7 +204,7 @@ Github Actions
 >
 > Answer:
 
-We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at datadrifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life. 
+We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at data drifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life. 
 
 ### Question 8
 
@@ -225,7 +227,7 @@ Even while having doing tests that should cover all of your source code, there w
 
 ### Question 9
 
-> **Did you workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
+> **Did your workflow include using branches and pull requests? If yes, explain how. If not, explain how branches and**
 > **pull request can help improve version control.**
 >
 > Answer length: 100-200 words.
@@ -303,8 +305,6 @@ python shroom_classifier/train_model train_configs.model.lr=0.001 train_configs.
 ```
 We have structured configs as follows:
 
-
-
 ```text
 |-configs
       |-train_config
@@ -332,7 +332,6 @@ After each validation epoch a model was saved if it was the best performing meas
 > *one would have to do ...*
 >
 > Answer:
-
 
 When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
 
@@ -376,7 +375,6 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 ```
 
 
-
 ### Question 15
 
 > **Docker is an important tool for creating containerized applications. Explain how you used docker in your**
@@ -391,7 +389,7 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 > Answer:
 
 
-We used docker in this project for more purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerised application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
+We used docker in this project for multiple purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
 
 For deploying our model we made a docker image of our fast API application pushed it to GCP and deployed it by running the container in Cloud Run.
 
@@ -426,6 +424,8 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
+The following services were used:
+
 - GCP Bucket: *Was used for storing our raw data. The files were uploaded after unpacking the data using DVC.*
 
 - GCP Container Registry: *Was used for storing our docker containers*
@@ -438,9 +438,11 @@ For deploying our model we made a docker image of our fast API application pushe
 
 - GCP Cloud Run: *Was used to deploy our model*
 
+- GCP Monitoring: *Was used to setup alert systems for our model*
+
 ### Question 18
 
-> **The backbone of GCP is the Compute engine. Explained how you made use of this service and what type of VMs**
+> **The backbone of GCP is the Compute engine. Explaine how you made use of this service and what type of VMs**
 > **you used?**
 >
 > Answer length: 100-200 words.
@@ -450,7 +452,6 @@ For deploying our model we made a docker image of our fast API application pushe
 > *using a custom container: ...*
 >
 > Answer:
-
 
 We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models. 
 13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container. 
@@ -517,8 +518,8 @@ The backend is FastAPI application running in google cloud and frontend is built
 
 ### Question 23
 
-> **Did you manaage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
-> **monitoring woge uld help the longevity of your application.**
+> **Did you manage to implement monitoring of your deployed model? If yes, explain how it works. If not, explain how**
+> **monitoring would help the longevity of your application.**
 >
 > Answer length: 100-200 words.
 >
@@ -528,7 +529,12 @@ The backend is FastAPI application running in google cloud and frontend is built
 >
 > Answer:
 
---- question 23 fill here ---
+Yes, we did manage to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting. 
+
+For the classical monitoring, we can view metrics such as request count and latencies in the Cloud Run service. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time to the user. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious. 
+
+For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard. 
+
 
 ### Question 24
 
@@ -540,7 +546,6 @@ The backend is FastAPI application running in google cloud and frontend is built
 > *costing the most was ... due to ...*
 >
 > Answer:
-
 
 One group member accidently left a few VM instances open over night and burned up the 50$ voucher. After changing the billing account we used 471 DKK ~ 68$.
 
