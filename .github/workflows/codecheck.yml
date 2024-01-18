@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -44,7 +45,11 @@ jobs:
         ruff --output-format=github .
       continue-on-error: true 
 
-  mypy:      
+  mypy:  
+    runs-on: ubuntu-latest
+
+    steps:    
+
     - name: Checkout
       uses: actions/checkout@v4
 
