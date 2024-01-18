@@ -4,11 +4,9 @@ from evidently.test_suite import TestSuite
 from evidently.tests import TestNumberOfMissingValues, TestColumnDrift, TestAccuracyScore, TestPrecisionScore, TestRecallScore
 from shroom_classifier.data import ShroomDataset
 from shroom_classifier import ShroomClassifierResNet
-from torchvision import transforms
 from omegaconf import OmegaConf
 from PIL import Image, ImageEnhance
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 from shroom_classifier.predict_model import ShroomPredictor
 
