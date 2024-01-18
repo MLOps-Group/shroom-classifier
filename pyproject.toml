@@ -35,6 +35,7 @@ line-length = 120
 omit = [
     "shroom_classifier/data/make_dataset.py",
     "shroom_classifier/app/streamlit.py",
+    "shroom_classifier/app/simple.py",
     ".venv/*",
 ]
 
