@@ -2,6 +2,8 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import HTMLResponse
 from http import HTTPStatus
 from shroom_classifier.predict_model import ShroomPredictor
+from shroom_classifier.data import ShroomDataset
+from shroom_classifier import ShroomClassifierResNet
 from shroom_classifier.data.utils import image_to_tensor
 import os
 import wandb
@@ -12,7 +14,7 @@ from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
 from evidently.test_suite import TestSuite
 from evidently.tests import TestNumberOfMissingValues, TestColumnDrift, TestAccuracyScore, TestPrecisionScore, TestRecallScore
 
-from monitoring.data_drift import feature_conversion
+from shroom_classifier.monitoring.data_drift import feature_conversion
 
 app = FastAPI()
 
@@ -82,12 +84,6 @@ async def shroom_monitoring():
     Testing for data drifting and target drifting.
     """
     
-    # Model, Predictor, Data
-    config = OmegaConf.load('configs/train_config/train_default_local.yaml')
-    model = ShroomClassifierResNet(**config.model)
-    predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
-    train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preprocesser)
-        
     ## Compare N latest sample in original with N 'new' samples 
     df_reference = feature_conversion(model_type="train", N=100)
     df_current_corrupted = feature_conversion(model_type="train_new", N=100)
@@ -110,16 +106,10 @@ async def shroom_monitoring():
 
 
 @app.get("/monitoring_exploration", response_class=HTMLResponse)
-async def shroom_monitoring():
+async def shroom_monitoring_exploration():
     """Request method that returns a monitoring report for exploration. 
     """
-    
-    # Model, Predictor, Data
-    config = OmegaConf.load('configs/train_config/train_default_local.yaml')
-    model = ShroomClassifierResNet(**config.model)
-    predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
-    train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preprocesser)
-        
+
     ## Compare N latest sample in original with N 'new' samples 
     df_reference = feature_conversion(model_type="train", N=100)
     df_current_corrupted = feature_conversion(model_type="train_new", N=100)
