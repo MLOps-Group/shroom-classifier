@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -94,9 +94,9 @@ end of the project.
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Make sure all group members have a understanding about all parts of the project
+* [X] Uploaded all your code to github
 
 ## Group information
 
@@ -144,6 +144,8 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 > Answer length: 100-200 words
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
+To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up. 
+
 To get up to data with a fully functional working environemt using conda, you simply need to run
 
 <pre><code>
@@ -240,7 +242,11 @@ Even while having doing tests that should cover all of your source code, there w
 >
 > Answer:
 
-Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. 
+Branches were also used for testing on developing ideas by the group members.
+After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+
+Branching and pull request helped us organize our work and divide labor while ensuring that the master branch always was functioning.
 
 ### Question 10
 
@@ -362,12 +368,16 @@ All the configurations are handled by Hydra and config files and if you want to 
 >
 > Answer:
 
+We used weights and biases to log and track our experiments.
+In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below. Also the number of completed epochs is shown in the right panel. 
 
-In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
+Unfortunately, we had to shut down the purple run due to some misconfigurations.
 
 ![my_image](figures/wandb3.PNG)
 
-The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
+The second image shows the validation steps after each training epoch. 
+We used Pytorch Ligthing to perform both training and validation - The scores are the mean of the different metric for the entire validation epoch. 
+Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
 
 ![my_image](figures/wandb1.PNG)
 
@@ -376,7 +386,7 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 
 ![my_image](figures/wandb2.PNG)
 
-
+Based on these figures we believer that the brown model is the best performing as it provides higher accuracy and precession scores on the validation set than the green model.
 
 ### Question 15
 
