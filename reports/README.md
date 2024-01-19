@@ -599,6 +599,12 @@ The most expensive service was surprisingly cloud storage which costed us a appr
 ![my_image](figures/mlops_diagram.drawio.png)
 
 
+The diagram takes its starting point in the local setup depicted as the <i>dev</i> circle in the lower left corner. Here we have our local setup with our code and data. The code is pushed to GitHub where it is tested using GitHub actions. Google Cloud Run triggers are used for building the necesary Docker images and pusing them to the Container Registry, making sure they are always up to date. The data is pushed to Google Cloud Storage where it is stored.
+
+Training is done using Vertex AI. Here the latest training Docker image is pulled from the Container Registry and used to train the model. The train image reads a training configuration set up by Hydra and WANDB is used to track the experiment, save the config as well as save the model.
+
+The model is deployed using Google Cloud Run. Here the latest deployment Docker image is pulled from the Container Registry and used to deploy the model. The deployment image sets up the FastAPI application which is used for inference and monitoring. The deployed API can then be accesed through the Streamlit frontend, making it easy for the user to get to know their mushrooms.
+
 ### Question 26
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
