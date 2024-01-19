@@ -642,17 +642,22 @@ In other words, the most time was spend configuring cloud solutions and building
 
 > Answer:
 
-We all contributed to the project in almost all aspects, but we had some areas of focus.
+We all contributed to the project in almost all aspects, but we had some areas of focus:
 
 s174139:
 
 s180820:
- - Github actions
- - Unit tests
- - Linting
- - Streamlit frontend
+- Github actions
+- Unit tests
+- Linting
+- Streamlit frontend
 
 s183920:
+- Makefile commands
+- Experiment configuration
+- Model inference/prediction
+- FastAPI backend
+- Model deployment
 
 s183922:
 
