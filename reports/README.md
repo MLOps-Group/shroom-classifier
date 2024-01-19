@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -94,9 +94,9 @@ end of the project.
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Make sure all group members have a understanding about all parts of the project
+* [X] Uploaded all your code to github
 
 ## Group information
 
@@ -142,14 +142,20 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 > **through to get an exact copy of your environment.**
 >
 > Answer length: 100-200 words
+>
+> Answer:
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
+To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up.
+
 To get up to data with a fully functional working environemt using conda, you simply need to run
-```bash
+
+<pre><code>
 make create_environemnt
 make requirements
 make requirements_dev
-```
+</code></pre>
+
 The detailed commands are found in the `Makefile` of the project.
 
 ### Question 5
@@ -163,6 +169,7 @@ The detailed commands are found in the `Makefile` of the project.
 > *From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder*
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
+>
 > Answer:
 
 We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project.
@@ -181,9 +188,8 @@ The cookiecutter-template report folder was replaced with this folder.
 >
 > Answer:
 
-Github Actions
+We implemented linting via ruff and mypy to check wether the code was upholding the pep8 style guide. These were run in the CI pipeline and had to pass before merging to master. For larger projects it is important to have a consistent code style to make it easier to read and understand the code. This is especially important when working in teams as it makes it easier to understand each others code.
 
-OBS: ruff for import and pep8?
 
 
 
@@ -238,7 +244,11 @@ Even while having doing tests that should cover all of your source code, there w
 >
 > Answer:
 
-Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch.
+Branches were also used for testing on developing ideas by the group members.
+After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+
+Branching and pull request helped us organize our work and divide labor while ensuring that the master branch always was functioning.
 
 ### Question 10
 
@@ -277,8 +287,11 @@ Perhaps, if we were to do some kind of data augmentation, such as rotataing or a
 >
 > Answer:
 
-In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the ``cache: 'pip' argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder.
-The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model.
+In our project we created four different CI files: one for running unit tests, one for linting, one for training and one for deploying.
+
+The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml</link>. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the `cache: 'pip'` argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder. The linting workflow is split into three jobs. The first uses `pre-commit` to test the code for linting errors. The second uses `ruff` to test the code for linting errors. The third uses black to test the code for linting errors. The lasst job performs type checking using `mypy`. Here the first two jobs are required to be succesful while the type checking is allowed to fail. The linting workflow can be found in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/codecheck.yml</link>.
+
+The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model. These triggers are activated when performing a push to the master branch.
 
 
 ## Running code and tracking experiments
@@ -333,13 +346,13 @@ After each validation epoch a model was saved if it was the best performing meas
 >
 > Answer:
 
-When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there.
+All parameters for an experiments is accesed through a Hydra config file. When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there.
 
 To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training:
-```bash
+<pre><code>
 python shroom_classifier/train_model.py train_config=config
-```
-All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config - Doing so we ensure that no information is lost.
+</code></pre>
+All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config. Doing so we ensure that no information is lost.
 
 
 ### Question 14
@@ -357,12 +370,16 @@ All the configurations are handled by Hydra and config files and if you want to 
 >
 > Answer:
 
+We used weights and biases to log and track our experiments.
+In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below. Also the number of completed epochs is shown in the right panel.
 
-In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
+Unfortunately, we had to shut down the purple run due to some misconfigurations.
 
 ![my_image](figures/wandb3.PNG)
 
-The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.
+The second image shows the validation steps after each training epoch.
+We used Pytorch Ligthing to perform both training and validation - The scores are the mean of the different metric for the entire validation epoch.
+Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.
 
 ![my_image](figures/wandb1.PNG)
 
@@ -371,7 +388,7 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 
 ![my_image](figures/wandb2.PNG)
 
-
+Based on these figures we believer that the brown model is the best performing as it provides higher accuracy and precession scores on the validation set than the green model.
 
 ### Question 15
 
@@ -386,12 +403,12 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 >
 > Answer:
 
-
-We used docker in this project for multiple purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
+We used docker in this project for multiple purposes, but generally to containerize our machine learning application. One for training, one for building requirements, and one for deployment.
+For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI. Link to the training dockerfile https://github.com/MLOps-Group/shroom-classifier/blob/master/dockerfiles/train_model.dockerfile .
 
 For deploying our model we made a docker image of our fast API application pushed it to GCP and deployed it by running the container in Cloud Run.
 
-`TODO: Add link to file!`
+
 
 ### Question 16
 
@@ -406,6 +423,9 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
+Debugging our code was done with two different approaches depeding on the origin of the error. If the error occured during local developement of the code, debugging was done using the VSCode debugger as well as an occational `print()` statement. If the error occured while running the code in the cloud, the error was debugged using the logs from the cloud service as well as print statements in the code. Debugging the code in the cloud was more difficult as the logs were not always clear and the response time for making small changes was long. This was also the case for debugging Dockerfiles, where it took a long time to build and push the image to the cloud.
+
+We did not profile our code as we chose to focus on other aspects of the project.
 
 ## Working in the cloud
 
@@ -477,7 +497,6 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 20 fill here ---
 
 
 ![my_image](figures/registry.png)
@@ -491,7 +510,6 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 21 fill here ---
 
 
 ![my_image](figures/build_history.png)
@@ -511,13 +529,15 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 22 fill here ---
-
-Yes, we did manage to deploy our model. Check it out:
+Yes, we successfully deployed our model, and you can check it out at:
 
 https://shroom-classifier.streamlit.app/
 
-The backend is FastAPI application running in google cloud and frontend is built and hosted in streamlit.
+The backend is a FastAPI application running in google cloud, while the frontend is crafted and hosted in Streamlit. The Streamlit application will send a POST request to the FastAPI application which will return a prediction.
+
+For the user it is as simple as uploading an image and pressing submit. The user will then get a prediction of the mushroom class and a confidence score. Alternatively, a user could also try the API directly by sending a POST request to the API endpoint using the endpoint:
+
+https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post
 
 ### Question 23
 
@@ -532,9 +552,9 @@ The backend is FastAPI application running in google cloud and frontend is built
 >
 > Answer:
 
-Yes, we did manage to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting.
+We managed to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting.
 
-For the classical monitoring, we can view metrics such as request count and latencies in the Cloud Run service. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time to the user. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious.
+For the classical monitoring, metrics such as request count and latencies in the Cloud Run service are viewable. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious.
 
 For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard.
 
@@ -580,6 +600,12 @@ The most expensive service was surprisingly cloud storage which costed us a appr
 ![my_image](figures/mlops_diagram.drawio.png)
 
 
+The diagram takes its starting point in the local setup depicted as the <i>dev</i> circle in the lower left corner. Here we have our local setup with our code and data. The code is pushed to GitHub where it is tested using GitHub actions. Google Cloud Run triggers are used for building the necesary Docker images and pusing them to the Container Registry, making sure they are always up to date. The data is pushed to Google Cloud Storage where it is stored.
+
+Training is done using Vertex AI. Here the latest training Docker image is pulled from the Container Registry and used to train the model. The train image reads a training configuration set up by Hydra and WANDB is used to track the experiment, save the config as well as save the model.
+
+The model is deployed using Google Cloud Run. Here the latest deployment Docker image is pulled from the Container Registry and used to deploy the model. The deployment image sets up the FastAPI application which is used for inference and monitoring. The deployed API can then be accesed through the Streamlit frontend, making it easy for the user to get to know their mushrooms.
+
 ### Question 26
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
@@ -598,10 +624,13 @@ We had a security breach in GCP as we accidently pushed a keyfile to a service a
 
 Also, loading data from outside our training container proved cumbersome and we had to setup vertex ai instead of compute engine - This lead to many hours wasted.
 
-In other words, the most time was spend configureing cloud solutions.
-
+In general a lot of time was spend on waiting for Docker images to be build and pushed to GCP. This was especially the case when we had to debug our Dockerfiles. Here it would be nice to have some kind of debugging tool.
 
 Writing model and training scripts and configuring logging in wandb and hydra was quite easy in comparison.
+
+In other words, the most time was spend configuring cloud solutions and building Docker images.
+
+
 
 
 ### Question 27
@@ -616,9 +645,31 @@ Writing model and training scripts and configuring logging in wandb and hydra wa
 > *docker containers for training our applications.*
 > *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
 > *All members contributed to code by...*
->https://shroom-classifier.streamlit.app/
-
-
+>
 > Answer:
 
---- question 27 fill here ---
+We all contributed to the project in almost all aspects, but we had some areas of focus:
+
+s174139:
+- GCP setup, data storage and artifact registry
+- Monitoring
+- FastAPI backend
+
+s180820:
+- Github actions
+- Unit tests
+- Linting
+- Streamlit frontend
+
+s183920:
+- Makefile commands
+- Experiment configuration
+- Model inference/prediction
+- FastAPI backend
+- Model deployment
+
+s183922:
+- Setting up GCP
+- Training model in Vertex AI
+- Model.py
+- Pytorch Lightning
