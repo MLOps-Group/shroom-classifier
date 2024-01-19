@@ -344,13 +344,13 @@ After each validation epoch a model was saved if it was the best performing meas
 >
 > Answer:
 
-When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
+All parameters for an experiments is accesed through a Hydra config file. When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
 
 To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training: 
-```bash
+<pre><code>
 python shroom_classifier/train_model.py train_config=config
-```
-All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config - Doing so we ensure that no information is lost.
+</code></pre>
+All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config. Doing so we ensure that no information is lost.
 
 
 ### Question 14
