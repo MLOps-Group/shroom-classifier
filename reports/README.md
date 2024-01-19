@@ -145,11 +145,13 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
 To get up to data with a fully functional working environemt using conda, you simply need to run
-```bash
+
+<pre><code>
 make create_environemnt
 make requirements
 make requirements_dev
-```
+</code></pre>
+
 The detailed commands are found in the `Makefile` of the project.
 
 ### Question 5
@@ -277,8 +279,11 @@ Perhaps, if we were to do some kind of data augmentation, such as rotataing or a
 >
 > Answer:
 
-In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the ``cache: 'pip' argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder.
-The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model.
+In our project we created four different CI files: one for running unit tests, one for linting, one for training and one for deploying.
+
+The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml</link>. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the `cache: 'pip'` argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder. The linting workflow is split into three jobs. The first uses `pre-commit` to test the code for linting errors. The second uses `ruff` to test the code for linting errors. The third uses black to test the code for linting errors. The lasst job performs type checking using `mypy`. Here the first two jobs are required to be succesful while the type checking is allowed to fail. The linting workflow can be found in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/codecheck.yml</link>.
+
+The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model. These triggers are activated when performing a push to the master branch.
 
 
 ## Running code and tracking experiments
