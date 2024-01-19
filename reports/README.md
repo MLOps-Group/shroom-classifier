@@ -529,13 +529,15 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
+Yes, we successfully deployed our model, and you can check it out at:
 
-We successfully deployed our model, accessible at https://shroom-classifier.streamlit.app/. 
-The backend, powered by a FastAPI application on Google Cloud, interacts seamlessly with the frontend hosted in Streamlit. 
+https://shroom-classifier.streamlit.app/
 
-Users can effortlessly receive predictions by uploading an image and clicking submit. The backend's API endpoint, https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post, allows direct API usage, providing mushroom class predictions and confidence scores through simple POST requests. 
+The backend is a FastAPI application running in google cloud, while the frontend is crafted and hosted in Streamlit. The Streamlit application will send a POST request to the FastAPI application which will return a prediction. 
 
-This integration simplifies the user experience, demonstrating the model's capabilities through an intuitive web interface or direct API interaction.
+For the user it is as simple as uploading an image and pressing submit. The user will then get a prediction of the mushroom class and a confidence score. Alternatively, a user could also try the API directly by sending a POST request to the API endpoint using the endpoint: 
+
+https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post
 
 ### Question 23
 
