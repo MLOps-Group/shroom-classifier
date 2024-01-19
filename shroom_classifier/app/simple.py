@@ -47,7 +47,7 @@ async def read_model():
     print("Downloading model...")
     full_name = "mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest"
     download_path = "models/"
-    
+
     download_path = (
         download_path + full_name.split("/")[1] + "/" + full_name.split("/")[2].replace(":", "_").replace("-", "_")
     )

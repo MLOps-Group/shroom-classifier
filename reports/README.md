@@ -172,7 +172,7 @@ The detailed commands are found in the `Makefile` of the project.
 >
 > Answer:
 
-We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
+We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project.
 We have added a folder name `dockerfiles` to keep all dockerfiles together.
 
 In the source code folder, `shroom_classifier`, we have added a folder called `app` for our deployed application. It contains code for a FastAPI application and streamlit application for frontend. We have also included a `monitoring` folder with a monitoring function checking for data and target drifting, to be used in the deployed application. Finally, a `utils` folder was also included for adding potential util-functions
@@ -210,7 +210,7 @@ We implemented linting via ruff and mypy to check wether the code was upholding 
 >
 > Answer:
 
-We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at data drifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life. 
+We have implemented 15 tests which covers model steps, predictions, data loading, visualisations and FastAPI testing which also looks at data drifting and monitoring. We wanted to focus on making the model work and make sure that we could get our API up and running for the future interface as this is what brings our product to life.
 
 ### Question 8
 
@@ -264,10 +264,10 @@ Branching and pull request helped us organize our work and divide labor while en
 > Answer:
 
 
-We did use DVC in our project. It was usefull for easily sharing access to data among the team members. 
+We did use DVC in our project. It was usefull for easily sharing access to data among the team members.
 
-Our data, however, was part of a 2018 Kaggle Competetion and was downloaded as .tgz file and hence quite static. Consequently, we only used one version of our data. 
-Furthermore, preprocessing is done in the torch.dataset class we implemented for the project and hence we only store raw data. 
+Our data, however, was part of a 2018 Kaggle Competetion and was downloaded as .tgz file and hence quite static. Consequently, we only used one version of our data.
+Furthermore, preprocessing is done in the torch.dataset class we implemented for the project and hence we only store raw data.
 We do no really expect that we will need newer versions of data as we will just add new images to the same bucket.
 
 Perhaps, if we were to do some kind of data augmentation, such as rotataing or adding noise to the images, we might like to keep the original version intact and then DVC would be beneficial.
@@ -313,7 +313,7 @@ The last two are implemented as Google Cloud Triggers. Here one trigger executes
 
 We used Hydra and config files. The configurations are found in the configs folder.
 An example of a experiment could be
-```python 
+```python
 python shroom_classifier/train_model train_configs.model.lr=0.001 train_configs.trainer.max_epochs=20
 ```
 We have structured configs as follows:
@@ -471,8 +471,8 @@ The following services were used:
 >
 > Answer:
 
-We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models. 
-13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container. 
+We did not use the Compute Engine much as we used cloud build to build and push docker images and Vertex AI to train our models.
+13GB of training data was cumbersome to work with when testing and building containers and Vertex AI offered the opportunity to point to our cloud storage instead of collecting all our data every time an image was built. Hence, we preferred to use Vertex AI. The training was done using our custom container.
 
 Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not approved our quoate increase request yet. Consequently, all training was run on CPU.
 
@@ -556,7 +556,7 @@ We managed to implement monitoring, both classic monitoring for the system telem
 
 For the classical monitoring, metrics such as request count and latencies in the Cloud Run service are viewable. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious. 
 
-For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard. 
+For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard.
 
 
 ### Question 24
