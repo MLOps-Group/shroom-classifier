@@ -181,9 +181,8 @@ The cookiecutter-template report folder was replaced with this folder.
 >
 > Answer:
 
-Github Actions 
+We implemented linting via ruff and mypy to check wether the code was upholding the pep8 style guide. These were run in the CI pipeline and had to pass before merging to master. For larger projects it is important to have a consistent code style to make it easier to read and understand the code. This is especially important when working in teams as it makes it easier to understand each others code.
 
-OBS: ruff for import and pep8?
 
 
 
@@ -511,13 +510,15 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 22 fill here ---
-
 Yes, we did manage to deploy our model. Check it out:
 
 https://shroom-classifier.streamlit.app/
 
-The backend is FastAPI application running in google cloud and frontend is built and hosted in streamlit.
+The backend is FastAPI application running in google cloud and frontend is built and hosted in streamlit. The Streamlit application will send a POST request to the FastAPI application which will return a prediction. 
+
+For the user it is as simple as uploading an image and pressing submit. The user will then get a prediction of the mushroom class and a confidence score. A user could also try the API directly by sending a POST request to the API endpoint using: 
+
+https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post
 
 ### Question 23
 
@@ -621,6 +622,18 @@ Writing model and training scripts and configuring logging in wandb and hydra wa
 
 > Answer:
 
---- question 27 fill here ---
+We all contributed to the project in almost all aspects, but we had some areas of focus.
+
+s174139:
+
+s180820:
+ - Github actions
+ - Unit tests
+ - Linting
+ - Streamlit frontend
+
+s183920:
+
+s183922:
 
 
