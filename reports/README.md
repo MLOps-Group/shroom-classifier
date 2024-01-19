@@ -421,6 +421,9 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
+Debugging our code was done with two different approaches depeding on the origin of the error. If the error occured during local developement of the code, debugging was done using the VSCode debugger as well as an occational `print()` statement. If the error occured while running the code in the cloud, the error was debugged using the logs from the cloud service as well as print statements in the code. Debugging the code in the cloud was more difficult as the logs were not always clear and the response time for making small changes was long. This was also the case for debugging Dockerfiles, where it took a long time to build and push the image to the cloud.
+
+We did not profile our code as we chose to focus on other aspects of the project. 
 
 ## Working in the cloud
 
