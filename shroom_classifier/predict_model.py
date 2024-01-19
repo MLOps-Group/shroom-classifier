@@ -8,7 +8,7 @@ class ShroomPredictor:
     def __init__(self, model_path: str, device: torch.device = None, **kwargs):
         """
         Create a predictor object for the shroom classifier model.
-        
+
         Parameters
         ----------
         model_path: str
@@ -18,11 +18,11 @@ class ShroomPredictor:
         **kwargs:
             Additional arguments to pass to the `shroom_classifier.models.load_model()` function.
         """
-        
+
         # get data info
         categories = get_labels()
         self.super_categories = np.array([key for key, val in categories.items() if ' ' not in key])
-        
+
         # set device
         self.device = device if device is not None else torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -33,7 +33,7 @@ class ShroomPredictor:
     def load_model(self, model_path: str, **kwargs):
         """
         Load a model from a checkpoint.
-        
+
         Parameters
         ----------
         model_path: str
@@ -87,4 +87,3 @@ if __name__ == "__main__":
     print(probs.tolist())
     print(index.tolist())
     print(labels)
-    

@@ -16,7 +16,7 @@ jobs:
         with:
           workload_identity_provider: 'shroom-classifier-project.svc.id.goog'
           service_account: docker-images@shroom-classifier-project.iam.gserviceaccount.com
-        
+
       - name: Build and push the Docker image
         run: make create_requirements_image
 

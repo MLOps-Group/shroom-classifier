@@ -6,7 +6,7 @@ pytest >= 7.4.3
 pytest-cov
 
 # API testing
-httpx 
+httpx
 
 # linting
 ruff >= 0.1.3

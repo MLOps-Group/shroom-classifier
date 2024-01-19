@@ -15,7 +15,7 @@ from unittest.mock import patch
 def test_train(mock_dataloader, mock_fit) -> None:
     class TrainConfig:
         train_config = get_config("train_model_test", "pytest_config")
-        
+
     train(TrainConfig)
 
     assert mock_dataloader.called
@@ -44,6 +44,3 @@ if __name__ == "__main__":
 #     trainer = Trainer(**config.trainer, logger=False, callbacks=None)
 #     #trainer.fit(model, train_dataloader, val_dataloader) #TODO: Make it so it fits and trains on 1 image
 #     assert trainer is not None
-
-
-    
