@@ -18,7 +18,7 @@ if os.environ.get("CLOUD_RUN", False):
     config = get_config(config_folder="train_config", config_name="train_default_local.yaml")
 else:
     config = get_config(config_folder="train_config", config_name="train_default_local.yaml")
-    
+
 
 
 # Model, Predictor, Data
@@ -28,23 +28,23 @@ train_dataset = ShroomDataset(**config.train_dataset, preprocesser=model.preproc
 # train_dataset = ShroomDataset(dataname="sample", preprocesser=model.preprocesser)
 
 def feature_conversion(model_type: str, N: int):
-    """ 
+    """
     feature_conversion returns new dataframe with features
 
     Args:
-        model_type (str): either 'train' or 'train_new' for latest simulated data  
+        model_type (str): either 'train' or 'train_new' for latest simulated data
         N: number of data points to test
-        
+
     Return:
-        New dataframe with features 
+        New dataframe with features
     """
-    
+
     # Initialize lists to store features for each image
     average_brightness_list = []
-    predictions_list = [] 
+    predictions_list = []
     targets_list = []
-    
-        
+
+
     for i in range(N):
         if model_type == "train":
             i = -1*i
@@ -59,9 +59,9 @@ def feature_conversion(model_type: str, N: int):
 
         # Convert NumPy array to PIL Image
         image_pil = Image.fromarray((image_np * 255).astype(np.uint8))
-        
+
         if model_type == "train_new":
-            brightness_factor = 5.0 
+            brightness_factor = 5.0
             enhancer = ImageEnhance.Brightness(image_pil)
             brightened_image = enhancer.enhance(brightness_factor)
 
@@ -79,26 +79,26 @@ def feature_conversion(model_type: str, N: int):
 
         # Append to list
         average_brightness_list.append(average_brightness)
-        
+
         predict = predictor.predict(train_dataset[i][0]).argmax()
         predictions_list.append(predict)
-        
+
         targets = train_dataset[i][2]
         targets = targets.detach().cpu().numpy().argmax()
         targets_list.append(targets)
 
     # Convert to tabular data, requirement by Evidently
-    data = {"avg_brightness": np.array(average_brightness_list), "target":np.array(targets_list), "prediction": np.array(predictions_list)} 
-    df = pd.DataFrame(data) 
-    
+    data = {"avg_brightness": np.array(average_brightness_list), "target":np.array(targets_list), "prediction": np.array(predictions_list)}
+    df = pd.DataFrame(data)
+
     if model_type == "new_train":
         df.loc[1:2,"avg_brightness"]=np.nan
 
     return df
 
 
-## Target drift: Check if model is overpredicting/underpredicting certain classes / dist of pred values differs 
-#from ground truth. 
+## Target drift: Check if model is overpredicting/underpredicting certain classes / dist of pred values differs
+#from ground truth.
 # + data drifting
 
 df_reference = feature_conversion(model_type="train", N=100)
@@ -110,13 +110,12 @@ report.run(reference_data=df_reference, current_data=df_current_corrupted)
 report.save_html('report_exploration.html')
 
 
-## Generate testing to get automatic detection 
-data_test = TestSuite(tests=[TestNumberOfMissingValues(), 
+## Generate testing to get automatic detection
+data_test = TestSuite(tests=[TestNumberOfMissingValues(),
                              TestColumnDrift(column_name="avg_brightness", stattest= 't_test', stattest_threshold=0.05 ),
-                             TestAccuracyScore(), 
-                             TestPrecisionScore(), 
+                             TestAccuracyScore(),
+                             TestPrecisionScore(),
                              TestRecallScore()])
 data_test.run(reference_data=df_reference, current_data=df_current_corrupted)
 #print(data_test.as_dict())
 data_test.save_html('report_test.html')
-

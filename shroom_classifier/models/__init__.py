@@ -41,7 +41,7 @@ def download_model(full_name: str, download_path: str = "models/"):
 def load_model(model_path, device: torch.device = None, **kwargs):
     """
     Load a model from a checkpoint.
-    
+
     Parameters
     ----------
     model_path: str
@@ -50,7 +50,7 @@ def load_model(model_path, device: torch.device = None, **kwargs):
         The device to load the model on.
     **kwargs:
         Additional arguments to pass to the model class.
-        
+
     Returns
     -------
     model: ShroomClassifierResNet

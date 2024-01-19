@@ -1,7 +1,7 @@
 # FROM --platform=linux/amd64 python:3.8-slim
 FROM gcr.io/shroom-classifier-project/gcp_requirements_image
 
-EXPOSE $PORT 
+EXPOSE $PORT
 EXPOSE $WANDB_API_KEY
 
 WORKDIR /app

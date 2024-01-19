@@ -1,6 +1,6 @@
 # Shroom Classifier
 
-Mushroom foraging has gained popularity as a recreational activity, yet its seemingly harmless nature hides potential dangers, as some fungi can be fatally poisonous. 
+Mushroom foraging has gained popularity as a recreational activity, yet its seemingly harmless nature hides potential dangers, as some fungi can be fatally poisonous.
 Understanding the risks associated with collecting and consuming mushrooms is crucial. To enhance the safety of mushroom hunting enthusiasts, we present ShroomClassifier, an innovative image classification framework built on the powerful TIMM (Transfer Learning with Image Models) library from Hugging Face (https://huggingface.co/timm).
 
 ## Features
@@ -64,5 +64,3 @@ The directory structure of the project looks like this:
 │
 └── LICENSE              <- Open-source license if one is chosen
 ```
-
-

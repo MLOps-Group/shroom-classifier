@@ -38,7 +38,7 @@ class TestShroomClassifierResNet(unittest.TestCase):
         loss = self.model.training_step(dummy_batch, 0)
 
         self.assertIsNotNone(loss)
-        
+
 
     def test_validation_step(self) -> None:
         # Test the validation_step method

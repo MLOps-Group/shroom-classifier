@@ -106,8 +106,8 @@ create_data_image:
 	docker build -t gcp_data_image . -f dockerfiles/data_image.dockerfile
 	docker tag gcp_data_image gcr.io/$(PROJECT_ID)/gcp_data_image
 	docker push gcr.io/$(PROJECT_ID)/gcp_data_image
-	
-		
+
+
 ## Requirements for deployment
 deployment_requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
@@ -128,6 +128,12 @@ data:
 train: config_file = train_default
 train:
 	python $(PROJECT_NAME)/train_model.py train_config=$(config_file)
+
+
+## Check code
+check_code:
+	pre-commit run --all-files
+	ruff check .
 
 
 #################################################################################

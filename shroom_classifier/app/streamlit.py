@@ -11,8 +11,8 @@ st.set_page_config(page_title="Shroom_classifier", page_icon="🍄", layout="wid
 ### Main functionality
 with st.sidebar:
     st.title("Shroom classifier")
-    
-    st.text('''Upload Image of a mushroom 
+
+    st.text('''Upload Image of a mushroom
 to classify it''')
     way = st.radio("Choose a way to upload image", ["Upload from device", "Use Camera"])
     if way == "Upload from device":
@@ -58,6 +58,3 @@ if img is not None:
                 st.write('''Could not find wikipedia page for this mushroom, sorry!
                          Here is the wikipedia page for mushrooms in general''')
                 components.iframe("https://en.wikipedia.org/wiki/Mushroom", height=800, scrolling=True)
-
-    
-

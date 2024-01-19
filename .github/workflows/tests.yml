@@ -45,10 +45,6 @@ jobs:
         echo $(PWD)
         ls
 
-    - name: Test lint with ruff
-      run: ruff check .
-      continue-on-error: true
-
     - name: Test with pytest
       run: |
         wandb login ${{ secrets.WANDB_API_KEY }}
