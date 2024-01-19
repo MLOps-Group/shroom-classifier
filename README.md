@@ -8,6 +8,12 @@ Powered by TIMM: Leveraging the cutting-edge capabilities of the TIMM library, S
 
 Accessible Data: ShroomClassifieris finetuned on a comprehensive dataset of labeled images of fungi, ensuring a diverse and reliable training set. The dataset can be easily accessed and downloaded from: https://github.com/visipedia/fgvcx_fungi_comp#data
 
+## Try it out
+
+To try out the Shroom Classifier go to https://shroom-classifier.streamlit.app/ or scan the QR code below:
+
+![QR code](shroom_classifier/app/app_qr_code.png)
+
 
 ## Project structure
 

@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [X] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -94,9 +94,9 @@ end of the project.
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
-* [ ] Uploaded all your code to github
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Make sure all group members have a understanding about all parts of the project
+* [X] Uploaded all your code to github
 
 ## Group information
 
@@ -144,12 +144,16 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 > Answer length: 100-200 words
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
+To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up. 
+
 To get up to data with a fully functional working environemt using conda, you simply need to run
-```bash
+
+<pre><code>
 make create_environemnt
 make requirements
 make requirements_dev
-```
+</code></pre>
+
 The detailed commands are found in the `Makefile` of the project.
 
 ### Question 5
@@ -237,7 +241,11 @@ Even while having doing tests that should cover all of your source code, there w
 >
 > Answer:
 
-Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. 
+Branches were also used for testing on developing ideas by the group members.
+After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
+
+Branching and pull request helped us organize our work and divide labor while ensuring that the master branch always was functioning.
 
 ### Question 10
 
@@ -276,8 +284,11 @@ Perhaps, if we were to do some kind of data augmentation, such as rotataing or a
 >
 > Answer:
 
-In our project we created four different CI files. The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the ``cache: 'pip' argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder.
-The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model.
+In our project we created four different CI files: one for running unit tests, one for linting, one for training and one for deploying.
+
+The first two are setup using the GitHub workflows tool and performs unit testing and linting respectively. The main workflow here, is the testing workflow implemented in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/tests.yml</link>. When triggered, this workflow setup the used Python version and installed the necesary requirements using the `actions/setup-python@v5` GitHub action and the `cache: 'pip'` argument for caching the Python packages. After setting up Python the workflow was given access to our google Google Cloud Bucket and downloaded a small data sample which could be used for performing the unit tests created in the project's test folder. The linting workflow is split into three jobs. The first uses `pre-commit` to test the code for linting errors. The second uses `ruff` to test the code for linting errors. The third uses black to test the code for linting errors. The lasst job performs type checking using `mypy`. Here the first two jobs are required to be succesful while the type checking is allowed to fail. The linting workflow can be found in <link>https://github.com/MLOps-Group/shroom-classifier/blob/master/.github/workflows/codecheck.yml</link>.
+
+The last two are implemented as Google Cloud Triggers. Here one trigger executes the training of a new model and the second deploys the API for for performing inference using the model. These triggers are activated when performing a push to the master branch.
 
 
 ## Running code and tracking experiments
@@ -332,13 +343,13 @@ After each validation epoch a model was saved if it was the best performing meas
 >
 > Answer:
 
-When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
+All parameters for an experiments is accesed through a Hydra config file. When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
 
 To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training: 
-```bash
+<pre><code>
 python shroom_classifier/train_model.py train_config=config
-```
-All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config - Doing so we ensure that no information is lost.
+</code></pre>
+All the configurations are handled by Hydra and config files and if you want to change a hyperparameter you will write it to config. Doing so we ensure that no information is lost.
 
 
 ### Question 14
@@ -356,12 +367,16 @@ All the configurations are handled by Hydra and config files and if you want to 
 >
 > Answer:
 
+We used weights and biases to log and track our experiments.
+In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below. Also the number of completed epochs is shown in the right panel. 
 
-In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below.
+Unfortunately, we had to shut down the purple run due to some misconfigurations.
 
 ![my_image](figures/wandb3.PNG)
 
-The second image shows the validation steps after each training epoch. Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
+The second image shows the validation steps after each training epoch. 
+We used Pytorch Ligthing to perform both training and validation - The scores are the mean of the different metric for the entire validation epoch. 
+Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
 
 ![my_image](figures/wandb1.PNG)
 
@@ -370,7 +385,7 @@ The third image shows logs of the training loss where each 20th bathc loss and c
 
 ![my_image](figures/wandb2.PNG)
 
-
+Based on these figures we believer that the brown model is the best performing as it provides higher accuracy and precession scores on the validation set than the green model.
 
 ### Question 15
 
@@ -405,6 +420,9 @@ For deploying our model we made a docker image of our fast API application pushe
 >
 > Answer:
 
+Debugging our code was done with two different approaches depeding on the origin of the error. If the error occured during local developement of the code, debugging was done using the VSCode debugger as well as an occational `print()` statement. If the error occured while running the code in the cloud, the error was debugged using the logs from the cloud service as well as print statements in the code. Debugging the code in the cloud was more difficult as the logs were not always clear and the response time for making small changes was long. This was also the case for debugging Dockerfiles, where it took a long time to build and push the image to the cloud.
+
+We did not profile our code as we chose to focus on other aspects of the project. 
 
 ## Working in the cloud
 
