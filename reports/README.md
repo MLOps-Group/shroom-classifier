@@ -142,6 +142,8 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 > **through to get an exact copy of your environment.**
 >
 > Answer length: 100-200 words
+>
+> Answer:
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
 To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up. 
@@ -167,6 +169,7 @@ The detailed commands are found in the `Makefile` of the project.
 > *From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder*
 > *because we did not use any ... in our project. We have added an ... folder that contains ... for running our*
 > *experiments.*
+>
 > Answer:
 
 We have sticked very much to the cookiecutter template provided in the course. The source folder (containing the source code for this project) is named `shroom_classifier`. We have not used any notebooks and have, therefore, removed this folder from the project. 
@@ -494,7 +497,6 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 20 fill here ---
 
 
 ![my_image](figures/registry.png)
@@ -508,7 +510,6 @@ Unfortunately, we were not able to run on GPU's in Vertex AI as Google has not a
 >
 > Answer:
 
---- question 21 fill here ---
 
 
 ![my_image](figures/build_history.png)
@@ -644,8 +645,7 @@ In other words, the most time was spend configuring cloud solutions and building
 > *docker containers for training our applications.*
 > *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
 > *All members contributed to code by...*
-
-
+>
 > Answer:
 
 We all contributed to the project in almost all aspects, but we had some areas of focus:
