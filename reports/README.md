@@ -146,7 +146,7 @@ In our project, we leveraged the [TIMM](https://huggingface.co/timm) framework, 
 > Answer:
 
 To mangage our dependencies we used our favorite choice of virtural environments manager. For the majority of our group that is miniconda. To see a list of dependencies check out `requirements.txt` and `requirements_dev.txt` (for development dependencies).
-To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up. 
+To be able to install these dependencies in our python project they were reffered to under the dynamic field in our `pyproject.toml`. In this file, the python dependency was also set up.
 
 To get up to data with a fully functional working environemt using conda, you simply need to run
 
@@ -244,7 +244,7 @@ Even while having doing tests that should cover all of your source code, there w
 >
 > Answer:
 
-Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch. 
+Our project utilized both branches and pull requests. As we made use of the GitHub issues and project for managing tasks, each task was completed in a seperate branch.
 Branches were also used for testing on developing ideas by the group members.
 After completion and ensuring that the master branch could successfully be merged into the branch, the branch was merged into the master branch. In the beginning this was done using simple merging, however, after the testing workflow was successfully set up, the merging was done using pull requests after passing all the tests succesfully.
 
@@ -346,9 +346,9 @@ After each validation epoch a model was saved if it was the best performing meas
 >
 > Answer:
 
-All parameters for an experiments is accesed through a Hydra config file. When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there. 
+All parameters for an experiments is accesed through a Hydra config file. When an experiment is run the config files is saved by Hydra to the logs folder and also added to the wandb run and saved there.
 
-To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training: 
+To reproduce an experiment go to the corresponding wandb run and download the config file (config.yaml) and save it to the train config folder. If you for instance want to rerun a training:
 <pre><code>
 python shroom_classifier/train_model.py train_config=config
 </code></pre>
@@ -371,15 +371,15 @@ All the configurations are handled by Hydra and config files and if you want to 
 > Answer:
 
 We used weights and biases to log and track our experiments.
-In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below. Also the number of completed epochs is shown in the right panel. 
+In the following wandb images we compare to models starting with to different initial learning rates. The learning rate is updated using a scheduler and shown in the first image below. Also the number of completed epochs is shown in the right panel.
 
 Unfortunately, we had to shut down the purple run due to some misconfigurations.
 
 ![my_image](figures/wandb3.PNG)
 
-The second image shows the validation steps after each training epoch. 
-We used Pytorch Ligthing to perform both training and validation - The scores are the mean of the different metric for the entire validation epoch. 
-Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.  
+The second image shows the validation steps after each training epoch.
+We used Pytorch Ligthing to perform both training and validation - The scores are the mean of the different metric for the entire validation epoch.
+Here it appears that the model with the higher initial learning rate (brown) overfits the training data as the validation loss rises. However, it is still this model which performs best when comparing the other classification metrics.
 
 ![my_image](figures/wandb1.PNG)
 
@@ -425,7 +425,7 @@ For deploying our model we made a docker image of our fast API application pushe
 
 Debugging our code was done with two different approaches depeding on the origin of the error. If the error occured during local developement of the code, debugging was done using the VSCode debugger as well as an occational `print()` statement. If the error occured while running the code in the cloud, the error was debugged using the logs from the cloud service as well as print statements in the code. Debugging the code in the cloud was more difficult as the logs were not always clear and the response time for making small changes was long. This was also the case for debugging Dockerfiles, where it took a long time to build and push the image to the cloud.
 
-We did not profile our code as we chose to focus on other aspects of the project. 
+We did not profile our code as we chose to focus on other aspects of the project.
 
 ## Working in the cloud
 
@@ -533,9 +533,9 @@ Yes, we successfully deployed our model, and you can check it out at:
 
 https://shroom-classifier.streamlit.app/
 
-The backend is a FastAPI application running in google cloud, while the frontend is crafted and hosted in Streamlit. The Streamlit application will send a POST request to the FastAPI application which will return a prediction. 
+The backend is a FastAPI application running in google cloud, while the frontend is crafted and hosted in Streamlit. The Streamlit application will send a POST request to the FastAPI application which will return a prediction.
 
-For the user it is as simple as uploading an image and pressing submit. The user will then get a prediction of the mushroom class and a confidence score. Alternatively, a user could also try the API directly by sending a POST request to the API endpoint using the endpoint: 
+For the user it is as simple as uploading an image and pressing submit. The user will then get a prediction of the mushroom class and a confidence score. Alternatively, a user could also try the API directly by sending a POST request to the API endpoint using the endpoint:
 
 https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post
 
@@ -552,9 +552,9 @@ https://main-app-kttq5kayna-ew.a.run.app/docs#/default/predict_predict_post
 >
 > Answer:
 
-We managed to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting. 
+We managed to implement monitoring, both classic monitoring for the system telemetry of our deployed model, and ML monitoring relating to data and target drifting.
 
-For the classical monitoring, metrics such as request count and latencies in the Cloud Run service are viewable. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious. 
+For the classical monitoring, metrics such as request count and latencies in the Cloud Run service are viewable. Here we also set a service-level Objective (SLO) with the service-level Indicator (SLI) 'Latency', with a latency threshold of 15s, considered to be a healthy respond time. An alert system was also set up in the Monitoring service, sending an e-mail notification whenever the average container instance count is above 5 within 5 minutes, as this is considered suspicious.
 
 For the ML monitoring, a test and exploration report can be accessed through the API endpoints. The test report includes a simulated case checking whether the distribution of the last new 100 images have drifted in terms of brightness, compared to the original training data distribution. It also checks the difference in model performance (accuracy, precision and recall) of the model trained on original training data, versus the model performance on some simulated new data entries. The exploration report is for debugging purposes of the test results, where the distributions etc. can be visually inspected on a dashboard.
 
@@ -673,4 +673,3 @@ s183922:
 - Training model in Vertex AI
 - Model.py
 - Pytorch Lightning
-
