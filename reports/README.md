@@ -616,10 +616,13 @@ We had a security breach in GCP as we accidently pushed a keyfile to a service a
 
 Also, loading data from outside our training container proved cumbersome and we had to setup vertex ai instead of compute engine - This lead to many hours wasted.
 
-In other words, the most time was spend configureing cloud solutions.
-
+In general a lot of time was spend on waiting for Docker images to be build and pushed to GCP. This was especially the case when we had to debug our Dockerfiles. Here it would be nice to have some kind of debugging tool.
 
 Writing model and training scripts and configuring logging in wandb and hydra was quite easy in comparison.
+
+In other words, the most time was spend configuring cloud solutions and building Docker images.
+
+
 
 
 ### Question 27
@@ -634,7 +637,6 @@ Writing model and training scripts and configuring logging in wandb and hydra wa
 > *docker containers for training our applications.*
 > *Student sXXXXXX was in charge of training our models in the cloud and deploying them afterwards.*
 > *All members contributed to code by...*
->https://shroom-classifier.streamlit.app/
 
 
 > Answer:
