@@ -403,12 +403,12 @@ Based on these figures we believer that the brown model is the best performing a
 >
 > Answer:
 
-
-We used docker in this project for multiple purposes. For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI.
+We used docker in this project for multiple purposes, but generally to containerize our machine learning application. One for training, one for building requirements, and one for deployment.
+For training our model we made a docker image of our training pipeline and pushed it to GCP. The containerized application of our training pipeline ensured that the models would train on the servers used by Vertex AI. Link to the training dockerfile https://github.com/MLOps-Group/shroom-classifier/blob/master/dockerfiles/train_model.dockerfile .
 
 For deploying our model we made a docker image of our fast API application pushed it to GCP and deployed it by running the container in Cloud Run.
 
-`TODO: Add link to file!`
+
 
 ### Question 16
 
