@@ -8,7 +8,7 @@ def get_config(config_name: str, config_folder: str = "") -> DictConfig:
     Args:
         config_name (str): Name of the config file to load.
         config_folder (str): Name of the folder where the config file is located. Relative to the configs folder.
- 
+
     Returns:
         OmegaConf: The loaded config file.
     """

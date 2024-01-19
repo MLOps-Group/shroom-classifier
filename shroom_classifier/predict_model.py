@@ -2,7 +2,7 @@ import torch
 from shroom_classifier.data.utils import image_to_tensor, get_labels
 from shroom_classifier.models import load_model
 import numpy as np
-from typing import Any, Dict, List, Tuple, Union
+from typing import Union
 
 
 class ShroomPredictor:

@@ -133,7 +133,7 @@ train:
 ## Check code
 check_code:
 	pre-commit run --all-files
-	ruff check .	
+	ruff check .
 
 
 #################################################################################
