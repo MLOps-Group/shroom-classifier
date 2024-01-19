@@ -666,5 +666,8 @@ s183920:
 - Model deployment
 
 s183922:
-
+- Setting up GCP
+- Training model in Vertex AI
+- Model.py
+- Pytorch Lightning
 
