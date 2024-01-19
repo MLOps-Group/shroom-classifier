@@ -17,7 +17,7 @@ app = FastAPI()
 
 
 @app.get("/")
-def root():
+def root() -> dict:
     """Health check."""
     response = {
         "message": HTTPStatus.OK.phrase,
@@ -26,12 +26,12 @@ def root():
     return response
 
 @app.get("/envvars/")
-def read_envvars():
+def read_envvars() -> dict:
     """Get an item by id."""
     return {"envvars": dict(os.environ)}
 
 @app.get("/wandb_model/")
-async def read_model():
+async def read_model() -> dict:
     """Get a model by id."""
     print("Downloading model...")
     full_name = "mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest"
@@ -50,7 +50,7 @@ async def read_model():
 
 
 @app.post("/predict")
-async def predict(file: UploadFile = File(...), k: int = 5):
+async def predict(file: UploadFile = File(...), k: int = 5) -> dict:
     # Load the model
 
     predictor = ShroomPredictor("wandb:mlops_papersummarizer/model-registry/shroom_classifier_resnet:latest")
@@ -76,7 +76,7 @@ async def predict(file: UploadFile = File(...), k: int = 5):
 
 
 @app.get("/monitoring_test", response_class=HTMLResponse)
-async def shroom_monitoring():
+async def shroom_monitoring() -> HTMLResponse:
     """Request method that returns a monitoring report for testing.
     Testing for data drifting and target drifting.
     """
@@ -103,8 +103,9 @@ async def shroom_monitoring():
 
 
 @app.get("/monitoring_exploration", response_class=HTMLResponse)
-async def shroom_monitoring_exploration():
-    """Request method that returns a monitoring report for exploration.
+async def shroom_monitoring_exploration() -> HTMLResponse:
+    """
+    Request method that returns a monitoring report for exploration.''
     """
 
     ## Compare N latest sample in original with N 'new' samples

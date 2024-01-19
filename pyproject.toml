@@ -44,3 +44,7 @@ exclude_also = [
     "def __repr__",
     "if __name__ == .__main__.:",
     ]
+
+
+[tool.mypy]
+ignore_missing_imports = true

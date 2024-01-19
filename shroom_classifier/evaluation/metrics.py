@@ -1,8 +1,8 @@
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 from numpy import ndarray
+from typing import Tuple
 
-
-def get_metrics(y_true: ndarray, y_hat: ndarray) -> (float, float, float, float, float):
+def get_metrics(y_true: ndarray, y_hat: ndarray) -> Tuple[float, float, float, float, float]:
     """Computes classification metrics:
      - Accuracy
     - Precision

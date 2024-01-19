@@ -130,6 +130,12 @@ train:
 	python $(PROJECT_NAME)/train_model.py train_config=$(config_file)
 
 
+## Check code
+check_code:
+	pre-commit run --all-files
+	ruff check .	
+
+
 #################################################################################
 ## Docker RULES                                                                 #
 #################################################################################

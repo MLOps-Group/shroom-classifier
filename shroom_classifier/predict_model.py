@@ -2,6 +2,7 @@ import torch
 from shroom_classifier.data.utils import image_to_tensor, get_labels
 from shroom_classifier.models import load_model
 import numpy as np
+from typing import Any, Dict, List, Tuple, Union
 
 
 class ShroomPredictor:
@@ -43,7 +44,7 @@ class ShroomPredictor:
         """
         self.model, _ = load_model(model_path, device=self.device, **kwargs)
 
-    def get_probs(self, image):
+    def get_probs(self, image: Union[str, torch.Tensor]):
         self.model.eval()
         if isinstance(image, str):
             image = image_to_tensor(image, preprocesser=self.model.preprocesser)
@@ -60,12 +61,12 @@ class ShroomPredictor:
             logits = self.model(image)
         return logits.softmax(dim=1)
 
-    def predict(self, image):
+    def predict(self, image: Union[str, torch.Tensor]):
         probs = self.get_probs(image)
         probs = probs.detach().cpu().numpy()
         return probs
 
-    def top_k_preds(self, image, k=5):
+    def top_k_preds(self, image: Union[str, torch.Tensor], k: int = 5):
         probs = self.get_probs(image)
         top_k, top_k_idx = torch.topk(probs, k=k, dim=1)
         labels = self.super_categories[top_k_idx.cpu()].squeeze().tolist()
